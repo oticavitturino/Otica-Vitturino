@@ -1,10 +1,10 @@
-import './App.css'
+import './style.css'
 import Button from './components/button'
 import Input from './components/input'
 import Container from './components/container'
 import LogoVitturino from './assets/upscalemedia-transformed.png'
 
-function App() {
+function Login() {
 
   const pageStyle = {
     display: "flex",
@@ -37,7 +37,6 @@ function App() {
     marginBottom: "30px",
     fontFamily: "Poppins, sans-serif",
     fontSize: "28px",
-    fontWeight: "500",
     marginTop: "30px",
     marginBottom: "60px"
   }
@@ -78,4 +77,4 @@ function App() {
   )
 }
 
-export default App
+export default Login
