@@ -1,14 +1,9 @@
 import './style.css'
 
-function Container({ width, height, children}) {
-
-    const containerStyle = {
-        width: width,
-        height: height
-    }
+function Container({ children, maxWidth }) {
 
     return (
-        <div className="container" style={containerStyle}>
+        <div className="container" style={{ maxWidth: maxWidth }}>
             {children}
         </div>
     )

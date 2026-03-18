@@ -6,72 +6,24 @@ import LogoVitturino from './assets/upscalemedia-transformed.png'
 
 function App() {
 
-  const pageStyle = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.2), rgba(190, 190, 190, 0.8)), url('/img/pexels-steve-29506613.jpg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
-  }
-
-  const logoStyle = {
-    width: "22%",
-    marginBottom: "90px"
-  }
-
-  const formStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "20px",
-    width: "100%"
-  }
-
-  const titleStyle = {
-    color: "#1DA299",
-    textAlign: "center",
-    marginBottom: "30px",
-    fontFamily: "Poppins, sans-serif",
-    fontSize: "28px",
-    fontWeight: "500",
-    marginTop: "30px",
-    marginBottom: "60px"
-  }
-
   return (
-    <div style={pageStyle}>
+    <div className="page-container">
 
-      <img src={LogoVitturino} style={logoStyle}></img>
+      <img className="logo" src={LogoVitturino}></img>
 
-      <Container width="780px">
+      <Container maxWidth="750px">
 
-        <h2 style={titleStyle}>Fazer Login</h2>
+        <h2>Fazer Login</h2>
 
-        <form style={formStyle}>
+        <form>
+          <Input placeholder="Digite seu e-mail" type="email" required/>
 
-          <Input 
-            placeholder="Digite seu e-mail"
-            type="email"
-            width="350px"
-            required
-          />
+          <Input placeholder="Digite sua senha" type="password" required/> 
 
-          <Input 
-            placeholder="Digite sua senha"
-            type="password"
-            width="350px"
-            required
-          />
-
-          <div style={{ marginTop: "30px", marginBottom: "30px" }}>
-            <Button type="submit" width="350px">Entrar</Button>
-          </div>
+          <Button className="btn-enter">Entrar</Button>
 
         </form>
+
       </Container>
 
     </div>

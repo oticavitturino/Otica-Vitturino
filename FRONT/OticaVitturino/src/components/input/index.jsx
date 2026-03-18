@@ -1,18 +1,9 @@
 import './style.css'
 
-function Input({ width, height, ...props}) {
-
-    const inputStyle = {
-        backgroundColor: "#D9D9D9",
-        color: "#6E6E6E",
-        width: width,
-        height: height
-    }
+function Input({ ...props }) {
 
     return (
-        <input style={inputStyle}
-               {...props} 
-        />
+        <input{...props} />
     )
 }
 

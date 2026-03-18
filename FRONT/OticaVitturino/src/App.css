@@ -7,3 +7,59 @@
 body {
     margin: 0;
 }
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-bottom: 12vh;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(190, 190, 190, 0.8)), url('/img/pexels-steve-29506613.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logo {
+    width: 20%;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+h2 {
+    font-family: Poppins, sans-serif;
+    color: #1DA299;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+input {
+    font-size: 0.9rem;
+    width: 350px;
+}
+
+.btn-enter {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    width: 350px;
+    transition: background-color 0.2s ease;
+    font-size: 1.3rem;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.btn-enter:hover {
+    background-color: #187e77;
+}
