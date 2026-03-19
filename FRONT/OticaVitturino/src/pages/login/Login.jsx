@@ -1,14 +1,13 @@
 import './style.css'
-import Button from './components/button'
-import Input from './components/input'
-import Container from './components/container'
-import LogoVitturino from './assets/upscalemedia-transformed.png'
+import Button from '../../components/button'
+import Input from '../../components/input'
+import Box_Container from '../../components/container'
+import LogoVitturino from '../../assets/upscalemedia-transformed.png'
 
 function Login() {
 
   return (
     <div className="page-container">
-
       <img className="logo" src={LogoVitturino}></img>
 
       <Container maxWidth="750px">
@@ -25,7 +24,6 @@ function Login() {
         </form>
 
       </Container>
-
     </div>
   )
 }

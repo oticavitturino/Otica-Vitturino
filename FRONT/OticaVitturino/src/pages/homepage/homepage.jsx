@@ -1,9 +1,9 @@
-import './App.css'
-import Header from './components/header'
-import Side_Menu from './components/side-menu'
-import Illustration from '../public/img/JEMA-GER-1740-05.png'
+import './style.css'
+import Header from '../../components/header'
+import Side_Menu from '../../components/side-menu'
+import Illustration from '../../public/img/JEMA-GER-1740-05.png'
 
-function App() {
+function Homepage() {
 
   return (
     <div className='page-container'>
@@ -17,4 +17,4 @@ function App() {
   )
 }
 
-export default App
+export default Homepage

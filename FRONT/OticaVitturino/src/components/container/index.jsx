@@ -1,6 +1,6 @@
 import './style.css'
 
-function Container({ children, maxWidth }) {
+function Box_Container({ children, maxWidth }) {
 
     return (
         <div className="container" style={{ maxWidth: maxWidth }}>
@@ -9,4 +9,4 @@ function Container({ children, maxWidth }) {
     )
 }
 
-export default Container
+export default Box_Container
