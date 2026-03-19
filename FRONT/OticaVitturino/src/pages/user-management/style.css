@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins-Medium.ttf') format('truetype');
-    font-weight: 500;
+    font-weight: 500; 
     font-style: normal;
 }
 
@@ -61,7 +61,7 @@ h3 {
     align-items: center;
     height: 550px;
     width: 100%;
-    max-width: 400px;
+    max-width: 400px;    
     flex-shrink: 0;
     background-color: rgba(217, 217, 217, 0.3);
 }
@@ -77,10 +77,10 @@ input {
 }
 
 .check-icon-form {
-    width: 50px;
+    width: 50px; 
     height: auto;
-    align-self: center;
-    margin-top: 20px;
+    align-self: center; 
+    margin-top: 20px; 
     margin-bottom: 20px;
 }
 
@@ -98,7 +98,7 @@ input {
     align-items: center;
     height: 550px;
     width: 100%;
-    max-width: 750px;
+    max-width: 750px;    
     flex-shrink: 0;
     background-color: rgba(217, 217, 217, 0.3);
 }

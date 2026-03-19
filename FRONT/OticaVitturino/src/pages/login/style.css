@@ -21,7 +21,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    padding-bottom: 12vh;
     background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(190, 190, 190, 0.8)), url('/img/pexels-steve-29506613.jpg');
     background-size: cover;
     background-position: center;

@@ -7,12 +7,19 @@ function Homepage() {
 
   return (
     <div className='page-container'>
-      <Header/>      
-      <Side_Menu/>
+
+      <Header />
+
+      <Side_Menu />
+
       <div className='welcome-container'>
+
         <h2>Olá, <span>admin</span>!</h2>
-        <img className='illustration' src={Illustration}/>
+
+        <img className='illustration' src={Illustration} />
+
       </div>
+
     </div>
   )
 }
