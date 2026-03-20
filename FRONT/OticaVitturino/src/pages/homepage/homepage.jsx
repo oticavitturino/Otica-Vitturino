@@ -1,7 +1,6 @@
 import './style.css'
 import Header from '../../components/header'
 import Side_Menu from '../../components/side-menu'
-import Illustration from '../../public/img/JEMA-GER-1740-05.png'
 
 function Homepage() {
 
@@ -14,9 +13,9 @@ function Homepage() {
 
       <div className='welcome-container'>
 
-        <h2>Olá, <span>admin</span>!</h2>
+        <h2 className="hello">Olá, <span>admin</span>!</h2>
 
-        <img className='illustration' src={Illustration} />
+        <img className='illustration' src="/img/JEMA-GER-1740-05.png" />
 
       </div>
 

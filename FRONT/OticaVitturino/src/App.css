@@ -30,10 +30,11 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    height: 80%;
     margin-top: 100px;
-    margin-left: 485px;
+    margin-left: 500px;
 }
 
 h2 {
@@ -54,12 +55,12 @@ h3 {
     width: 100%;
 }
 
-.container .user-registration-container {
+.container.user-registration-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 550px;
+    height: 600px;
     width: 100%;
     max-width: 400px;
     flex-shrink: 0;
@@ -70,6 +71,8 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 input {
@@ -91,14 +94,21 @@ input {
     height: 55px;
 }
 
-.container .registered-users-container {
+.container.registered-users-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 550px;
+    height: 600px;
     width: 100%;
     max-width: 750px;
     flex-shrink: 0;
     background-color: rgba(217, 217, 217, 0.3);
+}
+
+li {
+    background-color: rgba(49, 169, 161, 0.5);
+    height: 50px;
+    width: 100%;
+    list-style: none;
 }

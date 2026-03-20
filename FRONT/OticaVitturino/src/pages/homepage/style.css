@@ -37,7 +37,7 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
-h2 {
+.hello {
     font-family: Poppins, sans-serif;
     font-size: 70px;
     font-weight: medium;

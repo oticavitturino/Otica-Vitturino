@@ -4,53 +4,92 @@ import Side_Menu from '../../components/side-menu'
 import Box_Container from '../../components/container'
 import Input from '../../components/input'
 import Button from '../../components/button'
-import CheckIcon from '../assets/user-round-check.png'
+import List_item from '../../components/list-item'
+import CheckIcon from '../../assets/user-round-check.png'
+import PenIcon from '../../assets/pen.png'
+import TrashIcon from '../../assets/trash-2.png'
 
 function User_Management() {
+// Apenas para testes mockados
 
-    return (
-        <div className="page-container">
+  const users = [
+    {
+      id: 1,
+      nome: "Carlos Viana",
+      login: "carlos_v04"
+    },
 
-            <Header />
+    {
+      id: 2,
+      nome: "Maria Heloisa",
+      login: "marihelo07"
+    }
+  ]
 
-            <Side_Menu />
+  return (
+    <div className='page-container'>
 
-            <Box_Container className="main-container">
+      <Header />
 
-                <h2>Gerencie aqui seus usuários</h2>
+      <Side_Menu />
 
-                <div className='content-wrapper'>
+      <Box_Container className='main-container'>
 
-                    <Box_Container className="user-registration-container">
+        <h2>Gerencie aqui seus usuários</h2>
 
-                        <h3>Cadastrar usuário</h3>
+        <div className='content-wrapper'>
 
-                        <form className="user-registration-form">
+          <Box_Container className='user-registration-container'>
 
-                            <Input placeholder="Login" type="text" required />
+            <h3>Cadastrar usuário</h3>
 
-                            <Input placeholder="Nome" type="text" required />
+            <form className='user-registration-form' type='submit'>
 
-                            <Input placeholder="Data de nascimento" type="date" required />
+              <Input placeholder='Login' type='text' required />
 
-                            <Input placeholder="Senha" type="password" required />
+              <Input placeholder='Nome' type='text' required />
 
-                            <img src={CheckIcon} className="check-icon-form" />
+              <Input placeholder='E-mail' type='email' required />
 
-                            <Button className="btn-register">Cadastrar</Button>
+              <Input placeholder='Senha' type='password' required />
 
-                        </form>
+              <Input placeholder='Data de nascimento' type='date' required />
 
-                    </Box_Container>
+              <img src={CheckIcon} className='check-icon-form' />
 
-                    <Box_Container className="registered-users-container">
+              <Button className='btn-register'>Cadastrar</Button>
 
-                    </Box_Container>
-                </div>
+            </form>
 
-            </Box_Container>
+          </Box_Container>
+
+          <Box_Container className='registered-users-container'>
+
+            <h3>Usuários registrados</h3>
+
+            {/* List item de teste mockado */}
+
+            {users.map((user) => (
+              <List_item key={user.id} actions={
+                <>
+                  <button className="icon-btn edit-btn">
+                    <img src={PenIcon} alt="Editar usuário" className="action-icon" />
+                  </button>
+
+                  <button className="icon-btn delete-btn">
+                    <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
+                  </button>
+                </>
+              }>{user.nome} | {user.login}</List_item>
+            ))}
+
+          </Box_Container>
+
         </div>
-    )
+
+      </Box_Container>
+    </div>
+  )
 }
 
 export default User_Management

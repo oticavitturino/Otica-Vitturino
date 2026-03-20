@@ -32,7 +32,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 200px;
     margin-left: 485px;
 }
 
@@ -54,22 +54,24 @@ h3 {
     width: 100%;
 }
 
-.container .user-registration-container {
+.container.user-registration-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 550px;
     width: 100%;
     max-width: 400px;    
     flex-shrink: 0;
     background-color: rgba(217, 217, 217, 0.3);
+    padding: 20px;
 }
 
 form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 
 input {
@@ -80,8 +82,8 @@ input {
     width: 50px; 
     height: auto;
     align-self: center; 
-    margin-top: 20px; 
-    margin-bottom: 20px;
+    margin-top: 10px; 
+    margin-bottom: 10px;
 }
 
 .btn-register {
@@ -89,16 +91,18 @@ input {
     color: #FFFFFF;
     font-size: 1.1rem;
     height: 55px;
+    width: 100%;
 }
 
-.container .registered-users-container {
+.container.registered-users-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 550px;
     width: 100%;
     max-width: 750px;    
     flex-shrink: 0;
     background-color: rgba(217, 217, 217, 0.3);
+    padding: 20px;
 }
