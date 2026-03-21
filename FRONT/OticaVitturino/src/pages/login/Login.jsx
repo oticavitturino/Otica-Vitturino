@@ -12,13 +12,13 @@ function Login() {
   return (
     <div className='page-container'>
 
-      <img className='logo' src={LogoVitturino}></img>
+      <img className='login-logo' src={LogoVitturino}></img>
 
       <Box_Container className='login-container' maxWidth='700px'>
 
         <h2>Fazer Login</h2>
 
-        <form>
+        <form className='login-form'>
 
           <Input placeholder='Digite seu e-mail' type='email' required />
 

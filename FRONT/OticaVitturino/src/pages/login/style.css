@@ -27,9 +27,8 @@ body {
     background-repeat: no-repeat;
 }
 
-.logo {
+.login-logo {
     width: 20%;
-    margin-top: 80px;
     margin-bottom: 80px;
 }
 
@@ -38,25 +37,24 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    height: 450px;
 }
 
 h2 {
     font-family: Poppins, sans-serif;
-    color: #1DA299;
-    text-align: center;
     font-size: 2.2rem;
     font-weight: 600;
-    margin-top: 20px;
-    margin-bottom: 60px;
+    text-align: center;
+    color: #1DA299;
 }
 
-form {
+.login-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 16px;
+    margin-top: 20px;
 }
 
 input {
@@ -67,11 +65,11 @@ input {
 .btn-enter {
     background-color: #1DA299;
     color: #FFFFFF;
-    width: 350px;
-    transition: background-color 0.2s ease;
     font-size: 1.3rem;
+    width: 350px;    
     margin-top: 30px;
     margin-bottom: 30px;
+    transition: background-color 0.2s ease;
 }
 
 .btn-enter:hover {
