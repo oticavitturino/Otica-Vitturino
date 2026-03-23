@@ -61,7 +61,6 @@ body {
     width: 100%;
     padding: 0 15px;
     align-items: center;
-    transform: translateX(-5px);
 }
 
 .list-row-data span {
