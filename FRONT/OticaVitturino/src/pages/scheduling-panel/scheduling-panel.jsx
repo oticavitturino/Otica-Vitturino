@@ -1,0 +1,107 @@
+import './style.css'
+import Header from '../../components/header'
+import Side_Menu from '../../components/side-menu'
+import Container from '../../components/container'
+import List_Item from '../../components/list-item'
+import X from '../../assets/x.png'
+import Chart from '../../assets/file-chart-column.png'
+
+function Scheduling_Panel() {
+    // Apenas para testes mockados
+
+    const agendamentos = [
+        {
+            id: 1,
+            usuario: "Luiz Geraldo",
+            categoria: "Limpeza",
+            data: "20/05/2026",
+            hora: "11:30",
+            status: "Confirmada"
+        },
+        {
+            id: 2,
+            usuario: "Ana Júlia Fonseca",
+            categoria: "Consulta",
+            data: "21/05/2026",
+            hora: "09:00",
+            status: "Pendente"
+        },
+        {
+            id: 3,
+            usuario: "Marcos Silva",
+            categoria: "Limpeza",
+            data: "21/05/2026",
+            hora: "14:15",
+            status: "Confirmada"
+        },
+        {
+            id: 4,
+            usuario: "Beatriz Costa",
+            categoria: "Manutenção",
+            data: "22/05/2026",
+            hora: "10:00",
+            status: "Cancelada"
+        },
+        {
+            id: 5,
+            usuario: "Roberto Carlos",
+            categoria: "Consulta",
+            data: "23/05/2026",
+            hora: "16:45",
+            status: "Pendente"
+        }
+    ];
+
+    return (
+        <div className='page-container'>
+
+            <Header />
+
+            <Side_Menu />
+
+            <Container className='main-container-scheduling-panel'>
+
+                <h2>Gerencie aqui seus agendamentos</h2>
+
+                <div className='list-legend'>
+                    <span>Usuário</span>
+                    <span>Categoria</span>
+                    <span>Data</span>
+                    <span>Hora</span>
+                    <span>Status</span>
+                    <span></span>
+                </div>
+
+                {/* List item de teste mockado */}
+
+                {agendamentos.map((agendamento) => (
+                    <List_Item key={agendamento.id} actions={
+                        <>
+                            <button className="icon-btn chart-btn">
+                                <img src={Chart} className="action-icon"></img>
+                            </button>
+
+                            <button className="icon-btn x-btn">
+                                <img src={X} className="action-icon"></img>
+                            </button>
+                        </>
+                    }>
+
+                        <div className="list-row-data">
+                            <span>{agendamento.usuario}</span>
+                            <span>{agendamento.categoria}</span>
+                            <span>{agendamento.data}</span>
+                            <span>{agendamento.hora}</span>
+                            <span>{agendamento.status}</span>
+                        </div>
+
+                    </List_Item>
+                ))}
+
+            </Container>
+
+        </div>
+    )
+}
+
+export default Scheduling_Panel

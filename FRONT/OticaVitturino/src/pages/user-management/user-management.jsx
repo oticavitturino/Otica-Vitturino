@@ -1,7 +1,7 @@
 import './style.css'
 import Header from '../../components/header'
 import Side_Menu from '../../components/side-menu'
-import Box_Container from '../../components/container'
+import Container from '../../components/container'
 import Input from '../../components/input'
 import Button from '../../components/button'
 import List_item from '../../components/list-item'
@@ -33,13 +33,13 @@ function User_Management() {
 
       <Side_Menu />
 
-      <Box_Container className='main-container'>
+      <Container className='main-container-user-management'>
 
         <h2>Gerencie aqui seus usuários</h2>
 
         <div className='content-wrapper'>
 
-          <Box_Container className='user-registration-container'>
+          <Container className='user-registration-container'>
 
             <h3>Cadastrar usuário</h3>
 
@@ -61,9 +61,9 @@ function User_Management() {
 
             </form>
 
-          </Box_Container>
+          </Container>
 
-          <Box_Container className='registered-users-container'>
+          <Container className='registered-users-container'>
 
             <h3>Usuários registrados</h3>
 
@@ -83,11 +83,11 @@ function User_Management() {
               }>{user.nome} | {user.login}</List_item>
             ))}
 
-          </Box_Container>
+          </Container>
 
         </div>
 
-      </Box_Container>
+      </Container>
     </div>
   )
 }

@@ -10,7 +10,7 @@ function Side_Menu() {
         <div className='side-menu'>
             <div className='menu-items'>
                 <Button className='btn-item' onClick={() => navigate('/usuarios')}>Gerenciar Usuários</Button>
-                <Button className='btn-item'>Gerenciar Agendamentos</Button>
+                <Button className='btn-item' onClick={() => navigate('/agendamentos')}>Gerenciar Agendamentos</Button>
                 <Button className='btn-item'>Painel de Produção</Button>
                 <Button className='btn-item'>Histórico de Ocorrências/Reclamações</Button>
                 <Button className='btn-item'>Editar Mensagens Pré-Programadas</Button>

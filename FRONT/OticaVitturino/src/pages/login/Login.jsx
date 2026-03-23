@@ -1,7 +1,7 @@
 import './style.css'
 import Button from '../../components/button'
 import Input from '../../components/input'
-import Box_Container from '../../components/container'
+import Container from '../../components/container'
 import LogoVitturino from '../../assets/upscalemedia-transformed.png'
 import { useNavigate } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ function Login() {
 
       <img className='login-logo' src={LogoVitturino}></img>
 
-      <Box_Container className='login-container' maxWidth='700px'>
+      <Container className='login-container'>
 
         <h2>Fazer Login</h2>
 
@@ -28,7 +28,7 @@ function Login() {
 
         </form>
 
-      </Box_Container>
+      </Container>
     </div>
   )
 }

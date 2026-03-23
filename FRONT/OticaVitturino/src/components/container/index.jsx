@@ -1,14 +1,14 @@
 import './style.css'
 
-function Box_Container({ children, className, maxWidth, ...props }) {
+function Container({ children, className, ...props }) {
 
     const mergedClasses = `container ${className || ''}`;
 
     return (
-        <div className={mergedClasses} style={{ maxWidth: maxWidth }} {...props}>
+        <div className={mergedClasses}{...props}>
             {children}
         </div>
     )
 }
 
-export default Box_Container
+export default Container
