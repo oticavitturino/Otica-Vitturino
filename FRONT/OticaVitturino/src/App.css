@@ -12,10 +12,6 @@
 }
 
 body {
-    margin: 0;
-}
-
-.page-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -25,90 +21,5 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 80%;
-    margin-top: 100px;
-    margin-left: 500px;
-}
-
-h2 {
-    font-family: Poppins, sans-serif;
-    color: #3C7975;
-    margin-bottom: 35px;
-}
-
-h3 {
-    font-family: Poppins, sans-serif;
-    color: #3C7975;
-    margin-bottom: 30px;
-}
-
-.content-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.container.user-registration-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 600px;
-    width: 100%;
-    max-width: 400px;
-    flex-shrink: 0;
-    background-color: rgba(217, 217, 217, 0.3);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-input {
-    font-size: 0.9rem;
-}
-
-.check-icon-form {
-    width: 50px;
-    height: auto;
-    align-self: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.btn-register {
-    background-color: #1DA299;
-    color: #FFFFFF;
-    font-size: 1.1rem;
-    height: 55px;
-}
-
-.container.registered-users-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 600px;
-    width: 100%;
-    max-width: 750px;
-    flex-shrink: 0;
-    background-color: rgba(217, 217, 217, 0.3);
-}
-
-li {
-    background-color: rgba(49, 169, 161, 0.5);
-    height: 50px;
-    width: 100%;
-    list-style: none;
+    margin: 0;
 }
