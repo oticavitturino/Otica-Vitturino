@@ -27,7 +27,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.main-container-production-status-panel {
+.main-container-incident-history {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -39,15 +39,15 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
-.main-container-production-status-panel .list-legend {
+.main-container-incident-history .list-legend {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 60px; 
+    grid-template-columns: 1fr 0.5fr 2.3fr 0.7fr 60px; 
     width: 100%;
     padding: 0 15px;
     margin-bottom: 10px;
 }
 
-.main-container-production-status-panel .list-legend span {
+.main-container-incident-history .list-legend span {
     color: rgba(255, 255, 255, 0.8) !important;
     font-family: 'Poppins', sans-serif;
     font-size: 0.95rem;
@@ -55,15 +55,15 @@ body {
     text-align: left;
 }
 
-.main-container-production-status-panel .list-row-data {
+.main-container-incident-history .list-row-data {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 60px;
+    grid-template-columns: 1fr 0.5fr 2.3fr 0.7fr 60px;
     width: 100%;
     padding: 0 15px;
     align-items: center;
 }
 
-.main-container-production-status-panel .list-row-data span {
+.main-container-incident-history .list-row-data span {
     color: #FFFFFF !important;
     text-align: left;
     font-size: 0.9rem;

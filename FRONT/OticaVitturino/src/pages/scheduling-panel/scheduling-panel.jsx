@@ -3,8 +3,8 @@ import Header from '../../components/header'
 import Side_Menu from '../../components/side-menu'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
-import X from '../../assets/x.png'
-import Chart from '../../assets/file-chart-column.png'
+import XIcon from '../../assets/x.png'
+import ChartIcon from '../../assets/file-chart-column.png'
 
 function Scheduling_Panel() {
     // Apenas para testes mockados
@@ -78,11 +78,11 @@ function Scheduling_Panel() {
                     <List_Item key={agendamento.id} actions={
                         <>
                             <button className="icon-btn chart-btn">
-                                <img src={Chart} className="action-icon"></img>
+                                <img src={ChartIcon} className="action-icon"></img>
                             </button>
 
                             <button className="icon-btn x-btn">
-                                <img src={X} className="action-icon"></img>
+                                <img src={XIcon} className="action-icon"></img>
                             </button>
                         </>
                     }>

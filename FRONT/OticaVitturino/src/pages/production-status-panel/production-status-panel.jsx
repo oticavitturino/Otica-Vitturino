@@ -3,7 +3,7 @@ import Header from '../../components/header'
 import Side_Menu from '../../components/side-menu'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
-import Reload from '../../assets/rotate-ccw.png'
+import ReloadIcon from '../../assets/rotate-ccw.png'
 
 function Production_Status_Panel() {
     // Apenas para testes mockados
@@ -71,7 +71,7 @@ function Production_Status_Panel() {
                     <List_Item key={status.id} actions={
                         <>
                             <button className="icon-btn chart-btn">
-                                <img src={Reload} className="action-icon"></img>
+                                <img src={ReloadIcon} className="action-icon"></img>
                             </button>
                         </>
                     }>

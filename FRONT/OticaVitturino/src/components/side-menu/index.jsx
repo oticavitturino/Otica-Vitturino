@@ -12,7 +12,7 @@ function Side_Menu() {
                 <Button className='btn-item' onClick={() => navigate('/usuarios')}>Gerenciar Usuários</Button>
                 <Button className='btn-item' onClick={() => navigate('/agendamentos')}>Gerenciar Agendamentos</Button>
                 <Button className='btn-item' onClick={() => navigate('/status-producao')}>Painel de Produção</Button>
-                <Button className='btn-item'>Histórico de Ocorrências/Reclamações</Button>
+                <Button className='btn-item' onClick={() => navigate('/historico-ocorrencia')}>Histórico de Ocorrências/Reclamações</Button>
                 <Button className='btn-item'>Editar Mensagens Pré-Programadas</Button>
             </div>
 

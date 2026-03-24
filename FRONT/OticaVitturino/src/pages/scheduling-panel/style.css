@@ -33,7 +33,7 @@ body {
     justify-content: flex-start;
     align-items: center;
     min-height: 710px;
-    margin-top: 200px;
+    margin-top: 210px;
     margin-left: 485px;
     background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;

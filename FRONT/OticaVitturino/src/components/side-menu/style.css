@@ -9,7 +9,7 @@
     top: 100px;
     left: 0;
     height: calc(100vh - 100px);
-    animation: menuSlide 2.5s ease-out forwards;
+    animation: menuSlide 1.5s ease-out forwards;
 }
 
 .side-menu::after {
