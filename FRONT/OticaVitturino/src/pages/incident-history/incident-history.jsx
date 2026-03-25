@@ -55,30 +55,32 @@ function Incident_History() {
 
                 {/* List item de teste mockado */}
 
-                {ocorrencia.map((ocorrencia) => (
-                    <List_Item key={ocorrencia.id} actions={
-                        <>
-                            <button className="icon-btn chart-btn">
-                                <img src={ReplyIcon} className="action-icon"></img>
-                            </button>
+                <div className='incident-scroll-area'>
+                    {ocorrencia.map((ocorrencia) => (
+                        <List_Item key={ocorrencia.id} actions={
+                            <>
+                                <button className="icon-btn chart-btn">
+                                    <img src={ReplyIcon} className="action-icon"></img>
+                                </button>
 
-                            <button className="icon-btn chart-btn">
-                                <img src={TrashIcon} className="action-icon"></img>
-                            </button>
-                        </>
-                    }>
+                                <button className="icon-btn chart-btn">
+                                    <img src={TrashIcon} className="action-icon"></img>
+                                </button>
+                            </>
+                        }>
 
-                        <div className="list-row-data">
-                            <span>{ocorrencia.usuario}</span>
-                            <span>{ocorrencia.categoria}</span>
-                            <span>{ocorrencia.descricao}</span>
-                            <span>{ocorrencia.data}</span>
-                            <span></span>
-                        </div>
+                            <div className="list-row-data">
+                                <span>{ocorrencia.usuario}</span>
+                                <span>{ocorrencia.categoria}</span>
+                                <span>{ocorrencia.descricao}</span>
+                                <span>{ocorrencia.data}</span>
+                                <span></span>
+                            </div>
 
-                    </List_Item>
-                ))}
-                
+                        </List_Item>
+                    ))}
+                </div>
+
             </Container>
 
         </div>

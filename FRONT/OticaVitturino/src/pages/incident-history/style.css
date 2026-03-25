@@ -39,6 +39,34 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+.incident-scroll-area {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+}
+
+.incident-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.incident-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.incident-scroll-area::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+.incident-scroll-area .list-item {
+    flex-shrink: 0 !important;
+}
+
 .main-container-incident-history .list-legend {
     display: grid;
     grid-template-columns: 1fr 0.5fr 2.3fr 0.7fr 60px; 

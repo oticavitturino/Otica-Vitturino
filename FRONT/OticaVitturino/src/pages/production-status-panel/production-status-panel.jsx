@@ -56,7 +56,7 @@ function Production_Status_Panel() {
 
             <Container className='main-container-production-status-panel'>
 
-                <h2>Gerencia aqui o status de produção</h2>
+                <h2>Gerencie aqui o status de produção</h2>
 
                 <div className='list-legend'>
                     <span>Usuário</span>
@@ -67,24 +67,26 @@ function Production_Status_Panel() {
 
                 {/* List item de teste mockado */}
 
-                {status.map((status) => (
-                    <List_Item key={status.id} actions={
-                        <>
-                            <button className="icon-btn chart-btn">
-                                <img src={ReloadIcon} className="action-icon"></img>
-                            </button>
-                        </>
-                    }>
+                <div className='production-scroll-area'>
+                    {status.map((status) => (
+                        <List_Item key={status.id} actions={
+                            <>
+                                <button className="icon-btn chart-btn">
+                                    <img src={ReloadIcon} className="action-icon"></img>
+                                </button>
+                            </>
+                        }>
 
-                        <div className="list-row-data">
-                            <span>{status.usuario}</span>
-                            <span>{status.produto}</span>
-                            <span>{status.status}</span>
-                            <span></span>
-                        </div>
+                            <div className="list-row-data">
+                                <span>{status.usuario}</span>
+                                <span>{status.produto}</span>
+                                <span>{status.status}</span>
+                                <span></span>
+                            </div>
 
-                    </List_Item>
-                ))}
+                        </List_Item>
+                    ))}
+                </div>
 
             </Container>
 

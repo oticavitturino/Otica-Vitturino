@@ -16,7 +16,7 @@ function Scheduling_Panel() {
             categoria: "Limpeza",
             data: "20/05/2026",
             hora: "11:30",
-            status: "Confirmada"
+            status: "Confirmado"
         },
         {
             id: 2,
@@ -32,7 +32,7 @@ function Scheduling_Panel() {
             categoria: "Limpeza",
             data: "21/05/2026",
             hora: "14:15",
-            status: "Confirmada"
+            status: "Confirmado"
         },
         {
             id: 4,
@@ -40,7 +40,7 @@ function Scheduling_Panel() {
             categoria: "Manutenção",
             data: "22/05/2026",
             hora: "10:00",
-            status: "Cancelada"
+            status: "Cancelado"
         },
         {
             id: 5,
@@ -49,6 +49,46 @@ function Scheduling_Panel() {
             data: "23/05/2026",
             hora: "16:45",
             status: "Pendente"
+        },
+        {
+            id: 6,
+            usuario: "José Paiva",
+            categoria: "Limpeza",
+            data: "02/06/2026",
+            hora: "10:00",
+            status: "Confirmado"
+        },
+        {
+            id: 7,
+            usuario: "Rubens da Costa",
+            categoria: "Consulta",
+            data: "07/07/2026",
+            hora: "15:00",
+            status: "Pendente"
+        },
+        {
+            id: 8,
+            usuario: "Sarah Nunes",
+            categoria: "Consulta",
+            data: "15/04/2026",
+            hora: "14:00",
+            status: "Confirmado"
+        },
+        {
+            id: 9,
+            usuario: "Cláudio Abrãao",
+            categoria: "Manutenção",
+            data: "10/04/2026",
+            hora: "17:00",
+            status: "Confirmado"
+        },
+        {
+            id: 10,
+            usuario: "Rose Maria",
+            categoria: "Limpeza",
+            data: "19/04/2026",
+            hora: "09:00",
+            status: "Cancelado"
         }
     ];
 
@@ -74,29 +114,31 @@ function Scheduling_Panel() {
 
                 {/* List item de teste mockado */}
 
-                {agendamentos.map((agendamento) => (
-                    <List_Item key={agendamento.id} actions={
-                        <>
-                            <button className="icon-btn chart-btn">
-                                <img src={ChartIcon} className="action-icon"></img>
-                            </button>
+                <div className='scheduling-scroll-area'>
+                    {agendamentos.map((agendamento) => (
+                        <List_Item key={agendamento.id} actions={
+                            <>
+                                <button className="icon-btn chart-btn">
+                                    <img src={ChartIcon} className="action-icon"></img>
+                                </button>
 
-                            <button className="icon-btn x-btn">
-                                <img src={XIcon} className="action-icon"></img>
-                            </button>
-                        </>
-                    }>
+                                <button className="icon-btn x-btn">
+                                    <img src={XIcon} className="action-icon"></img>
+                                </button>
+                            </>
+                        }>
 
-                        <div className="list-row-data">
-                            <span>{agendamento.usuario}</span>
-                            <span>{agendamento.categoria}</span>
-                            <span>{agendamento.data}</span>
-                            <span>{agendamento.hora}</span>
-                            <span>{agendamento.status}</span>
-                        </div>
+                            <div className="list-row-data">
+                                <span>{agendamento.usuario}</span>
+                                <span>{agendamento.categoria}</span>
+                                <span>{agendamento.data}</span>
+                                <span>{agendamento.hora}</span>
+                                <span>{agendamento.status}</span>
+                            </div>
 
-                    </List_Item>
-                ))}
+                        </List_Item>
+                    ))}
+                </div>
 
             </Container>
 

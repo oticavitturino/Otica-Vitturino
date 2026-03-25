@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins-Medium.ttf') format('truetype');
-    font-weight: 500; 
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -38,6 +38,34 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+.user-management-scroll-area {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+}
+
+.user-management-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.user-management-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.user-management-scroll-area::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+.user-management-scroll-area .list-item {
+    flex-shrink: 0 !important;
+}
+
 h2 {
     font-family: Poppins, sans-serif;
     color: #3C7975;
@@ -64,9 +92,9 @@ h3 {
     align-items: center;
     height: 550px;
     width: 100%;
-    max-width: 400px; 
+    max-width: 400px;
     padding: 20px;
-    background-color: rgba(217, 217, 217, 0.3);    
+    background-color: rgba(217, 217, 217, 0.3);
 }
 
 .user-registration-form {
@@ -83,8 +111,8 @@ input {
 .check-icon-form {
     align-self: center;
     height: auto;
-    width: 50px; 
-    margin-top: 10px; 
+    width: 50px;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -105,22 +133,23 @@ input {
     height: 550px;
     width: 100%;
     max-width: 750px;
-    padding: 20px;   
-    background-color: rgba(217, 217, 217, 0.3);    
+    padding: 20px;
+    background-color: rgba(217, 217, 217, 0.3);
 }
 
 .registered-users-container .item-content {
-    display: flex !important; 
-    justify-content: center !important; 
+    display: flex !important;
+    justify-content: center !important;
     align-items: center !important;
-    text-align: center !important;    
-    padding: 0 20px !important; 
+    text-align: center !important;
+    padding: 0 20px !important;
 }
 
-@keyframes welcome-container-animation{
+@keyframes welcome-container-animation {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }

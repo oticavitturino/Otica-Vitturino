@@ -10,7 +10,7 @@ import PenIcon from '../../assets/pen.png'
 import TrashIcon from '../../assets/trash-2.png'
 
 function User_Management() {
-// Apenas para testes mockados
+  // Apenas para testes mockados
 
   const users = [
     {
@@ -18,11 +18,60 @@ function User_Management() {
       nome: "Carlos Viana",
       login: "carlos_v04"
     },
-
     {
       id: 2,
       nome: "Maria Heloisa",
       login: "marihelo07"
+    },
+    {
+      id: 3,
+      nome: "Pablo Costa",
+      login: "p_costa"
+    },
+    {
+      id: 4,
+      nome: "Raquel Souza",
+      login: "rahsouza"
+    },
+    {
+      id: 5,
+      nome: "Marina Sampaio",
+      login: "marinasamp"
+    },
+    {
+      id: 6,
+      nome: "Douglas Henrique",
+      login: "doug_henrique"
+    },
+    {
+      id: 7,
+      nome: "Silvia Pamplona Matos",
+      login: "silvia_p_m"
+    },
+    {
+      id: 8,
+      nome: "João César",
+      login: "johncesar"
+    },
+    {
+      id: 9,
+      nome: "Humberto Filho",
+      login: "humberto_f"
+    },
+    {
+      id: 10,
+      nome: "Gabriel Coelho",
+      login: "gabcoelho"
+    },
+    {
+      id: 11,
+      nome: "Marcos de Paula",
+      login: "marcos_p"
+    },
+    {
+      id: 12,
+      nome: "Samara Rodrigues",
+      login: "samara_rod"
     }
   ]
 
@@ -69,19 +118,21 @@ function User_Management() {
 
             {/* List item de teste mockado */}
 
-            {users.map((user) => (
-              <List_item key={user.id} actions={
-                <>
-                  <button className="icon-btn edit-btn">
-                    <img src={PenIcon} alt="Editar usuário" className="action-icon" />
-                  </button>
+            <div className='user-management-scroll-area'>
+              {users.map((user) => (
+                <List_item key={user.id} actions={
+                  <>
+                    <button className="icon-btn edit-btn">
+                      <img src={PenIcon} alt="Editar usuário" className="action-icon" />
+                    </button>
 
-                  <button className="icon-btn delete-btn">
-                    <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
-                  </button>
-                </>
-              }>{user.nome} | {user.login}</List_item>
-            ))}
+                    <button className="icon-btn delete-btn">
+                      <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
+                    </button>
+                  </>
+                }>{user.nome} | {user.login}</List_item>
+              ))}
+            </div>
 
           </Container>
 

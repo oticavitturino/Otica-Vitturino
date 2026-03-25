@@ -27,7 +27,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.main-container-scheduling-panel {
+.main-container-message-editor {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -39,71 +39,51 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
-.scheduling-scroll-area {
+.messages-scroll-area {
     width: 100%;
-    max-height: 500px;
+    max-height: 520px; 
     overflow-y: auto;
     padding-right: 10px;
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
 }
 
-.scheduling-scroll-area::-webkit-scrollbar {
+.messages-scroll-area::-webkit-scrollbar {
     width: 6px;
 }
 
-.scheduling-scroll-area::-webkit-scrollbar-track {
+.messages-scroll-area::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.scheduling-scroll-area::-webkit-scrollbar-thumb {
+.messages-scroll-area::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 10px;
 }
 
-.scheduling-scroll-area .list-item {
+.main-container-message-editor .list-item {
+    height: auto !important;
+    min-height: 80px;
+    padding: 15px 50px 15px 15px !important;
+    margin-bottom: 0 !important;
     flex-shrink: 0 !important;
 }
 
-.main-container-scheduling-panel .list-legend {
-    display: grid;
-    grid-template-columns: 2.5fr 2fr 1.5fr 1fr 2fr 60px;
-    width: 100%;
-    padding: 0 15px;
-    margin-bottom: 10px;
-}
-
-.main-container-scheduling-panel .list-legend span {
+.main-container-message-editor .message-text {
     color: #FFFFFF !important;
-    font-family: 'Poppins', sans-serif;
+    text-align: center;
     font-size: 0.95rem;
-    font-weight: 500;
-    text-align: left;
-}
-
-.main-container-scheduling-panel .list-row-data {
-    display: grid;
-    grid-template-columns: 2.5fr 2fr 1.5fr 1fr 2fr 60px;
-    width: 100%;
-    padding: 0 15px;
-    align-items: center;
-}
-
-.main-container-scheduling-panel .list-row-data span {
-    color: #FFFFFF !important;
-    text-align: left;
-    font-size: 0.9rem;
-}
-
-.item-content {
-    flex-grow: 1;
-    width: 100%;
+    white-space: pre-line;
     display: block;
+    width: 100%;
+    line-height: 1.5;
 }
 
-.action-icon {
+.main-container-message-editor .action-icon {
     width: 20px !important;
     height: 20px !important;
     object-fit: contain;
