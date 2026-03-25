@@ -58,16 +58,17 @@ function Production_Status_Panel() {
 
                 <h2>Gerencie aqui o status de produção</h2>
 
-                <div className='list-legend'>
-                    <span>Usuário</span>
-                    <span>Produto</span>
-                    <span>Status</span>
-                    <span></span>
-                </div>
-
                 {/* List item de teste mockado */}
 
                 <div className='production-scroll-area'>
+
+                    <div className='list-legend'>
+                        <span>Usuário</span>
+                        <span>Produto</span>
+                        <span>Status</span>
+                        <span></span>
+                    </div>
+
                     {status.map((status) => (
                         <List_Item key={status.id} actions={
                             <>

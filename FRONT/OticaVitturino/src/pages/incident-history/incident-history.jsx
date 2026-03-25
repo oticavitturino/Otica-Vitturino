@@ -45,17 +45,18 @@ function Incident_History() {
 
                 <h2>Gerencie aqui as ocorrências/reclamações</h2>
 
-                <div className='list-legend'>
-                    <span>Usuário</span>
-                    <span>Categoria</span>
-                    <span>Descrição</span>
-                    <span>Data</span>
-                    <span></span>
-                </div>
-
                 {/* List item de teste mockado */}
 
                 <div className='incident-scroll-area'>
+
+                    <div className='list-legend'>
+                        <span>Usuário</span>
+                        <span>Categoria</span>
+                        <span>Descrição</span>
+                        <span>Data</span>
+                        <span></span>
+                    </div>
+
                     {ocorrencia.map((ocorrencia) => (
                         <List_Item key={ocorrencia.id} actions={
                             <>

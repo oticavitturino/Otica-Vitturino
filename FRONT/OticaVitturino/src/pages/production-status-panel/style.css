@@ -67,12 +67,12 @@ body {
     flex-shrink: 0 !important;
 }
 
-.main-container-production-status-panel .list-legend {
+.main-container-production-status-panel .list-legend,
+.main-container-production-status-panel .list-row-data {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr 60px; 
     width: 100%;
-    padding: 0 15px;
-    margin-bottom: 10px;
+    align-items: center;
 }
 
 .main-container-production-status-panel .list-legend span {
@@ -81,20 +81,15 @@ body {
     font-size: 0.95rem;
     font-weight: 500;
     text-align: left;
-}
-
-.main-container-production-status-panel .list-row-data {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr 60px;
-    width: 100%;
-    padding: 0 15px;
-    align-items: center;
+    padding-left: 10px;
+    padding-bottom: 10px;
 }
 
 .main-container-production-status-panel .list-row-data span {
     color: #FFFFFF !important;
     text-align: left;
     font-size: 0.9rem;
+    padding-left: 10px;
 }
 
 @keyframes welcome-container-animation {

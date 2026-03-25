@@ -103,18 +103,19 @@ function Scheduling_Panel() {
 
                 <h2>Gerencie aqui seus agendamentos</h2>
 
-                <div className='list-legend'>
-                    <span>Usuário</span>
-                    <span>Categoria</span>
-                    <span>Data</span>
-                    <span>Hora</span>
-                    <span>Status</span>
-                    <span></span>
-                </div>
-
                 {/* List item de teste mockado */}
 
                 <div className='scheduling-scroll-area'>
+
+                    <div className='list-legend'>
+                        <span>Usuário</span>
+                        <span>Categoria</span>
+                        <span>Data</span>
+                        <span>Hora</span>
+                        <span>Status</span>
+                        <span></span>
+                    </div>
+
                     {agendamentos.map((agendamento) => (
                         <List_Item key={agendamento.id} actions={
                             <>
