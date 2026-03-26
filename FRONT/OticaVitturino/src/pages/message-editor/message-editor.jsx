@@ -27,6 +27,14 @@ function Message_Editor() {
         },
         {
             id: 5,
+            texto: "9 meses:\nOlá, usuário! Que tal fazermos um ajuste no seu produto preventivamente?\nDeixar tudo em ordem?"
+        },
+        {
+            id: 6,
+            texto: "1 ano:\nComo vai, usuário? Já faz 1 ano desde a sua compra!\nVamos marcar uma consulta para renovação do grau do seu produto?"
+        },
+        {
+            id: 7,
             texto: "Aniversário:\nHoje é seu dia, usuário! Nós da Ótica Vitturino desejamos a você um dia\nabençoado e um feliz aniversário!\nQue sua vida seja repleta de felicidade!"
         }
     ];
