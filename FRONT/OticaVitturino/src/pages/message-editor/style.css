@@ -99,3 +99,19 @@ body {
         opacity: 1;
     }
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .main-container-message-editor {
+        min-height: 600px;
+        width: 1040px;
+        margin-top: 160px;
+        margin-left: 450px;
+        padding: 30px;
+    }
+
+    .main-container-message-editor .message-text {
+        font-size: 0.85rem;
+    }
+}

@@ -20,7 +20,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    width: 100%;
     background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(190, 190, 190, 0.8)), url('/img/pexels-steve-29506613.jpg');
     background-size: cover;
     background-position: center;
@@ -87,5 +88,39 @@ input {
 
     100% {
         opacity: 1;
+    }
+}
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .login-logo {
+        width: 15%;
+        margin-bottom: 90px;
+    }
+
+    .login-container {
+        height: 400px;
+        max-width: 650px;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    .login-form {
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .login-form input {
+        font-size: 0.7rem;
+        width: 300px;
+    }
+
+    .btn-enter {
+        height: 55px;
+        width: 300px;
+        font-size: 1.1rem;
     }
 }

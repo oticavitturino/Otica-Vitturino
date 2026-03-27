@@ -16,7 +16,7 @@
     content: "";
     position: absolute;
     right: 2%;
-    top: 38%;
+    top: 37%;
     height: 25%;
     width: 3px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -45,8 +45,8 @@
 .btn-exit {
     background-color: #AAAAAA;
     color: #FFFFFF;
-    width: 330px;
     height: 60px;
+    width: 330px;    
     transition: background-color 0.2s ease;
     font-size: 1.3rem;
     margin-top: 30px;
@@ -62,8 +62,35 @@
         transform: translateX(-100%);
         opacity: 0;
     }
+
     100% {
         transform: translateX(0);
         opacity: 1;
+    }
+}
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .side-menu {
+        width: 350px;
+        top: 85px;
+        height: calc(100vh - 85px);
+    }
+
+    .side-menu::after {
+        top: 38%;
+        height: 23%;
+    }
+
+    .btn-item {
+        height: 60px;
+        font-size: 0.85rem;
+    }
+
+    .btn-exit {
+        height: 50px;
+        width: 300px;
+        font-size: 1.1rem;
     }
 }

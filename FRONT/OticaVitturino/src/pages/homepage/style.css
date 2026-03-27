@@ -60,3 +60,15 @@ span {
         opacity: 1;
     }
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .hello {
+        font-size: 58px;
+    }
+
+    .illustration {
+        width: 20%;
+    }
+}

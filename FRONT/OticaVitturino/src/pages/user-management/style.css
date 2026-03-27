@@ -154,3 +154,67 @@ input {
         opacity: 1;
     }
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .main-container-user-management {
+        min-height: 600px;
+        width: 1040px;
+        margin-top: 160px;
+        margin-left: 450px;
+        padding: 30px;
+    }
+
+    .content-wrapper {
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .container.user-registration-container {
+        flex: 1;
+        height: 500px;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    .container.registered-users-container {
+        flex: 1.8;
+        height: 500px;
+        max-width: 700px;
+        padding: 15px;
+    }
+
+    .user-management-scroll-area {
+        max-height: 400px;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .user-registration-form input {
+        font-size: 0.85rem;
+        width: 100%;
+    }
+
+    .registered-users-container .list-item {
+        font-size: 0.85rem;
+    }
+
+    .check-icon-form {
+        width: 40px;
+    }
+
+    .btn-register {
+        height: 45px;
+        font-size: 1rem;
+    }
+}

@@ -101,3 +101,23 @@ body {
         opacity: 1;
     }
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .main-container-production-status-panel {
+        min-height: 600px;
+        width: 1040px;
+        margin-top: 160px;
+        margin-left: 450px;
+        padding: 30px;
+    }
+
+    .production-scroll-area .list-legend span {
+        font-size: 0.85rem;
+    }
+
+    .production-scroll-area .list-row-data span {
+        font-size: 0.85rem;
+    }
+}

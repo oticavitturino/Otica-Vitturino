@@ -13,3 +13,15 @@
 .header-logo {
     width: 10%;
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .header {
+        height: 85px;
+    }
+    
+    .header-logo {
+        width: 8.5%;
+    }
+}

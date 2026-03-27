@@ -70,7 +70,7 @@ body {
 .main-container-scheduling-panel .list-legend,
 .main-container-scheduling-panel .list-row-data {
     display: grid;
-    grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 1.5fr 60px; 
+    grid-template-columns: 2fr 1.5fr 1.5fr 1.5fr 1.5fr 60px;
     width: 100%;
     align-items: center;
 }
@@ -112,5 +112,25 @@ body {
 
     100% {
         opacity: 1;
+    }
+}
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .main-container-scheduling-panel {
+        min-height: 600px;
+        width: 1040px;
+        margin-top: 160px;
+        margin-left: 450px;
+        padding: 30px;
+    }
+
+    .scheduling-scroll-area .list-legend span {
+        font-size: 0.85rem;
+    }
+
+    .scheduling-scroll-area .list-row-data span {
+        font-size: 0.85rem;
     }
 }
