@@ -39,6 +39,12 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+.main-container-production-status-panel h2 {
+    font-family: Poppins, sans-serif;
+    color: #3C7975;
+    margin-bottom: 45px;
+}
+
 .production-scroll-area {
     width: 100%;
     max-height: 500px;
@@ -70,7 +76,7 @@ body {
 .main-container-production-status-panel .list-legend,
 .main-container-production-status-panel .list-row-data {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 60px; 
+    grid-template-columns: 1fr 2fr 1fr 60px;
     width: 100%;
     align-items: center;
 }
@@ -113,11 +119,47 @@ body {
         padding: 30px;
     }
 
+    .main-container-production-status-panel h2 {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+    }
+
     .production-scroll-area .list-legend span {
         font-size: 0.85rem;
     }
 
     .production-scroll-area .list-row-data span {
         font-size: 0.85rem;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .main-container-production-status-panel {
+        min-height: 550px;
+        width: 840px;
+        margin-top: 160px;
+        margin-left: 360px;
+        padding: 30px;
+    }
+
+    .main-container-production-status-panel h2 {
+        font-size: 1.3rem;
+        margin-top: 10px;
+        margin-bottom: 27px;
+    }
+
+    .main-container-production-status-panel .list-item {
+        font-size: 0.75rem;
+        height: 35px;
+    }
+
+    .production-scroll-area .list-legend span {
+        font-size: 0.75rem;
+    }
+
+    .production-scroll-area .list-row-data span {
+        font-size: 0.75rem;
     }
 }

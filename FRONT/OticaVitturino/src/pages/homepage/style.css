@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins-Medium.ttf') format('truetype');
-    font-weight: 500; 
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -37,14 +37,14 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
-.hello {
+.welcome-container h2 {
     font-family: Poppins, sans-serif;
     font-size: 70px;
     font-weight: medium;
     color: #FFFFFF;
 }
 
-span {
+.welcome-container span {
     color: #1DA299;
 }
 
@@ -52,10 +52,11 @@ span {
     width: 22%;
 }
 
-@keyframes welcome-container-animation{
+@keyframes welcome-container-animation {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -64,11 +65,33 @@ span {
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
-    .hello {
+    .welcome-container {
+        margin-top: 190px;
+        margin-left: 370px;
+    }
+
+    .welcome-container h2 {
         font-size: 58px;
     }
 
     .illustration {
         width: 20%;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .welcome-container {
+        margin-top: 170px;
+        margin-left: 310px;
+    }
+
+    .welcome-container h2 {
+        font-size: 50px;
+    }
+
+    .illustration {
+        width: 19%;
     }
 }

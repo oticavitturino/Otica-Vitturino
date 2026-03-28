@@ -39,9 +39,15 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+.main-container-message-editor h2 {
+    font-family: Poppins, sans-serif;
+    color: #3C7975;
+    margin-bottom: 45px;
+}
+
 .messages-scroll-area {
     width: 100%;
-    max-height: 520px; 
+    max-height: 520px;
     overflow-y: auto;
     padding-right: 10px;
     display: flex;
@@ -111,7 +117,34 @@ body {
         padding: 30px;
     }
 
+    .main-container-message-editor h2 {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+    }
+
     .main-container-message-editor .message-text {
         font-size: 0.85rem;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .main-container-message-editor {
+        min-height: 550px;
+        width: 840px;
+        margin-top: 160px;
+        margin-left: 360px;
+        padding: 30px;
+    }
+
+    .main-container-message-editor h2 {
+        font-size: 1.3rem;
+        margin-top: 10px;
+        margin-bottom: 27px;
+    }
+
+    .main-container-message-editor .message-text {
+        font-size: 0.75rem;
     }
 }

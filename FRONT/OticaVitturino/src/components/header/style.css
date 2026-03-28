@@ -20,8 +20,20 @@
     .header {
         height: 85px;
     }
-    
+
     .header-logo {
         width: 8.5%;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .header {
+        height: 75px;
+    }
+
+    .header-logo {
+        width: 8%;
     }
 }

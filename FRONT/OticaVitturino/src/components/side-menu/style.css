@@ -46,7 +46,7 @@
     background-color: #AAAAAA;
     color: #FFFFFF;
     height: 60px;
-    width: 330px;    
+    width: 330px;
     transition: background-color 0.2s ease;
     font-size: 1.3rem;
     margin-top: 30px;
@@ -92,5 +92,31 @@
         height: 50px;
         width: 300px;
         font-size: 1.1rem;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .side-menu {
+        width: 290px;
+        top: 75px;
+        height: calc(100vh - 75px);
+    }
+
+    .side-menu::after {
+        top: 40%;
+        height: 20%;
+    }
+
+    .btn-item {
+        height: 50px;
+        font-size: 0.75rem;
+    }
+
+    .btn-exit {
+        height: 40px;
+        width: 250px;
+        font-size: 0.9rem;
     }
 }

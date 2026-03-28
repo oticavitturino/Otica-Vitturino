@@ -38,6 +38,18 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+.main-container-user-management h2 {
+    font-family: Poppins, sans-serif;
+    color: #3C7975;
+    margin-bottom: 45px;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
 .user-management-scroll-area {
     width: 100%;
     max-height: 500px;
@@ -66,25 +78,7 @@ body {
     flex-shrink: 0 !important;
 }
 
-h2 {
-    font-family: Poppins, sans-serif;
-    color: #3C7975;
-    margin-bottom: 35px;
-}
-
-h3 {
-    font-family: Poppins, sans-serif;
-    color: #3C7975;
-    margin-bottom: 30px;
-}
-
-.content-wrapper {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.container.user-registration-container {
+.user-registration-container {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -97,6 +91,12 @@ h3 {
     background-color: rgba(217, 217, 217, 0.3);
 }
 
+.user-registration-container h3 {
+    font-family: Poppins, sans-serif;
+    color: #3C7975;
+    margin-bottom: 30px;
+}
+
 .user-registration-form {
     display: flex;
     flex-direction: column;
@@ -104,7 +104,7 @@ h3 {
     width: 100%;
 }
 
-input {
+.user-registration-form input {
     font-size: 0.9rem;
 }
 
@@ -122,9 +122,14 @@ input {
     font-size: 1.1rem;
     height: 55px;
     width: 100%;
+    transition: background-color 0.2s ease;
 }
 
-.container.registered-users-container {
+.btn-register:hover {
+    background-color: #187e77;
+}
+
+.registered-users-container {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -135,6 +140,12 @@ input {
     max-width: 750px;
     padding: 20px;
     background-color: rgba(217, 217, 217, 0.3);
+}
+
+.registered-users-container h3 {
+    font-family: Poppins, sans-serif;
+    color: #3C7975;
+    margin-bottom: 30px;
 }
 
 .registered-users-container .item-content {
@@ -166,47 +177,33 @@ input {
         padding: 30px;
     }
 
+    .main-container-user-management h2 {
+        font-size: 1.7rem;
+        margin-bottom: 30px;
+    }
+
     .content-wrapper {
         justify-content: center;
         width: 100%;
         gap: 15px;
     }
 
-    .container.user-registration-container {
+    .user-registration-container {
         flex: 1;
         height: 500px;
         max-width: 350px;
         padding: 15px;
     }
 
-    .container.registered-users-container {
-        flex: 1.8;
-        height: 500px;
-        max-width: 700px;
-        padding: 15px;
-    }
-
-    .user-management-scroll-area {
-        max-height: 400px;
-    }
-
-    h2 {
-        font-size: 1.7rem;
-        margin-bottom: 20px;
-    }
-
-    h3 {
+    .user-registration-container h3 {
         font-size: 1.3rem;
-        margin-bottom: 20px;
+        margin-bottom: 17px;
     }
 
     .user-registration-form input {
         font-size: 0.85rem;
+        height: 45px;
         width: 100%;
-    }
-
-    .registered-users-container .list-item {
-        font-size: 0.85rem;
     }
 
     .check-icon-form {
@@ -214,7 +211,100 @@ input {
     }
 
     .btn-register {
-        height: 45px;
+        height: 50px;
         font-size: 1rem;
+    }
+
+    .registered-users-container {
+        flex: 1.8;
+        height: 500px;
+        max-width: 700px;
+        padding: 15px;
+    }
+
+    .registered-users-container h3 {
+        font-size: 1.3rem;
+        margin-bottom: 17px;
+    }
+
+    .registered-users-container .list-item {
+        font-size: 0.85rem;
+        height: 40px;
+    }
+
+    .user-management-scroll-area {
+        max-height: 400px;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .main-container-user-management {
+        min-height: 550px;
+        width: 840px;
+        margin-top: 160px;
+        margin-left: 360px;
+        padding: 30px;
+    }
+
+    .main-container-user-management h2 {
+        font-size: 1.3rem;
+        margin-top: 10px;
+        margin-bottom: 27px;
+    }
+
+    .content-wrapper {
+        justify-content: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .user-registration-container {
+        flex: 1;
+        height: 450px;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    .user-registration-container h3 {
+        font-size: 1rem;
+        margin-bottom: 17px;
+    }
+
+    .user-registration-form input {
+        font-size: 0.75rem;
+        height: 40px;
+        width: 100%;
+    }
+
+    .check-icon-form {
+        width: 30px;
+    }
+
+    .btn-register {
+        height: 45px;
+        font-size: 0.8rem;
+    }
+
+    .registered-users-container {
+        flex: 1.8;
+        height: 450px;
+        max-width: 700px;
+        padding: 15px;
+    }
+
+    .registered-users-container h3 {
+        font-size: 1rem;
+        margin-bottom: 17px;
+    }
+
+    .registered-users-container .list-item {
+        font-size: 0.75rem;
+        height: 35px;
+    }
+
+    .user-management-scroll-area {
+        max-height: 350px;
     }
 }

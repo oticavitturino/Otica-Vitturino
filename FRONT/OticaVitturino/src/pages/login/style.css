@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins-Medium.ttf') format('truetype');
-    font-weight: 500; 
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -44,7 +44,7 @@ body {
     animation: welcome-container-animation 0.5s ease-in;
 }
 
-h2 {
+.login-container h2 {
     font-family: Poppins, sans-serif;
     font-size: 2.2rem;
     font-weight: 600;
@@ -61,7 +61,7 @@ h2 {
     margin-top: 20px;
 }
 
-input {
+.login-form input {
     font-size: 0.9rem;
     width: 350px;
 }
@@ -71,7 +71,7 @@ input {
     color: #FFFFFF;
     font-size: 1.3rem;
     height: 60px;
-    width: 350px;    
+    width: 350px;
     margin-top: 30px;
     margin-bottom: 15px;
     transition: background-color 0.2s ease;
@@ -104,8 +104,9 @@ input {
         max-width: 650px;
     }
 
-    h2 {
+    .login-container h2 {
         font-size: 1.7rem;
+        margin-bottom: 6%;
     }
 
     .login-form {
@@ -115,12 +116,48 @@ input {
 
     .login-form input {
         font-size: 0.7rem;
+        height: 45px;
         width: 300px;
     }
 
     .btn-enter {
-        height: 55px;
+        height: 50px;
         width: 300px;
         font-size: 1.1rem;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) {
+    .login-logo {
+        width: 15%;
+        margin-bottom: 70px;
+    }
+
+    .login-container {
+        height: 350px;
+        max-width: 550px;
+    }
+
+    .login-container h2 {
+        font-size: 1.4rem;
+    }
+
+    .login-form {
+        gap: 12px;
+        margin-top: 5px;
+    }
+
+    .login-form input {
+        font-size: 0.6rem;
+        height: 40px;
+        width: 260px;
+    }
+
+    .btn-enter {
+        height: 45px;
+        width: 260px;
+        font-size: 1rem;
     }
 }

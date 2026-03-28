@@ -3,7 +3,7 @@ import './style.css'
 function List_item({ children, actions, ...props }) {
     return (
         <li className='list-item'{...props}>
-            
+
             <span className='item-content' style={{ color: 'white' }}>
                 {children}
             </span>
@@ -13,7 +13,7 @@ function List_item({ children, actions, ...props }) {
                     {actions}
                 </div>
             )}
-            
+
         </li>
     )
 }
