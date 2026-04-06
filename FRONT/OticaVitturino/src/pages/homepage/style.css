@@ -32,8 +32,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 200px;
-    margin-left: 400px;
+    margin-top: 10%;
+    margin-left: 20%;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -65,33 +65,16 @@ body {
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
-    .welcome-container {
-        margin-top: 190px;
-        margin-left: 370px;
-    }
-
     .welcome-container h2 {
         font-size: 58px;
-    }
-
-    .illustration {
-        width: 20%;
     }
 }
 
 /* 1366 * 768 */
 
 @media (max-width: 1366px) {
-    .welcome-container {
-        margin-top: 170px;
-        margin-left: 310px;
-    }
 
     .welcome-container h2 {
         font-size: 50px;
-    }
-
-    .illustration {
-        width: 19%;
     }
 }
