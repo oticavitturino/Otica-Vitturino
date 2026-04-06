@@ -50,6 +50,7 @@ body {
     font-weight: 600;
     text-align: center;
     color: #1DA299;
+    margin-bottom: 6%;
 }
 
 .login-form {
@@ -95,7 +96,6 @@ body {
 
 @media (max-width: 1600px) {
     .login-logo {
-        width: 15%;
         margin-bottom: 90px;
     }
 
@@ -106,7 +106,7 @@ body {
 
     .login-container h2 {
         font-size: 1.7rem;
-        margin-bottom: 6%;
+        margin-bottom: 8%;
     }
 
     .login-form {
@@ -127,12 +127,11 @@ body {
     }
 }
 
-/* 1280 * 720 */
+/* 1366 * 768 */
 
-@media (max-width: 1280px) {
+@media (max-width: 1366px) {
     .login-logo {
-        width: 15%;
-        margin-bottom: 70px;
+        margin-bottom: 75px;
     }
 
     .login-container {
@@ -160,4 +159,10 @@ body {
         width: 260px;
         font-size: 1rem;
     }
+}
+
+/* Mobile */
+
+@media (max-width: 360px) {
+
 }

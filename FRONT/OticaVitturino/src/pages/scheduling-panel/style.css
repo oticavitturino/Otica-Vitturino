@@ -125,10 +125,10 @@ body {
 
 @media (max-width: 1600px) {
     .main-container-scheduling-panel {
-        min-height: 600px;
-        width: 1040px;
-        margin-top: 160px;
-        margin-left: 450px;
+        min-height: 620px;
+        width: 1090px;
+        margin-top: 190px;
+        margin-left: 427px;
         padding: 30px;
     }
 
@@ -146,14 +146,14 @@ body {
     }
 }
 
-/* 1280 * 720 */
+/* 1366 * 768 */
 
-@media (max-width: 1280px) {
+@media (max-width: 1366px) {
     .main-container-scheduling-panel {
         min-height: 550px;
-        width: 840px;
+        width: 930px;
         margin-top: 160px;
-        margin-left: 360px;
+        margin-left: 355px;
         padding: 30px;
     }
 

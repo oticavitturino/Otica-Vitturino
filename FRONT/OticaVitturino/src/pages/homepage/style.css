@@ -79,9 +79,9 @@ body {
     }
 }
 
-/* 1280 * 720 */
+/* 1366 * 768 */
 
-@media (max-width: 1280px) {
+@media (max-width: 1366px) {
     .welcome-container {
         margin-top: 170px;
         margin-left: 310px;
