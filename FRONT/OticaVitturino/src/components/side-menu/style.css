@@ -2,13 +2,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: 400px;
+    height: 90%;
+    width: 21%;
     background-color: rgba(29, 162, 153, 0.7);
     position: absolute;
-    top: 100px;
+    top: 10%;
     left: 0;
-    height: calc(100vh - 100px);
     animation: menuSlide 1.5s ease-out forwards;
 }
 
@@ -72,17 +71,6 @@
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
-    .side-menu {
-        width: 350px;
-        top: 85px;
-        height: calc(100vh - 85px);
-    }
-
-    .side-menu::after {
-        top: 38%;
-        height: 23%;
-    }
-
     .btn-item {
         height: 60px;
         font-size: 0.85rem;
@@ -98,17 +86,6 @@
 /* 1366 * 768 */
 
 @media (max-width: 1366px) {
-    .side-menu {
-        width: 290px;
-        top: 75px;
-        height: calc(100vh - 75px);
-    }
-
-    .side-menu::after {
-        top: 40%;
-        height: 20%;
-    }
-
     .btn-item {
         height: 50px;
         font-size: 0.75rem;

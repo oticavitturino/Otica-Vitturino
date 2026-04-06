@@ -34,7 +34,7 @@ body {
     align-items: center;
     min-height: 710px;
     margin-top: 210px;
-    margin-left: 485px;
+    margin-left: 26%;
     background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
@@ -114,8 +114,7 @@ body {
     .main-container-production-status-panel {
         min-height: 620px;
         width: 1090px;
-        margin-top: 190px;
-        margin-left: 427px;
+        margin-top: 183px;
         padding: 30px;
     }
 
@@ -139,8 +138,7 @@ body {
     .main-container-production-status-panel {
         min-height: 550px;
         width: 930px;
-        margin-top: 160px;
-        margin-left: 355px;
+        margin-top: 163px;
         padding: 30px;
     }
 
