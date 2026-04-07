@@ -93,21 +93,13 @@ function User_Management() {
             <h3>Cadastrar usuário</h3>
 
             <form className='user-registration-form' type='submit'>
-
               <Input placeholder='Login' type='text' required />
-
               <Input placeholder='Nome' type='text' required />
-
               <Input placeholder='E-mail' type='email' required />
-
               <Input placeholder='Senha' type='password' required />
-
               <Input placeholder='Data de nascimento' type='date' required />
-
               <img src={CheckIcon} className='check-icon-form' />
-
               <Button className='btn-register'>Cadastrar</Button>
-
             </form>
 
           </Container>

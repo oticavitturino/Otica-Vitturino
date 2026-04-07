@@ -12,11 +12,8 @@ function Homepage() {
       <Side_Menu />
 
       <div className='welcome-container'>
-
         <h2>Olá, <span>admin</span>!</h2>
-
         <img className='illustration' src="/img/JEMA-GER-1740-05.png" />
-
       </div>
 
     </div>
