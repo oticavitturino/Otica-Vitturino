@@ -82,6 +82,49 @@ body {
     background-color: #187e77;
 }
 
+ /* CSS do Card */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.error-card {
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.error-card h3 {
+    font-weight: 600;
+    color: #3C7975;
+    margin: 0;
+}
+
+.error-card p {
+    color: #666666;
+    margin: 0;
+}
+
+.btn-ok {
+    width: 50%;
+    margin: 0 auto;
+    height: 40px;
+    background-color: #1DA299;
+    color: #FFFFFF;
+}
+
 @keyframes welcome-container-animation {
     0% {
         opacity: 0;
