@@ -13,7 +13,7 @@ function Layout({ children }) {
   return (
     <div className="layout-container">
  
-      <Header toggleMenu={toggleMenu} />
+      <Header toggleMenu={toggleMenu} isOpen={isMobileMenuOpen} />
       <SideMenu isOpen={isMobileMenuOpen} />
       
       <main className="main-content">
