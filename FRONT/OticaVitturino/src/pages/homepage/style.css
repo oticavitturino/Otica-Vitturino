@@ -73,8 +73,27 @@ body {
 /* 1366 * 768 */
 
 @media (max-width: 1366px) {
-
     .welcome-container h2 {
         font-size: 50px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .welcome-container {
+        flex-direction: column;
+        margin: 0;
+        margin-top: 40%;
+    }
+
+    .welcome-container h2 {
+        font-size: 2.3rem;
+    }
+
+    .illustration {
+        width: 70%;
+        margin-top: 10%;
+        margin-right: 15%;
     }
 }
