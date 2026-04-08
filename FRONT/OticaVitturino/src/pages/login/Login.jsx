@@ -44,7 +44,7 @@ function Login() {
   }
 
   return (
-    <div className='page-container'>
+    <div className='login-page-wrapper'>
 
       <img className='login-logo' src={LogoVitturino}></img>
 

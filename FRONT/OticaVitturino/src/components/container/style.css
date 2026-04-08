@@ -5,3 +5,12 @@
     border: 3px solid #1DA299;
     border-radius: 10px;
 }
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0;
+        border: none;
+    }
+}

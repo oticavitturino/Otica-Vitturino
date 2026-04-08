@@ -2,12 +2,13 @@ import './style.css'
 import Button from '../button'
 import { useNavigate } from 'react-router-dom'
 
-function Side_Menu() {
+function Side_Menu({ isOpen }) {
 
     const navigate = useNavigate();
 
     return (
-        <div className='side-menu'>
+        <aside className={`side-menu ${isOpen ? 'open' : ''}`}>
+
             <div className='menu-items'>
                 <Button className='btn-item' onClick={() => navigate('/usuarios')}>Gerenciar Usuários</Button>
                 <Button className='btn-item' onClick={() => navigate('/agendamentos')}>Gerenciar Agendamentos</Button>
@@ -17,9 +18,9 @@ function Side_Menu() {
             </div>
 
             <Button className='btn-exit' onClick={() => navigate('/')}>Sair</Button>
-        </div>
-    )
 
+        </aside>
+    )
 }
 
 export default Side_Menu
