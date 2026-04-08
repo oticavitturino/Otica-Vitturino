@@ -1,22 +1,20 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
+
 
 function Homepage() {
 
   return (
-    <div className='page-container'>
+    <Layout>
+      <div className='page-container'>
 
-      <Header />
+        <div className='welcome-container'>
+          <h2>Olá, <span>admin</span>!</h2>
+          <img className='illustration' src="/img/JEMA-GER-1740-05.png" alt="Ilustração de boas-vindas" />
+        </div>
 
-      <Side_Menu />
-
-      <div className='welcome-container'>
-        <h2>Olá, <span>admin</span>!</h2>
-        <img className='illustration' src="/img/JEMA-GER-1740-05.png" />
       </div>
-
-    </div>
+    </Layout>
   )
 }
 

@@ -1,6 +1,5 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
 import ReloadIcon from '../../assets/rotate-ccw.png'
@@ -48,51 +47,48 @@ function Production_Status_Panel() {
     ];
 
     return (
-        <div className='page-container'>
+        <Layout>
+            <div className='page-container'>
 
-            <Header />
+                <Container className='main-container-production-status-panel'>
 
-            <Side_Menu />
+                    <h2>Gerencie aqui o status de produção</h2>
 
-            <Container className='main-container-production-status-panel'>
+                    {/* List item de teste mockado */}
 
-                <h2>Gerencie aqui o status de produção</h2>
+                    <div className='production-scroll-area'>
 
-                {/* List item de teste mockado */}
+                        <div className='list-legend'>
+                            <span>Usuário</span>
+                            <span>Produto</span>
+                            <span>Status</span>
+                            <span></span>
+                        </div>
 
-                <div className='production-scroll-area'>
+                        {status.map((status) => (
+                            <List_Item key={status.id} actions={
+                                <>
+                                    <button className="icon-btn chart-btn">
+                                        <img src={ReloadIcon} className="action-icon"></img>
+                                    </button>
+                                </>
+                            }>
 
-                    <div className='list-legend'>
-                        <span>Usuário</span>
-                        <span>Produto</span>
-                        <span>Status</span>
-                        <span></span>
+                                <div className="list-row-data">
+                                    <span>{status.usuario}</span>
+                                    <span>{status.produto}</span>
+                                    <span>{status.status}</span>
+                                    <span></span>
+                                </div>
+
+                            </List_Item>
+                        ))}
                     </div>
 
-                    {status.map((status) => (
-                        <List_Item key={status.id} actions={
-                            <>
-                                <button className="icon-btn chart-btn">
-                                    <img src={ReloadIcon} className="action-icon"></img>
-                                </button>
-                            </>
-                        }>
+                </Container>
 
-                            <div className="list-row-data">
-                                <span>{status.usuario}</span>
-                                <span>{status.produto}</span>
-                                <span>{status.status}</span>
-                                <span></span>
-                            </div>
-
-                        </List_Item>
-                    ))}
-                </div>
-
-            </Container>
-
-        </div>
-
+            </div>
+        </Layout>
     )
 }
 

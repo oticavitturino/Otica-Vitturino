@@ -1,6 +1,5 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
 import Container from '../../components/container'
 import Input from '../../components/input'
 import Button from '../../components/button'
@@ -76,62 +75,61 @@ function User_Management() {
   ]
 
   return (
-    <div className='page-container'>
+    <Layout>
+      <div className='page-container'>
 
-      <Header />
+        <Container className='main-container-user-management'>
 
-      <Side_Menu />
+          <h2>Gerencie aqui seus usuários</h2>
 
-      <Container className='main-container-user-management'>
+          <div className='content-wrapper'>
 
-        <h2>Gerencie aqui seus usuários</h2>
+            <Container className='user-registration-container'>
 
-        <div className='content-wrapper'>
+              <h3>Cadastrar usuário</h3>
 
-          <Container className='user-registration-container'>
+              <form className='user-registration-form' type='submit'>
+                <Input placeholder='Login' type='text' required />
+                <Input placeholder='Nome' type='text' required />
+                <Input placeholder='E-mail' type='email' required />
+                <Input placeholder='Senha' type='password' required />
+                <Input placeholder='Data de nascimento' type='date' required />
+                <img src={CheckIcon} className='check-icon-form' />
+                <Button className='btn-register'>Cadastrar</Button>
+              </form>
 
-            <h3>Cadastrar usuário</h3>
+            </Container>
 
-            <form className='user-registration-form' type='submit'>
-              <Input placeholder='Login' type='text' required />
-              <Input placeholder='Nome' type='text' required />
-              <Input placeholder='E-mail' type='email' required />
-              <Input placeholder='Senha' type='password' required />
-              <Input placeholder='Data de nascimento' type='date' required />
-              <img src={CheckIcon} className='check-icon-form' />
-              <Button className='btn-register'>Cadastrar</Button>
-            </form>
+            <Container className='registered-users-container'>
 
-          </Container>
+              <h3>Usuários registrados</h3>
 
-          <Container className='registered-users-container'>
+              {/* List item de teste mockado */}
 
-            <h3>Usuários registrados</h3>
+              <div className='user-management-scroll-area'>
+                {users.map((user) => (
+                  <List_item key={user.id} actions={
+                    <>
+                      <button className="icon-btn edit-btn">
+                        <img src={PenIcon} alt="Editar usuário" className="action-icon" />
+                      </button>
 
-            {/* List item de teste mockado */}
+                      <button className="icon-btn delete-btn">
+                        <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
+                      </button>
+                    </>
+                  }>{user.nome} | {user.login}</List_item>
+                ))}
+              </div>
 
-            <div className='user-management-scroll-area'>
-              {users.map((user) => (
-                <List_item key={user.id} actions={
-                  <>
-                    <button className="icon-btn edit-btn">
-                      <img src={PenIcon} alt="Editar usuário" className="action-icon" />
-                    </button>
+            </Container>
 
-                    <button className="icon-btn delete-btn">
-                      <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
-                    </button>
-                  </>
-                }>{user.nome} | {user.login}</List_item>
-              ))}
-            </div>
+          </div>
 
-          </Container>
-
-        </div>
-
-      </Container>
-    </div>
+        </Container>
+        
+      </div>
+    </Layout>
   )
 }
 

@@ -1,6 +1,5 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
 import ReplyIcon from '../../assets/message-square-reply.png'
@@ -35,58 +34,55 @@ function Incident_History() {
     ];
 
     return (
-        <div className='page-container'>
+        <Layout>
+            <div className='page-container'>
 
-            <Header />
+                <Container className='main-container-incident-history'>
 
-            <Side_Menu />
+                    <h2>Gerencie aqui as ocorrências/reclamações</h2>
 
-            <Container className='main-container-incident-history'>
+                    {/* List item de teste mockado */}
 
-                <h2>Gerencie aqui as ocorrências/reclamações</h2>
+                    <div className='incident-scroll-area'>
 
-                {/* List item de teste mockado */}
+                        <div className='list-legend'>
+                            <span>Usuário</span>
+                            <span>Categoria</span>
+                            <span>Descrição</span>
+                            <span>Data</span>
+                            <span></span>
+                        </div>
 
-                <div className='incident-scroll-area'>
+                        {ocorrencia.map((ocorrencia) => (
+                            <List_Item key={ocorrencia.id} actions={
+                                <>
+                                    <button className="icon-btn chart-btn">
+                                        <img src={ReplyIcon} className="action-icon"></img>
+                                    </button>
 
-                    <div className='list-legend'>
-                        <span>Usuário</span>
-                        <span>Categoria</span>
-                        <span>Descrição</span>
-                        <span>Data</span>
-                        <span></span>
+                                    <button className="icon-btn chart-btn">
+                                        <img src={TrashIcon} className="action-icon"></img>
+                                    </button>
+                                </>
+                            }>
+
+                                <div className="list-row-data">
+                                    <span>{ocorrencia.usuario}</span>
+                                    <span>{ocorrencia.categoria}</span>
+                                    <span>{ocorrencia.descricao}</span>
+                                    <span>{ocorrencia.data}</span>
+                                    <span></span>
+                                </div>
+
+                            </List_Item>
+                        ))}
                     </div>
 
-                    {ocorrencia.map((ocorrencia) => (
-                        <List_Item key={ocorrencia.id} actions={
-                            <>
-                                <button className="icon-btn chart-btn">
-                                    <img src={ReplyIcon} className="action-icon"></img>
-                                </button>
+                </Container>
 
-                                <button className="icon-btn chart-btn">
-                                    <img src={TrashIcon} className="action-icon"></img>
-                                </button>
-                            </>
-                        }>
-
-                            <div className="list-row-data">
-                                <span>{ocorrencia.usuario}</span>
-                                <span>{ocorrencia.categoria}</span>
-                                <span>{ocorrencia.descricao}</span>
-                                <span>{ocorrencia.data}</span>
-                                <span></span>
-                            </div>
-
-                        </List_Item>
-                    ))}
-                </div>
-
-            </Container>
-
-        </div>
+            </div>
+        </Layout>
     )
-
 }
 
 export default Incident_History

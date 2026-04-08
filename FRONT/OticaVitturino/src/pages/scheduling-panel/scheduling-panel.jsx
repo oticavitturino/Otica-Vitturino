@@ -1,6 +1,5 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
 import XIcon from '../../assets/x.png'
@@ -93,57 +92,55 @@ function Scheduling_Panel() {
     ];
 
     return (
-        <div className='page-container'>
+        <Layout>
+            <div className='page-container'>
 
-            <Header />
+                <Container className='main-container-scheduling-panel'>
 
-            <Side_Menu />
+                    <h2>Gerencie aqui seus agendamentos</h2>
 
-            <Container className='main-container-scheduling-panel'>
+                    {/* List item de teste mockado */}
 
-                <h2>Gerencie aqui seus agendamentos</h2>
+                    <div className='scheduling-scroll-area'>
 
-                {/* List item de teste mockado */}
+                        <div className='list-legend'>
+                            <span>Usuário</span>
+                            <span>Categoria</span>
+                            <span>Data</span>
+                            <span>Hora</span>
+                            <span>Status</span>
+                            <span></span>
+                        </div>
 
-                <div className='scheduling-scroll-area'>
+                        {agendamentos.map((agendamento) => (
+                            <List_Item key={agendamento.id} actions={
+                                <>
+                                    <button className="icon-btn chart-btn">
+                                        <img src={ChartIcon} className="action-icon"></img>
+                                    </button>
 
-                    <div className='list-legend'>
-                        <span>Usuário</span>
-                        <span>Categoria</span>
-                        <span>Data</span>
-                        <span>Hora</span>
-                        <span>Status</span>
-                        <span></span>
+                                    <button className="icon-btn x-btn">
+                                        <img src={XIcon} className="action-icon"></img>
+                                    </button>
+                                </>
+                            }>
+
+                                <div className="list-row-data">
+                                    <span>{agendamento.usuario}</span>
+                                    <span>{agendamento.categoria}</span>
+                                    <span>{agendamento.data}</span>
+                                    <span>{agendamento.hora}</span>
+                                    <span>{agendamento.status}</span>
+                                </div>
+
+                            </List_Item>
+                        ))}
                     </div>
 
-                    {agendamentos.map((agendamento) => (
-                        <List_Item key={agendamento.id} actions={
-                            <>
-                                <button className="icon-btn chart-btn">
-                                    <img src={ChartIcon} className="action-icon"></img>
-                                </button>
+                </Container>
 
-                                <button className="icon-btn x-btn">
-                                    <img src={XIcon} className="action-icon"></img>
-                                </button>
-                            </>
-                        }>
-
-                            <div className="list-row-data">
-                                <span>{agendamento.usuario}</span>
-                                <span>{agendamento.categoria}</span>
-                                <span>{agendamento.data}</span>
-                                <span>{agendamento.hora}</span>
-                                <span>{agendamento.status}</span>
-                            </div>
-
-                        </List_Item>
-                    ))}
-                </div>
-
-            </Container>
-
-        </div>
+            </div>
+        </Layout>
     )
 }
 

@@ -1,6 +1,5 @@
 import './style.css'
-import Header from '../../components/header'
-import Side_Menu from '../../components/side-menu'
+import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
 import PenIcon from '../../assets/pen.png'
@@ -40,33 +39,30 @@ function Message_Editor() {
     ];
 
     return (
-        <div className='page-container'>
+        <Layout>
+            <div className='page-container'>
 
-            <Header />
+                <Container className='main-container-message-editor'>
 
-            <Side_Menu />
+                    <h2>Editor de Mensagens Pré-Programadas</h2>
 
-            <Container className='main-container-message-editor'>
+                    <div className="messages-scroll-area">
+                        {mensagens.map((msg) => (
+                            <List_Item key={msg.id} actions={
+                                <button className="icon-btn edit-btn">
+                                    <img src={PenIcon} className="action-icon" alt="Editar"></img>
+                                </button>
+                            }>
+                                <span className="message-text">{msg.texto}</span>
+                            </List_Item>
+                        ))}
+                    </div>
 
-                <h2>Editor de Mensagens Pré-Programadas</h2>
+                </Container>
 
-                <div className="messages-scroll-area">
-                    {mensagens.map((msg) => (
-                        <List_Item key={msg.id} actions={
-                            <button className="icon-btn edit-btn">
-                                <img src={PenIcon} className="action-icon" alt="Editar"></img>
-                            </button>
-                        }>
-                            <span className="message-text">{msg.texto}</span>
-                        </List_Item>
-                    ))}
-                </div>
-
-            </Container>
-
-        </div>
+            </div>
+        </Layout>
     )
-
 }
 
 export default Message_Editor
