@@ -1,30 +1,12 @@
-@font-face {
-    font-family: 'Poppins';
-    src: url('/fonts/Poppins-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
+/* user-management/style.css */
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-}
-
-.page-container {
+.user-management-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(190, 190, 190, 0.8)), url('/img/pexels-steve-29506613.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100%;
 }
 
 .main-container-user-management {
@@ -32,9 +14,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 85%;
-    margin-top: 11%;
-    margin-bottom: 0.5%;
+    height: 75vh;
+    margin-top: 17.5vh;
+    margin-bottom: 20px;
     margin-left: 26%;
     animation: welcome-container-animation 0.5s ease-in;
 }
@@ -171,7 +153,6 @@ body {
 
 @media (max-width: 1600px) {
     .main-container-user-management {
-        min-height: 620px;
         width: 1090px;
         padding: 30px;
     }
@@ -240,7 +221,6 @@ body {
 
 @media (max-width: 1366px) {
     .main-container-user-management {
-        min-height: 550px;
         width: 930px;
         padding: 30px;
     }
@@ -303,5 +283,71 @@ body {
 
     .user-management-scroll-area {
         max-height: 350px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .page-container {
+        justify-content: flex-start;
+        height: auto;
+    }
+
+    .main-container-user-management {
+        margin-left: 0;
+        margin-top: 120px;
+        margin-bottom: 20px;
+        height: auto;
+        width: 100%;
+        padding: 0 15px;
+    }
+
+    .main-container-user-management h2 {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .user-registration-container,
+    .registered-users-container {
+        flex: none;
+        max-width: 100%;
+        height: auto;
+        width: 100%;
+        padding: 20px 15px;
+    }
+
+    .user-registration-container h3,
+    .registered-users-container h3 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    .user-registration-form input {
+        height: 50px;
+        font-size: 0.9rem;
+    }
+
+    .btn-register {
+        height: 50px;
+        font-size: 1.1rem;
+    }
+
+    .user-management-scroll-area {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .registered-users-container .list-item {
+        height: auto;
+        min-height: 45px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
     }
 }

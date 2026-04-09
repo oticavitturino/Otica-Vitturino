@@ -48,7 +48,7 @@ function Production_Status_Panel() {
 
     return (
         <Layout>
-            <div className='page-container'>
+            <div className='production-page-wrapper'>
 
                 <Container className='main-container-production-status-panel'>
 

@@ -6,7 +6,7 @@ function Homepage() {
 
   return (
     <Layout>
-      <div className='page-container'>
+      <div className='homepage-wrapper'>
 
         <div className='welcome-container'>
           <h2>Olá, <span>admin</span>!</h2>

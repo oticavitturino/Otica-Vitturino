@@ -40,7 +40,7 @@ function Message_Editor() {
 
     return (
         <Layout>
-            <div className='page-container'>
+            <div className='message-page-wrapper'>
 
                 <Container className='main-container-message-editor'>
 

@@ -76,7 +76,7 @@ function User_Management() {
 
   return (
     <Layout>
-      <div className='page-container'>
+      <div className='user-management-wrapper'>
 
         <Container className='main-container-user-management'>
 

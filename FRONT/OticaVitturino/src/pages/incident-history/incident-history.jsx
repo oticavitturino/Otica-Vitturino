@@ -35,7 +35,7 @@ function Incident_History() {
 
     return (
         <Layout>
-            <div className='page-container'>
+            <div className='incident-page-wrapper'>
 
                 <Container className='main-container-incident-history'>
 

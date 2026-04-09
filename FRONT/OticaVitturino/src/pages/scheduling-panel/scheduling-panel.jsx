@@ -93,7 +93,7 @@ function Scheduling_Panel() {
 
     return (
         <Layout>
-            <div className='page-container'>
+            <div className='scheduling-page-wrapper'>
 
                 <Container className='main-container-scheduling-panel'>
 

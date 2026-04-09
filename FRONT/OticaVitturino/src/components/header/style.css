@@ -36,6 +36,12 @@
 /* Mobile */
 
 @media (max-width: 768px) {
+    .header {
+        position: fixed;
+        background-color: rgba(29, 162, 153, 1);
+        z-index: 1000;
+    }
+
     .hamburger-btn {
         display: block;
     }
