@@ -30,7 +30,7 @@ body {
 
 .login-logo {
     width: 20%;
-    margin-bottom: 80px;
+    margin-bottom: 4%;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -42,6 +42,7 @@ body {
     height: 450px;
     max-width: 700px;
     animation: welcome-container-animation 0.5s ease-in;
+    margin-bottom: 3%;
 }
 
 .login-container h2 {
@@ -138,10 +139,6 @@ body {
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
-    .login-logo {
-        margin-bottom: 90px;
-    }
-
     .login-container {
         height: 400px;
         max-width: 650px;
@@ -173,10 +170,6 @@ body {
 /* 1366 * 768 */
 
 @media (max-width: 1366px) {
-    .login-logo {
-        margin-bottom: 75px;
-    }
-
     .login-container {
         height: 350px;
         max-width: 550px;
@@ -215,7 +208,6 @@ body {
     .login-logo {
         width: 75%;
         margin-top: 30%;
-        /* border: 3px solid blue; */
     }
 
     .login-container {
