@@ -118,7 +118,7 @@ function User_Management() {
                         <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
                       </button>
                     </>
-                  }>{user.nome} | {user.login}</List_item>
+                  }><span>{user.nome} | {user.login}</span></List_item>
                 ))}
               </div>
 
