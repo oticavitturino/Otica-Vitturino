@@ -72,13 +72,6 @@
     line-height: 1.5;
 }
 
-.main-container-message-editor .action-icon {
-    width: 20px !important;
-    height: 20px !important;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-}
-
 @keyframes welcome-container-animation {
     0% {
         opacity: 0;
@@ -133,7 +126,7 @@
         margin-top: 120px;
         margin-bottom: 20px;
         height: auto;
-        width: 95%;
+        width: 100%;
         padding: 20px 10px;
     }
 
@@ -145,11 +138,13 @@
     .messages-scroll-area {
         max-height: none;
         overflow-y: visible;
+        padding-right: 0;
     }
 
     .main-container-message-editor .list-item {
         min-height: 60px;
         padding: 15px 40px 15px 10px !important;
+        width: 100% !important;
     }
 
     .main-container-message-editor .message-text {

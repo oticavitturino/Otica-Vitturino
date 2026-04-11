@@ -148,7 +148,7 @@
         margin-top: 120px;
         margin-bottom: 20px;
         height: auto;
-        width: 95%;
+        width: 100%;
         padding: 20px 10px;
     }
 
@@ -160,6 +160,7 @@
     .production-scroll-area {
         max-height: none;
         overflow-y: visible;
+        padding-right: 0;
     }
 
     .main-container-production-status-panel .list-legend {
@@ -170,6 +171,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        width: 75%;
         gap: 5px;
     }
 
@@ -178,5 +180,6 @@
         min-height: 60px;
         padding: 15px 10px;
         margin-bottom: 10px;
+        width: 100% !important;
     }
 }

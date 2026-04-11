@@ -289,11 +289,6 @@
 /* Mobile */
 
 @media (max-width: 768px) {
-    .page-container {
-        justify-content: flex-start;
-        height: auto;
-    }
-
     .main-container-user-management {
         margin-left: 0;
         margin-top: 120px;
@@ -363,7 +358,7 @@
         width: 100% !important;
         text-align: left !important;
         padding-left: 15px !important;
-        padding-right: 80px !important;
+        padding-right: 95px !important;
         box-sizing: border-box;
     }
 

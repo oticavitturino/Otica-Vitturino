@@ -31,7 +31,7 @@
     font-size: 2.2rem;
     font-weight: 600;
     text-align: center;
-    color: #1DA299;
+    color: #3C7975;
     margin-bottom: 6%;
 }
 
@@ -109,6 +109,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -210,13 +211,13 @@
 
     .login-form input {
         height: 50px;
-        width: 85vw;        
+        width: 85vw;
         font-size: 0.9rem;
     }
 
     .btn-enter {
         height: 50px;
-        width: 85vw;        
+        width: 85vw;
         margin-top: 20px;
         font-size: 1.3rem;
     }
