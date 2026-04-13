@@ -1,13 +1,36 @@
 import './style.css'
 import Button from '../button'
 import { useNavigate } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
 
-function Side_Menu({ isOpen }) {
+function Side_Menu({ isOpen, onClose }) {
 
     const navigate = useNavigate();
 
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+        function handleOutsideTouch(event) {
+            if (event.target.closest('.hamburger-btn')) {
+                return; 
+            }
+
+            if (isOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+                onClose(); //
+            }
+        }
+
+        document.addEventListener("mousedown", handleOutsideTouch);
+        document.addEventListener("touchstart", handleOutsideTouch);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideTouch);
+            document.removeEventListener("touchstart", handleOutsideTouch);
+        };
+    }, [isOpen, onClose]);
+
     return (
-        <aside className={`side-menu ${isOpen ? 'open' : ''}`}>
+        <aside ref={menuRef} className={`side-menu ${isOpen ? 'open' : ''}`}>
 
             <div className='menu-items'>
                 <Button className='btn-item' onClick={() => navigate('/usuarios')}>Gerenciar Usuários</Button>
