@@ -175,6 +175,16 @@
         gap: 5px;
     }
 
+    .main-container-incident-history .list-row-data span {
+        font-size: 0.9rem;
+    }
+
+    .main-container-incident-history .list-row-data span:first-child {
+        font-weight: 500;
+        font-size: 1rem;
+        color: #3C7975 !important;
+    }
+
     .main-container-incident-history .list-item {
         height: auto;
         min-height: 60px;
