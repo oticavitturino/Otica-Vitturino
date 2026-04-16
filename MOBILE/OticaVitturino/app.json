@@ -4,7 +4,7 @@
     "slug": "OticaVitturino",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/upscalemedia-transformed.png",
+    "icon": "./assets/img/logovitturino.png",
     "scheme": "oticavitturino",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,21 +14,22 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#eeeded",
-        "foregroundImage": "./assets/img/upscalemedia-transformed.png"
+        "foregroundImage": "./assets/img/logovitturino.png"
       },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "edgeToEdgeEnabled": false,
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/img/upscalemedia-transformed.png"
+      "favicon": "./assets/img/logovitturino.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/img/upscalemedia-transformed.png",
+          "image": "./assets/img/logovitturino.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#eeeded",
