@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-export function Button({ title, ...rest }) {
+export function Button({ title, onPress, ...rest }) {
     return (
-        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.6} onPress={onPress}>
             <Text style={styles.buttonText}>{title}</Text>
         </TouchableOpacity>
     )
