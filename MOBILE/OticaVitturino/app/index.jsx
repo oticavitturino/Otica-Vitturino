@@ -26,7 +26,7 @@ export default function Login() {
           <View style={styles.formContainer}>
             <Input placeholder="Digite seu e-mail" keyboardType="email-address" autoCapitalize="none" autoCorrect={false} />
             <Input placeholder="Digite sua senha" secureTextEntry={true} />
-            <Button title="Entrar" onPress={() => router.replace('/homepage')}/>
+            <Button title="Entrar" onPress={() => router.replace('/homepage')} />
           </View>
 
         </View>
