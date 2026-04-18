@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    paddingHorizontal: 18,
     justifyContent: "center",
+    paddingHorizontal: 18,
   },
   headerContainer: {
     alignItems: "center",
