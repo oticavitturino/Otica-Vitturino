@@ -3,7 +3,7 @@ import Button from '../../components/button'
 import Input from '../../components/input'
 import Container from '../../components/container'
 import Card from '../../components/card'
-import LogoVitturino from '../../assets/upscalemedia-transformed.png'
+import LogoVitturino from '../../assets/logovitturino-full.png'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
