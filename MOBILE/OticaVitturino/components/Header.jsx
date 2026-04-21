@@ -29,7 +29,9 @@ export function Header() {
 
             {/* 3: Ícone de usuário */}
             <Pressable style={styles.userButton} onPress={handleUserMenuClick}>
-                <Image resizeMode='contain' style={[styles.userIcon, { tintColor: isMenuOpen ? "#3C7975" : undefined }]} source={require('../assets/img/circle-user-round.png')} />
+                <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
+                    <Image resizeMode='contain' style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} />
+                </View>
             </Pressable>
         </View>
     )
@@ -77,5 +79,20 @@ const styles = StyleSheet.create({
     userIcon: {
         width: 42,
         height: 42,
+    },
+    glowContainer: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    activeGlow: {
+        backgroundColor: "rgba(255, 255, 255, 0.25)",
+        borderRadius: 25,
+        shadowColor: "#ffffff",
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0.9,
+        shadowRadius: 10,
     }
 })
