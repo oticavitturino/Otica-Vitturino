@@ -37,14 +37,16 @@ function Incident_History() {
         <Layout>
             <div className='incident-page-wrapper'>
 
+                {/* 1: Container externo */}
                 <Container className='main-container-incident-history'>
 
+                    {/* 2: Título */}
                     <h2>Gerencie aqui as ocorrências/reclamações</h2>
 
-                    {/* List item de teste mockado */}
-
+                    {/* 3: Área de scroll / List item de teste mockado */}
                     <div className='incident-scroll-area'>
 
+                        {/* 4: Legendas */}
                         <div className='list-legend'>
                             <span>Usuário</span>
                             <span>Categoria</span>
@@ -53,6 +55,7 @@ function Incident_History() {
                             <span></span>
                         </div>
 
+                        {/* 5: Ícones de ação */}
                         {ocorrencia.map((ocorrencia) => (
                             <List_Item key={ocorrencia.id} actions={
                                 <>
@@ -66,6 +69,7 @@ function Incident_History() {
                                 </>
                             }>
 
+                                {/* 6: Dados de cada usuário */}
                                 <div className="list-row-data">
                                     <span>{ocorrencia.usuario}</span>
                                     <span>{ocorrencia.categoria}</span>

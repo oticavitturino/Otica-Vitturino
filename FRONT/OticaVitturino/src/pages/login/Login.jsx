@@ -29,6 +29,7 @@ function Login() {
     }
   ]
 
+  // Função de checkagem de login
   function checkLogin(event) {
     event.preventDefault();
 
@@ -46,12 +47,16 @@ function Login() {
   return (
     <div className='login-page-wrapper'>
 
+      {/* 1: Imagem da logo */}
       <img className='login-logo' src={LogoVitturino}></img>
 
+      {/* 2: Container externo */}
       <Container className='login-container'>
 
+        {/* 3: Título */}
         <h2>Fazer Login</h2>
 
+        {/* 4: Formulário de login */}
         <form className='login-form' onSubmit={checkLogin}>
           <Input placeholder='Digite seu e-mail' type='email' value={emailInput} onChange={(event) => setEmailInput(event.target.value)} required />
           <Input placeholder='Digite sua senha' type='password' value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required />
@@ -60,6 +65,7 @@ function Login() {
 
       </Container>
 
+      {/* 5: Card de erro de login */}
       {showError && (
         <div className="modal-overlay">
           <Card className="error-card">
@@ -71,7 +77,7 @@ function Login() {
           </Card>
         </div>
       )}
-      
+
     </div>
   )
 }

@@ -42,18 +42,24 @@ function Message_Editor() {
         <Layout>
             <div className='message-page-wrapper'>
 
+                {/* 1: Container externo */}
                 <Container className='main-container-message-editor'>
 
+                    {/* 2: Título */}
                     <h2>Editor de Mensagens Pré-Programadas</h2>
 
+                    {/* 3: Área de scroll */}
                     <div className="messages-scroll-area">
+                        {/* 4: Ícone de ação */}
                         {mensagens.map((msg) => (
                             <List_Item key={msg.id} actions={
                                 <button className="icon-btn edit-btn">
                                     <img src={PenIcon} className="action-icon" alt="Editar"></img>
                                 </button>
                             }>
+                                {/* 5: Texto da mensagem */}
                                 <span className="message-text">{msg.texto}</span>
+
                             </List_Item>
                         ))}
                     </div>

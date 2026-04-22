@@ -50,14 +50,16 @@ function Production_Status_Panel() {
         <Layout>
             <div className='production-page-wrapper'>
 
+                {/* 1: Container externo */}
                 <Container className='main-container-production-status-panel'>
 
+                    {/* 2: Título */}
                     <h2>Gerencie aqui o status de produção</h2>
 
-                    {/* List item de teste mockado */}
-
+                    {/* 3: Área de scroll / List item de teste mockado */}
                     <div className='production-scroll-area'>
 
+                        {/* 4: Legendas */}
                         <div className='list-legend'>
                             <span>Usuário</span>
                             <span>Produto</span>
@@ -65,6 +67,7 @@ function Production_Status_Panel() {
                             <span></span>
                         </div>
 
+                        {/* 5: Ícone de ação */}
                         {status.map((status) => (
                             <List_Item key={status.id} actions={
                                 <>
@@ -74,6 +77,7 @@ function Production_Status_Panel() {
                                 </>
                             }>
 
+                                {/* 6: Dados de cada usuário */}
                                 <div className="list-row-data">
                                     <span>{status.usuario}</span>
                                     <span>{status.produto}</span>

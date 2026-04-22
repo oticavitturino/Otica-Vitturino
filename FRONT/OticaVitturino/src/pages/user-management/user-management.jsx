@@ -78,16 +78,22 @@ function User_Management() {
     <Layout>
       <div className='user-management-wrapper'>
 
+        {/* 1: Container externo */}
         <Container className='main-container-user-management'>
 
+          {/* 2: Título principal */}
           <h2>Gerencie aqui seus usuários</h2>
 
+          {/* 3: Container interno */}
           <div className='content-wrapper'>
 
+            {/* 4: Container de cadastro de usuários */}
             <Container className='user-registration-container'>
 
+              {/* 5: Título secundário 1 */}
               <h3>Cadastrar usuário</h3>
 
+              {/* 6: Formulário de cadastro de usuários */}
               <form className='user-registration-form' type='submit'>
                 <Input placeholder='Login' type='text' required />
                 <Input placeholder='Nome' type='text' required />
@@ -100,13 +106,16 @@ function User_Management() {
 
             </Container>
 
+            {/* 7: Container de usuários registrados */}
             <Container className='registered-users-container'>
 
+              {/* 8: Título secundário 2 */}
               <h3>Usuários registrados</h3>
 
-              {/* List item de teste mockado */}
-
+              {/* 9: Área de scroll / List item de teste mockado */}
               <div className='user-management-scroll-area'>
+
+                {/* 10: Ícones de ação */}
                 {users.map((user) => (
                   <List_item key={user.id} actions={
                     <>
@@ -118,7 +127,9 @@ function User_Management() {
                         <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
                       </button>
                     </>
-                  }><span>{user.nome} | {user.login}</span></List_item>
+                  }>
+                    {/* 11: Dados de cada usuário */}
+                    <span>{user.nome} | {user.login}</span></List_item>
                 ))}
               </div>
 
@@ -127,7 +138,7 @@ function User_Management() {
           </div>
 
         </Container>
-        
+
       </div>
     </Layout>
   )

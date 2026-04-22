@@ -95,14 +95,16 @@ function Scheduling_Panel() {
         <Layout>
             <div className='scheduling-page-wrapper'>
 
+                {/* 1: Container externo */}
                 <Container className='main-container-scheduling-panel'>
 
+                    {/* 2: Título */}
                     <h2>Gerencie aqui seus agendamentos</h2>
 
-                    {/* List item de teste mockado */}
-
+                    {/* 3: Área de scroll / List item de teste mockado */}
                     <div className='scheduling-scroll-area'>
 
+                        {/* 4: Legendas */}
                         <div className='list-legend'>
                             <span>Usuário</span>
                             <span>Categoria</span>
@@ -112,6 +114,7 @@ function Scheduling_Panel() {
                             <span></span>
                         </div>
 
+                        {/* 5: Ícones de ação */}
                         {agendamentos.map((agendamento) => (
                             <List_Item key={agendamento.id} actions={
                                 <>
@@ -125,6 +128,7 @@ function Scheduling_Panel() {
                                 </>
                             }>
 
+                                {/* 6: Dados de cada usuário */}
                                 <div className="list-row-data">
                                     <span>{agendamento.usuario}</span>
                                     <span>{agendamento.categoria}</span>
