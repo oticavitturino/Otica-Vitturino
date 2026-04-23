@@ -29,10 +29,10 @@ export default function Homepage() {
 
                 {/* 5: Botões */}
                 <View style={styles.pageButtonContainer}>
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Agendar Consulta" onPress={() => router.replace('')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Acompanhar Produção" onPress={() => router.replace('')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Registrar Ocorrência/Reclamação" onPress={() => router.replace('')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Indicar Aplicativo" onPress={() => router.replace('')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Agendar Consulta" onPress={() => router.navigate('/booking-page')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Acompanhar Produção" onPress={() => router.navigate('')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Registrar Ocorrência/Reclamação" onPress={() => router.navigate('')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Indicar Aplicativo" onPress={() => router.navigate('')} />
                 </View>
 
             </View>
@@ -44,7 +44,7 @@ export default function Homepage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#eeeded"
+        backgroundColor: "#EEEDED"
     },
     inner: {
         flex: 1,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     pageButton: {
         height: 70,
         borderRadius: 10,
-        backgroundColor: "#31a9a1c5"
+        backgroundColor: "#31A9A1C5"
     },
     pageButtonText: {
         fontSize: 16

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 140,
         padding: 30,
-        backgroundColor: "#1da299d0"
+        backgroundColor: "#1DA299D0"
     },
     scoreContainer: {
         flexDirection: "row",
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontFamily: "PoppinsRegular",
         fontSize: 18,
         marginTop: 4,
-        color: "#ffffff"
+        color: "#FFFFFF"
     },
     logoContainer: {
         position: "absolute",
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     activeGlow: {
         backgroundColor: "rgba(255, 255, 255, 0.25)",
         borderRadius: 25,
-        shadowColor: "#ffffff",
+        shadowColor: "#FFFFFF",
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.9,
         shadowRadius: 10,
