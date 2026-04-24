@@ -43,7 +43,7 @@ export function List_Item({ title, dotColor, expandable, onPress, headerStyle, t
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        marginBottom: 12,
+        marginBottom: 8,
         borderRadius: 12,
         backgroundColor: "#FFFFFF",
         overflow: "hidden"
