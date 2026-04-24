@@ -65,7 +65,7 @@ export default function BookingPage() {
 
                 {/* 3: Texto */}
                 <Text style={styles.textContainer}>
-                    <Text style={styles.text}>Selecione um dia </Text> <Text style={styles.textSpan}>disponível</Text> <Text style={styles.text}>:</Text>
+                    <Text style={styles.text}>Selecione um dia</Text> <Text style={styles.textSpan}>disponível</Text> <Text style={styles.text}>:</Text>
                 </Text>
 
                 {/* 4: Calendário */}
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         justifyContent: "center",
-        marginTop: 16,
-
+        textAlign: "center",
+        marginTop: 16
     },
     text: {
         fontFamily: "PoppinsRegular",
