@@ -30,7 +30,7 @@ export default function Homepage() {
                 {/* 5: Botões */}
                 <View style={styles.pageButtonContainer}>
                     <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Agendar Consulta" onPress={() => router.navigate('/booking-page')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Acompanhar Produção" onPress={() => router.navigate('')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Acompanhar Produção" onPress={() => router.navigate('/production-page')} />
                     <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Registrar Ocorrência/Reclamação" onPress={() => router.navigate('/incident-history')} />
                     <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Indicar Aplicativo" onPress={() => router.navigate('')} />
                 </View>
