@@ -126,8 +126,8 @@ const styles = StyleSheet.create({
     textHistory: {
         fontFamily: "PoppinsRegular",
         fontSize: 22,
-        marginTop: 14,
-        marginBottom: 14,
+        marginTop: 18,
+        marginBottom: 18,
         color: "#1DA299"
     },
     titleStyle: {
