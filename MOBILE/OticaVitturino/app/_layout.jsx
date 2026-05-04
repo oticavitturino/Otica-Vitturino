@@ -10,7 +10,7 @@ export default function Layout() {
   });
 
   if (!fontsLoaded) {
-    return null; 
+    return null;
   }
 
   return <Slot />;

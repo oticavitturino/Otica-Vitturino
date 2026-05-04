@@ -16,29 +16,29 @@ LocaleConfig.defaultLocale = 'pt-br';
 
 const agendamentos = [
     {
-        id: "1",
-        title: "Limpeza - 6 mar (16:30)",
-        color: "#963765"
+        id: '1',
+        title: 'Limpeza - 6 mar (16:30)',
+        color: '#963765'
     },
     {
-        id: "2",
-        title: "Consulta - 30 mar (14:00)",
-        color: "#33AB5B"
+        id: '2',
+        title: 'Consulta - 30 mar (14:00)',
+        color: '#33AB5B'
     },
     {
-        id: "3",
-        title: "Manutenção - 15 mai (09:00)",
-        color: "#4085AF"
+        id: '3',
+        title: 'Manutenção - 15 mai (09:00)',
+        color: '#4085AF'
     },
     {
-        id: "4",
-        title: "Consulta - 22 abr (10:45)",
-        color: "#33AB5B"
+        id: '4',
+        title: 'Consulta - 22 abr (10:45)',
+        color: '#33AB5B'
     },
     {
-        id: "5",
-        title: "Limpeza - 31 dez (23:59)",
-        color: "#963765"
+        id: '5',
+        title: 'Limpeza - 31 dez (23:59)',
+        color: '#963765'
     }
 ]
 
@@ -60,7 +60,7 @@ export default function BookingPage() {
             <View style={styles.inner}>
                 {/* 2: Guia de uso */}
                 <View style={styles.userGuideContainer}>
-                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title="Guia de uso" />
+                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
                 </View>
 
                 {/* 3: Texto */}
@@ -102,17 +102,17 @@ export default function BookingPage() {
                 <View style={styles.legendContainer}>
                     {/* Consulta */}
                     <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require("../assets/img/green-dot.png")} />
+                        <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} />
                         <Text style={styles.legendText}>Consulta</Text>
                     </View>
                     {/* Manutenção */}
                     <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require("../assets/img/blue-dot.png")} />
+                        <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} />
                         <Text style={styles.legendText}>Manutenção</Text>
                     </View>
                     {/* Limpeza */}
                     <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require("../assets/img/purple-dot.png")} />
+                        <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} />
                         <Text style={styles.legendText}>Limpeza</Text>
                     </View>
                 </View>
@@ -132,17 +132,17 @@ export default function BookingPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEDED"
+        backgroundColor: '#EEEDED'
     },
     inner: {
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         paddingHorizontal: 18
     },
     userGuideContainer: {
-        alignItems: "flex-end",
-        width: "100%",
+        alignItems: 'flex-end',
+        width: '100%',
         marginTop: 22
     },
     userGuideButton: {
@@ -150,52 +150,52 @@ const styles = StyleSheet.create({
         height: 50,
         paddingVertical: 10,
         borderRadius: 30,
-        backgroundColor: "#D9D9D9",
+        backgroundColor: '#D9D9D9',
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: "#1DA299"
+        color: '#1DA299'
     },
     textContainer: {
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "center",
-        textAlign: "center",
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center',
+        textAlign: 'center',
         marginTop: 16
     },
     text: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 22,
         marginBottom: 20,
-        color: "#6E6E6E"
+        color: '#6E6E6E'
     },
     textSpan: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: "#1DA299"
+        color: '#1DA299'
     },
     calendarContainer: {
-        width: "100%",
-        backgroundColor: "#D9D9D9",
+        width: '100%',
+        backgroundColor: '#D9D9D9',
         borderRadius: 20,
         marginTop: 16,
         padding: 10,
         elevation: 3,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
     },
     legendContainer: {
-        flexDirection: "row",
-        justifyContent: "center",
-        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
         marginTop: 12,
         gap: 10
     },
     legend: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         gap: 6
     },
     legendDot: {
@@ -203,16 +203,16 @@ const styles = StyleSheet.create({
         height: 14
     },
     legendText: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 16,
         marginTop: 4,
-        color: "#33ABA3"
+        color: '#33ABA3'
     },
     textBooking: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 22,
         marginTop: 14,
         marginBottom: 18,
-        color: "#1DA299"
+        color: '#1DA299'
     }
 })

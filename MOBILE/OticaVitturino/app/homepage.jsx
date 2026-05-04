@@ -16,7 +16,7 @@ export default function Homepage() {
 
                 {/* 2: Guia de uso */}
                 <View style={styles.userGuideContainer}>
-                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title="Guia de uso" />
+                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
                 </View>
 
                 {/* 3: Texto */}
@@ -25,14 +25,14 @@ export default function Homepage() {
                 </Text>
 
                 {/* 4: Imagem */}
-                <Image style={styles.illustration} source={require("../assets/img/10725885-cut.png")} resizeMode="contain" />
+                <Image style={styles.illustration} source={require('../assets/img/10725885-cut.png')} resizeMode='contain' />
 
                 {/* 5: Botões */}
                 <View style={styles.pageButtonContainer}>
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Agendar Consulta" onPress={() => router.navigate('/booking-page')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Acompanhar Produção" onPress={() => router.navigate('/production-page')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Registrar Ocorrência/Reclamação" onPress={() => router.navigate('/incident-history')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title="Indicar Aplicativo" onPress={() => router.navigate('')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Agendar Consulta' onPress={() => router.navigate('/booking-page')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Acompanhar Produção' onPress={() => router.navigate('/production-page')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Registrar Ocorrência/Reclamação' onPress={() => router.navigate('/incident-history')} />
+                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Indicar Aplicativo' onPress={() => router.navigate('')} />
                 </View>
 
             </View>
@@ -44,17 +44,17 @@ export default function Homepage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEDED"
+        backgroundColor: '#EEEDED'
     },
     inner: {
         flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
+        justifyContent: 'flex-start',
+        alignItems: 'center',
         paddingHorizontal: 18
     },
     userGuideContainer: {
-        alignItems: "flex-end",
-        width: "100%",
+        alignItems: 'flex-end',
+        width: '100%',
         marginTop: 22
     },
     userGuideButton: {
@@ -62,27 +62,27 @@ const styles = StyleSheet.create({
         height: 50,
         paddingVertical: 10,
         borderRadius: 30,
-        backgroundColor: "#D9D9D9",
+        backgroundColor: '#D9D9D9',
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: "#1DA299"
+        color: '#1DA299'
     },
     textContainer: {
-        flexDirection: "row",
-        width: "100%",
-        justifyContent: "center",
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'center',
         marginTop: 16
     },
     text: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: "#6E6E6E"
+        color: '#6E6E6E'
     },
     textSpan: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: "#1DA299"
+        color: '#1DA299'
     },
     illustration: {
         width: 250,
@@ -93,13 +93,13 @@ const styles = StyleSheet.create({
 
     },
     pageButtonContainer: {
-        width: "100%",
+        width: '100%',
         gap: 6
     },
     pageButton: {
         height: 70,
         borderRadius: 10,
-        backgroundColor: "#31A9A1C5"
+        backgroundColor: '#31A9A1C5'
     },
     pageButtonText: {
         fontSize: 16

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 export function Button({ title, onPress, style, textStyle, ...rest }) {
     return (
@@ -10,17 +10,17 @@ export function Button({ title, onPress, style, textStyle, ...rest }) {
 
 const styles = StyleSheet.create({
     button: {
-        width: "100%",
+        width: '100%',
         height: 74,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 12,
         borderRadius: 14,
-        backgroundColor: "#1DA299"
+        backgroundColor: '#1DA299'
     },
     buttonText: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 24,
-        color: "#FFFFFF"
+        color: '#FFFFFF'
     }
 })

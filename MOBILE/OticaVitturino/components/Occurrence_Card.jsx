@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from '../components/Button';
 
-export function Occurrence_Card({ type = "Ocorrência ", isExpanded, onToggle }) {
+export function Occurrence_Card({ type = 'Ocorrência', isExpanded, onToggle }) {
 
     const [occurrenceText, setOccurrenceText] = useState('');
 
@@ -38,16 +38,16 @@ export function Occurrence_Card({ type = "Ocorrência ", isExpanded, onToggle })
                     <TextInput
                         style={styles.input}
                         placeholder={`Digite aqui sua ${type.toLowerCase()}`}
-                        placeholderTextColor="#A9A9A9"
+                        placeholderTextColor='#A9A9A9'
                         multiline={true}
                         numberOfLines={5}
-                        textAlignVertical="top"
+                        textAlignVertical='top'
                         value={occurrenceText}
                         onChangeText={setOccurrenceText}
                     />
 
                     {/* 6: Botão de enviar */}
-                    <Button title="Enviar" onPress={handleSend} style={styles.sendButton} textStyle={styles.sendButtonText} />
+                    <Button title='Enviar' onPress={handleSend} style={styles.sendButton} textStyle={styles.sendButtonText} />
                 </View>
             )}
         </View>
@@ -56,21 +56,21 @@ export function Occurrence_Card({ type = "Ocorrência ", isExpanded, onToggle })
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        width: '100%',
         marginBottom: 8,
         borderRadius: 12,
-        overflow: "hidden",
+        overflow: 'hidden',
         elevation: 2,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2
     },
     header: {
-        backgroundColor: "#74C0B9",
+        backgroundColor: '#74C0B9',
         paddingVertical: 22,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         borderRadius: 12
     },
     headerExpanded: {
@@ -78,39 +78,39 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 0
     },
     headerTitle: {
-        fontFamily: "PoppinsSemiBold",
+        fontFamily: 'PoppinsSemiBold',
         fontSize: 16,
-        color: "#FFFFFF",
+        color: '#FFFFFF',
         includeFontPadding: false
     },
     body: {
-        backgroundColor: "#D9D9D9",
+        backgroundColor: '#D9D9D9',
         padding: 16,
-        alignItems: "center",
+        alignItems: 'center',
         borderBottomLeftRadius: 12,
         borderBottomRightRadius: 12
     },
     input: {
-        width: "100%",
+        width: '100%',
         height: 240,
-        backgroundColor: "#F8F8F8",
+        backgroundColor: '#F8F8F8',
         borderRadius: 8,
         padding: 16,
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 14,
-        color: "#333333",
+        color: '#333333',
         marginBottom: 16
     },
     sendButton: {
-        backgroundColor: "#1DA299",
+        backgroundColor: '#1DA299',
         paddingVertical: 12,
         paddingHorizontal: 40,
         borderRadius: 8
     },
     sendButtonText: {
-        fontFamily: "PoppinsSemiBold",
+        fontFamily: 'PoppinsSemiBold',
         fontSize: 16,
-        color: "#FFFFFF",
+        color: '#FFFFFF',
         includeFontPadding: false
     }
 })

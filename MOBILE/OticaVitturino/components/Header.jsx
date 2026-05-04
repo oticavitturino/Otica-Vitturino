@@ -30,7 +30,7 @@ export function Header() {
             {/* 3: Ícone de usuário */}
             <Pressable style={styles.userButton} onPress={handleUserMenuClick}>
                 <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
-                    <Image resizeMode='contain' style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} />
+                    <Image style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} resizeMode='contain' />
                 </View>
             </Pressable>
         </View>
@@ -39,17 +39,17 @@ export function Header() {
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-end",
-        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        width: '100%',
         height: 140,
         padding: 30,
-        backgroundColor: "#1DA299D0"
+        backgroundColor: '#1DA299D0'
     },
     scoreContainer: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         gap: 6
     },
     scoreImage: {
@@ -57,20 +57,20 @@ const styles = StyleSheet.create({
         height: 38
     },
     scoreText: {
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 18,
         marginTop: 4,
-        color: "#FFFFFF"
+        color: '#EEEDED'
     },
     logoContainer: {
-        position: "absolute",
+        position: 'absolute',
         bottom: 12,
-        left: "50%",
+        left: '50%',
         marginLeft: -38
     },
     logo: {
         width: 140,
-        height: 80,
+        height: 80
 
     },
     userButton: {
@@ -78,21 +78,21 @@ const styles = StyleSheet.create({
     },
     userIcon: {
         width: 42,
-        height: 42,
+        height: 42
     },
     glowContainer: {
         width: 50,
         height: 50,
         borderRadius: 25,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     activeGlow: {
-        backgroundColor: "rgba(255, 255, 255, 0.25)",
+        backgroundColor: 'rgba(255, 255, 255, 0.25)',
         borderRadius: 25,
-        shadowColor: "#FFFFFF",
+        shadowColor: '#FFFFFF',
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.9,
-        shadowRadius: 10,
+        shadowRadius: 10
     }
 })

@@ -42,22 +42,22 @@ export function List_Item({ title, dotColor, expandable, onPress, headerStyle, t
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        width: '100%',
         marginBottom: 8,
         borderRadius: 12,
-        backgroundColor: "#FFFFFF",
-        overflow: "hidden"
+        backgroundColor: '#FFFFFF',
+        overflow: 'hidden'
     },
     containerExpanded: {
-        backgroundColor: "#E8E8E8"
+        backgroundColor: '#E8E8E8'
     },
     header: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 24,
         borderRadius: 12,
-        backgroundColor: "#FFFFFF"
+        backgroundColor: '#FFFFFF'
     },
     headerExpanded: {
         borderBottomLeftRadius: 0,
@@ -71,10 +71,10 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        fontFamily: "PoppinsRegular",
+        fontFamily: 'PoppinsRegular',
         fontSize: 18,
         includeFontPadding: false,
-        color: "#6E6E6E"
+        color: '#6E6E6E'
     },
     body: {
         padding: 16,
