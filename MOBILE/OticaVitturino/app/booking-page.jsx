@@ -118,7 +118,7 @@ export default function BookingPage() {
                 </View>
 
                 {/* 6: Texto */}
-                <Text style={styles.textBooking}>Agendamentos:</Text>
+                <Text style={styles.bookingText}>Agendamentos:</Text>
 
                 {/* 7: Renderização dos agendamentos */}
                 {agendamentos.map((item) => (
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
         color: '#33ABA3'
     },
-    textBooking: {
+    bookingText: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
         marginTop: 14,

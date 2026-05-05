@@ -72,7 +72,7 @@ export default function Production_Page() {
                 <Image style={styles.illustration} source={require('../assets/img/gear_10945800.png')} resizeMode='contain' />
 
                 {/* 5: Texto */}
-                <Text style={styles.textStatus}>Status:</Text>
+                <Text style={styles.statusText}>Status:</Text>
 
                 {/* 6: Container dos Cards */}
                 <View style={styles.cardsContainer}>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
     },
-    textStatus: {
+    statusText: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
         marginTop: 18,

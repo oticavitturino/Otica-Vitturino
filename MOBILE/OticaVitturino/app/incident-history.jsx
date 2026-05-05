@@ -56,7 +56,7 @@ export default function Incident_History() {
                     </View>
 
                     {/* 6: Texto */}
-                    <Text style={styles.textHistory}>Histórico:</Text>
+                    <Text style={styles.historyText}>Histórico:</Text>
 
                     {/* 7: Itens do histórico */}
                     {historico.map((item) => (
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 20,
     },
-    textHistory: {
+    historyText: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
         marginTop: 18,
