@@ -50,6 +50,7 @@ function Message_Editor() {
 
                     {/* 3: Área de scroll */}
                     <div className="messages-scroll-area">
+
                         {/* 4: Ícone de ação */}
                         {mensagens.map((msg) => (
                             <List_Item key={msg.id} actions={
@@ -57,6 +58,7 @@ function Message_Editor() {
                                     <img src={PenIcon} className="action-icon" alt="Editar"></img>
                                 </button>
                             }>
+
                                 {/* 5: Texto da mensagem */}
                                 <span className="message-text">{msg.texto}</span>
 

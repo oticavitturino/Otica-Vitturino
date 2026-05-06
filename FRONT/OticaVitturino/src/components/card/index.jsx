@@ -1,7 +1,7 @@
 import './style.css'
 import Button from '../button'
 
-function Card({ children, className, ...props}) {
+function Card({ children, className, ...props }) {
 
     const mergedClasses = `card ${className || ''}`;
 
@@ -10,7 +10,6 @@ function Card({ children, className, ...props}) {
             {children}
         </div>
     )
-
 }
 
 export default Card

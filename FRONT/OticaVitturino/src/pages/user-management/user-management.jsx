@@ -128,9 +128,11 @@ function User_Management() {
                       </button>
                     </>
                   }>
+
                     {/* 11: Dados de cada usuário */}
                     <span>{user.nome} | {user.login}</span></List_item>
                 ))}
+
               </div>
 
             </Container>

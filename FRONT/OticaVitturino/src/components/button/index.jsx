@@ -1,6 +1,5 @@
 import './style.css'
 
-
 function Button({ children, ...props }) {
 
     return (

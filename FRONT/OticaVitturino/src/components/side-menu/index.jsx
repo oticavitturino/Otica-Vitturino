@@ -12,7 +12,7 @@ function Side_Menu({ isOpen, onClose }) {
     useEffect(() => {
         function handleOutsideTouch(event) {
             if (event.target.closest('.hamburger-btn')) {
-                return; 
+                return;
             }
 
             if (isOpen && menuRef.current && !menuRef.current.contains(event.target)) {
@@ -31,7 +31,6 @@ function Side_Menu({ isOpen, onClose }) {
 
     return (
         <aside ref={menuRef} className={`side-menu ${isOpen ? 'open' : ''}`}>
-
             <div className='menu-items'>
                 <Button className='btn-item' onClick={() => navigate('/usuarios')}>Gerenciar Usuários</Button>
                 <Button className='btn-item' onClick={() => navigate('/agendamentos')}>Gerenciar Agendamentos</Button>
@@ -41,7 +40,6 @@ function Side_Menu({ isOpen, onClose }) {
             </div>
 
             <Button className='btn-exit' onClick={() => navigate('/')}>Sair</Button>
-
         </aside>
     )
 }

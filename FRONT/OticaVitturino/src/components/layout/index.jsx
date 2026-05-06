@@ -12,15 +12,15 @@ function Layout({ children }) {
 
   return (
     <div className="layout-container">
- 
       <Header toggleMenu={toggleMenu} isOpen={isMobileMenuOpen} />
+
       <SideMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-      
+
       <main className="main-content">
         {children}
       </main>
     </div>
-  );
+  )
 }
 
 export default Layout;
