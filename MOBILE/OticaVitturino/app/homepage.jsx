@@ -1,43 +1,51 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
+import { useState } from 'react'
+import { useRouter } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
-import { useRouter } from 'expo-router'
+import { User_Guide_Card } from '../components/User_Guide_Card'
 
 export default function Homepage() {
+
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
 
     const router = useRouter();
 
     return (
-        <View style={styles.container}>
-            {/* 1: Header */}
-            <Header />
+        <>
+            <View style={styles.container}>
+                {/* 1: Header */}
+                <Header />
 
-            <View style={styles.inner}>
+                <View style={styles.inner}>
+                    {/* 2: Guia de uso */}
+                    <View style={styles.userGuideContainer}>
+                        <Button title='Guia de uso' style={styles.userGuideButton} textStyle={styles.userGuideButtonText} onPress={() => setIsGuideVisible(true)} />
+                    </View>
 
-                {/* 2: Guia de uso */}
-                <View style={styles.userGuideContainer}>
-                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
+                    {/* 3: Texto */}
+                    <Text style={styles.textContainer}>
+                        <Text style={styles.text}>O que faremos hoje, </Text> <Text style={styles.textSpan}>usuário</Text> <Text style={styles.text}>?</Text>
+                    </Text>
+
+                    {/* 4: Imagem */}
+                    <Image style={styles.illustration} source={require('../assets/img/10725885-cut.png')} resizeMode='contain' />
+
+                    {/* 5: Botões */}
+                    <View style={styles.pageButtonContainer}>
+                        <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Agendar Consulta' onPress={() => router.navigate('/booking-page')} />
+                        <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Acompanhar Produção' onPress={() => router.navigate('/production-page')} />
+                        <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Registrar Ocorrência/Reclamação' onPress={() => router.navigate('/incident-history')} />
+                        <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Indicar Aplicativo' onPress={() => router.navigate('/refer-a-friend')} />
+                    </View>
                 </View>
-
-                {/* 3: Texto */}
-                <Text style={styles.textContainer}>
-                    <Text style={styles.text}>O que faremos hoje, </Text> <Text style={styles.textSpan}>usuário</Text> <Text style={styles.text}>?</Text>
-                </Text>
-
-                {/* 4: Imagem */}
-                <Image style={styles.illustration} source={require('../assets/img/10725885-cut.png')} resizeMode='contain' />
-
-                {/* 5: Botões */}
-                <View style={styles.pageButtonContainer}>
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Agendar Consulta' onPress={() => router.navigate('/booking-page')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Acompanhar Produção' onPress={() => router.navigate('/production-page')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Registrar Ocorrência/Reclamação' onPress={() => router.navigate('/incident-history')} />
-                    <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Indicar Aplicativo' onPress={() => router.navigate('/refer-a-friend')} />
-                </View>
-
             </View>
 
-        </View>
+            {/* 6: Card do guia de uso */}
+            {isGuideVisible && (
+                <User_Guide_Card onClose={() => setIsGuideVisible(false)} />
+            )}
+        </>
     )
 }
 

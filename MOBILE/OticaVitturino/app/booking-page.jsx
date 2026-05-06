@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item';
+import { User_Guide_Card } from '../components/User_Guide_Card'
 
 LocaleConfig.locales['pt-br'] = {
     monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -52,80 +53,89 @@ export default function BookingPage() {
 
     }
 
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+
     return (
-        <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
-            {/* 1: Header */}
-            <Header />
+        <>
+            <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
+                {/* 1: Header */}
+                <Header />
 
-            <View style={styles.inner}>
-                {/* 2: Guia de uso */}
-                <View style={styles.userGuideContainer}>
-                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
-                </View>
-
-                {/* 3: Texto */}
-                <Text style={styles.textContainer}>
-                    <Text style={styles.text}>Selecione um dia</Text> <Text style={styles.textSpan}>disponível</Text> <Text style={styles.text}>:</Text>
-                </Text>
-
-                {/* 4: Calendário */}
-                <View style={styles.calendarContainer}>
-                    <Calendar
-                        onDayPress={handlePressedDay}
-                        markedDates={{
-                            [selectedDate]: {
-                                selected: true,
-                                disableTouchEvent: true
-                            }
-                        }}
-                        theme={{
-                            backgroundColor: 'transparent',
-                            calendarBackground: 'transparent',
-                            textSectionTitleColor: '#1DA299',
-                            selectedDayBackgroundColor: '#1DA299',
-                            selectedDayTextColor: '#FFFFFF',
-                            todayTextColor: '#1DA299',
-                            dayTextColor: '#8C8C8C',
-                            textDisabledColor: '#D9E1E8',
-                            arrowColor: '#8C8C8C',
-                            monthTextColor: '#1DA299',
-                            textMonthFontFamily: 'PoppinsSemiBold',
-                            textDayHeaderFontFamily: 'PoppinsRegular',
-                            textDayFontFamily: 'PoppinsRegular',
-                            textMonthFontSize: 18,
-                        }}
-                        hideExtraDays={true}
-                    />
-                </View>
-
-                {/* 5: Legenda de serviços */}
-                <View style={styles.legendContainer}>
-                    {/* Consulta */}
-                    <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} />
-                        <Text style={styles.legendText}>Consulta</Text>
+                <View style={styles.inner}>
+                    {/* 2: Guia de uso */}
+                    <View style={styles.userGuideContainer}>
+                        <Button title='Guia de uso' style={styles.userGuideButton} textStyle={styles.userGuideButtonText} onPress={() => setIsGuideVisible(true)} />
                     </View>
-                    {/* Manutenção */}
-                    <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} />
-                        <Text style={styles.legendText}>Manutenção</Text>
+
+                    {/* 3: Texto */}
+                    <Text style={styles.textContainer}>
+                        <Text style={styles.text}>Selecione um dia</Text> <Text style={styles.textSpan}>disponível</Text> <Text style={styles.text}>:</Text>
+                    </Text>
+
+                    {/* 4: Calendário */}
+                    <View style={styles.calendarContainer}>
+                        <Calendar
+                            onDayPress={handlePressedDay}
+                            markedDates={{
+                                [selectedDate]: {
+                                    selected: true,
+                                    disableTouchEvent: true
+                                }
+                            }}
+                            theme={{
+                                backgroundColor: 'transparent',
+                                calendarBackground: 'transparent',
+                                textSectionTitleColor: '#1DA299',
+                                selectedDayBackgroundColor: '#1DA299',
+                                selectedDayTextColor: '#FFFFFF',
+                                todayTextColor: '#1DA299',
+                                dayTextColor: '#8C8C8C',
+                                textDisabledColor: '#D9E1E8',
+                                arrowColor: '#8C8C8C',
+                                monthTextColor: '#1DA299',
+                                textMonthFontFamily: 'PoppinsSemiBold',
+                                textDayHeaderFontFamily: 'PoppinsRegular',
+                                textDayFontFamily: 'PoppinsRegular',
+                                textMonthFontSize: 18,
+                            }}
+                            hideExtraDays={true}
+                        />
                     </View>
-                    {/* Limpeza */}
-                    <View style={styles.legend}>
-                        <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} />
-                        <Text style={styles.legendText}>Limpeza</Text>
+
+                    {/* 5: Legenda de serviços */}
+                    <View style={styles.legendContainer}>
+                        {/* Consulta */}
+                        <View style={styles.legend}>
+                            <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} />
+                            <Text style={styles.legendText}>Consulta</Text>
+                        </View>
+                        {/* Manutenção */}
+                        <View style={styles.legend}>
+                            <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} />
+                            <Text style={styles.legendText}>Manutenção</Text>
+                        </View>
+                        {/* Limpeza */}
+                        <View style={styles.legend}>
+                            <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} />
+                            <Text style={styles.legendText}>Limpeza</Text>
+                        </View>
                     </View>
+
+                    {/* 6: Texto */}
+                    <Text style={styles.bookingText}>Agendamentos:</Text>
+
+                    {/* 7: Renderização dos agendamentos */}
+                    {agendamentos.map((item) => (
+                        <List_Item key={item.id} title={item.title} dotColor={item.color} />
+                    ))}
                 </View>
+            </ScrollView>
 
-                {/* 6: Texto */}
-                <Text style={styles.bookingText}>Agendamentos:</Text>
-
-                {/* 7: Renderização dos agendamentos */}
-                {agendamentos.map((item) => (
-                    <List_Item key={item.id} title={item.title} dotColor={item.color} />
-                ))}
-            </View>
-        </ScrollView>
+            {/* 8: Card do guia de uso */}
+            {isGuideVisible && (
+                <User_Guide_Card onClose={() => setIsGuideVisible(false)} />
+            )}
+        </>
     )
 }
 

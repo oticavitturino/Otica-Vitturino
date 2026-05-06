@@ -4,6 +4,7 @@ import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item'
 import { Occurrence_Card } from '../components/Occurrence_Card'
+import { User_Guide_Card } from '../components/User_Guide_Card'
 
 const historico = [
     {
@@ -29,44 +30,51 @@ export default function Incident_History() {
         }
     }
 
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+
     return (
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-            <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
-                {/* 1: Header */}
-                <Header />
+        <>
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+                <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
+                    {/* 1: Header */}
+                    <Header />
 
-                <View style={styles.inner}>
-                    {/* 2: Guia de uso */}
-                    <View style={styles.userGuideContainer}>
-                        <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
+                    <View style={styles.inner}>
+                        {/* 2: Guia de uso */}
+                        <View style={styles.userGuideContainer}>
+                            <Button title='Guia de uso' style={styles.userGuideButton} textStyle={styles.userGuideButtonText} onPress={() => setIsGuideVisible(true)} />
+                        </View>
+
+                        {/* 3: Texto */}
+                        <Text style={styles.textContainer}>
+                            <Text style={styles.text}>Registre aqui sua {"\n"}</Text> <Text style={styles.textSpan}>ocorrência/reclamação</Text> <Text style={styles.text}>:</Text>
+                        </Text>
+
+                        {/* 4: Ilustração */}
+                        <Image style={styles.illustration} source={require('../assets/img/thinking.png')} resizeMode='contain' />
+
+                        {/* 5: Container dos cards */}
+                        <View style={styles.cardsContainer}>
+                            <Occurrence_Card type='Ocorrência' isExpanded={openCard === 'Ocorrência'} onToggle={() => toggleCard('Ocorrência')} />
+                            <Occurrence_Card type='Reclamação' isExpanded={openCard === 'Reclamação'} onToggle={() => toggleCard('Reclamação')} />
+                        </View>
+
+                        {/* 6: Texto */}
+                        <Text style={styles.historyText}>Histórico:</Text>
+
+                        {/* 7: Itens do histórico */}
+                        {historico.map((item) => (
+                            <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.title} />
+                        ))}
                     </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
 
-                    {/* 3: Texto */}
-                    <Text style={styles.textContainer}>
-                        <Text style={styles.text}>Registre aqui sua {"\n"}</Text> <Text style={styles.textSpan}>ocorrência/reclamação</Text> <Text style={styles.text}>:</Text>
-                    </Text>
-
-                    {/* 4: Ilustração */}
-                    <Image style={styles.illustration} source={require('../assets/img/thinking.png')} resizeMode='contain' />
-
-                    {/* 5: Container dos cards */}
-                    <View style={styles.cardsContainer}>
-                        <Occurrence_Card type='Ocorrência' isExpanded={openCard === 'Ocorrência'} onToggle={() => toggleCard('Ocorrência')} />
-                        <Occurrence_Card type='Reclamação' isExpanded={openCard === 'Reclamação'} onToggle={() => toggleCard('Reclamação')} />
-                    </View>
-
-                    {/* 6: Texto */}
-                    <Text style={styles.historyText}>Histórico:</Text>
-
-                    {/* 7: Itens do histórico */}
-                    {historico.map((item) => (
-                        <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.title} />
-                    ))}
-                </View>
-
-            </ScrollView>
-
-        </KeyboardAvoidingView>
+            {/* 8: Card do guia de uso */}
+            {isGuideVisible && (
+                <User_Guide_Card onClose={() => setIsGuideVisible(false)} />
+            )}
+        </>
     )
 }
 

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { Production_Card } from '../components/Production_Card'
+import { User_Guide_Card } from '../components/User_Guide_Card'
 
 export default function Production_Page() {
 
@@ -42,7 +43,7 @@ export default function Production_Page() {
         }
     ];
 
-    const [openCardId, setOpenCardId] = useState(produtos[null]);
+    const [openCardId, setOpenCardId] = useState(null);
 
     function toggleCard(id) {
         if (openCardId === id) {
@@ -52,54 +53,63 @@ export default function Production_Page() {
         }
     }
 
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+
     return (
-        <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
-            {/* 1: Header */}
-            <Header />
+        <>
+            <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
+                {/* 1: Header */}
+                <Header />
 
-            <View style={styles.inner}>
-                {/* 2: Guia de uso */}
-                <View style={styles.userGuideContainer}>
-                    <Button style={styles.userGuideButton} textStyle={styles.userGuideButtonText} title='Guia de uso' />
+                <View style={styles.inner}>
+                    {/* 2: Guia de uso */}
+                    <View style={styles.userGuideContainer}>
+                        <Button title='Guia de uso' style={styles.userGuideButton} textStyle={styles.userGuideButtonText} onPress={() => setIsGuideVisible(true)} />
+                    </View>
+
+                    {/* 3: Texto */}
+                    <Text style={styles.textContainer}>
+                        <Text style={styles.text}>Acompanhe aqui o</Text> <Text style={styles.textSpan}>status {"\n"}</Text> <Text style={styles.text}>de produção:</Text>
+                    </Text>
+
+                    {/* 4: Ilustração */}
+                    <Image style={styles.illustration} source={require('../assets/img/gear_10945800.png')} resizeMode='contain' />
+
+                    {/* 5: Texto */}
+                    <Text style={styles.statusText}>Status:</Text>
+
+                    {/* 6: Container dos Cards */}
+                    <View style={styles.cardsContainer}>
+
+                        {produtos.map((product) => (
+                            <Production_Card
+                                key={product.id}
+                                title={product.title}
+                                isExpanded={openCardId === product.id}
+                                onToggle={() => toggleCard(product.id)}
+                                timeline={product.timeline.map((step) => ({
+                                    date: step.date,
+                                    status: STATUS_DICIONARIO[step.statusCode].texto,
+                                    icon: STATUS_DICIONARIO[step.statusCode].icone
+                                }))}
+                            />
+                        ))}
+                    </View>
                 </View>
+            </ScrollView>
 
-                {/* 3: Texto */}
-                <Text style={styles.textContainer}>
-                    <Text style={styles.text}>Acompanhe aqui o</Text> <Text style={styles.textSpan}>status {"\n"}</Text> <Text style={styles.text}>de produção:</Text>
-                </Text>
-
-                {/* 4: Ilustração */}
-                <Image style={styles.illustration} source={require('../assets/img/gear_10945800.png')} resizeMode='contain' />
-
-                {/* 5: Texto */}
-                <Text style={styles.statusText}>Status:</Text>
-
-                {/* 6: Container dos Cards */}
-                <View style={styles.cardsContainer}>
-
-                    {produtos.map((product) => (
-                        <Production_Card
-                            key={product.id}
-                            title={product.title}
-                            isExpanded={openCardId === product.id}
-                            onToggle={() => toggleCard(product.id)}
-                            timeline={product.timeline.map((step) => ({
-                                date: step.date,
-                                status: STATUS_DICIONARIO[step.statusCode].texto,
-                                icon: STATUS_DICIONARIO[step.statusCode].icone
-                            }))}
-                        />
-                    ))}
-                </View>
-            </View>
-        </ScrollView>
+            {/* 7: Card do guia de uso */}
+            {isGuideVisible && (
+                <User_Guide_Card onClose={() => setIsGuideVisible(false)} />
+            )}
+        </>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#EEEDED'
+        backgroundColor: '#EEEDED',
     },
     inner: {
         flex: 1,
