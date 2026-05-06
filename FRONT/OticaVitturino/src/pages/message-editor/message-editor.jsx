@@ -41,7 +41,6 @@ function Message_Editor() {
     return (
         <Layout>
             <div className='message-page-wrapper'>
-
                 {/* 1: Container externo */}
                 <Container className='main-container-message-editor'>
 
@@ -64,11 +63,8 @@ function Message_Editor() {
 
                             </List_Item>
                         ))}
-
                     </div>
-
                 </Container>
-
             </div>
         </Layout>
     )

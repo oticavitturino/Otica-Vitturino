@@ -46,7 +46,6 @@ function Login() {
 
   return (
     <div className='login-page-wrapper'>
-
       {/* 1: Imagem da logo */}
       <img className='login-logo' src={LogoVitturino}></img>
 
@@ -77,7 +76,6 @@ function Login() {
           </Card>
         </div>
       )}
-
     </div>
   )
 }

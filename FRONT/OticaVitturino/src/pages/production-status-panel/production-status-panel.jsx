@@ -49,7 +49,6 @@ function Production_Status_Panel() {
     return (
         <Layout>
             <div className='production-page-wrapper'>
-
                 {/* 1: Container externo */}
                 <Container className='main-container-production-status-panel'>
 
@@ -87,11 +86,8 @@ function Production_Status_Panel() {
 
                             </List_Item>
                         ))}
-
                     </div>
-
                 </Container>
-
             </div>
         </Layout>
     )

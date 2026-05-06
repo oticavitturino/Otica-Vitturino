@@ -36,7 +36,6 @@ function Incident_History() {
     return (
         <Layout>
             <div className='incident-page-wrapper'>
-
                 {/* 1: Container externo */}
                 <Container className='main-container-incident-history'>
 
@@ -80,11 +79,8 @@ function Incident_History() {
 
                             </List_Item>
                         ))}
-
                     </div>
-
                 </Container>
-
             </div>
         </Layout>
     )

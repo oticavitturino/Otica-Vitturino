@@ -1,4 +1,5 @@
 import './style.css'
+import { useState } from 'react'
 import Layout from '../../components/layout'
 import Container from '../../components/container'
 import Input from '../../components/input'
@@ -9,8 +10,10 @@ import PenIcon from '../../assets/pen.png'
 import TrashIcon from '../../assets/trash-2.png'
 
 function User_Management() {
-  // Apenas para testes mockados
 
+  const [dateInputType, setDateInputType] = useState('text');
+
+  // Apenas para testes mockados
   const users = [
     {
       id: 1,
@@ -77,7 +80,6 @@ function User_Management() {
   return (
     <Layout>
       <div className='user-management-wrapper'>
-
         {/* 1: Container externo */}
         <Container className='main-container-user-management'>
 
@@ -99,7 +101,20 @@ function User_Management() {
                 <Input placeholder='Nome' type='text' required />
                 <Input placeholder='E-mail' type='email' required />
                 <Input placeholder='Senha' type='password' required />
-                <Input placeholder='Data de nascimento' type='date' required />
+                <Input
+                  placeholder='Data de nascimento'
+                  type={dateInputType}
+                  onFocus={() => {
+                    if (dateInputType !== 'date') {
+                      setDateInputType('date');
+                    }
+                  }}
+                  onBlur={(e) => {
+                    if (!e.target.value) {
+                      setDateInputType('text');
+                    }
+                  }}
+                  required />
                 <img src={CheckIcon} className='check-icon-form' />
                 <Button className='btn-register'>Cadastrar</Button>
               </form>
@@ -132,15 +147,10 @@ function User_Management() {
                     {/* 11: Dados de cada usuário */}
                     <span>{user.nome} | {user.login}</span></List_item>
                 ))}
-
               </div>
-
             </Container>
-
           </div>
-
         </Container>
-
       </div>
     </Layout>
   )

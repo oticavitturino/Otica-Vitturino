@@ -94,7 +94,6 @@ function Scheduling_Panel() {
     return (
         <Layout>
             <div className='scheduling-page-wrapper'>
-
                 {/* 1: Container externo */}
                 <Container className='main-container-scheduling-panel'>
 
@@ -139,11 +138,8 @@ function Scheduling_Panel() {
 
                             </List_Item>
                         ))}
-
                     </div>
-
                 </Container>
-
             </div>
         </Layout>
     )
