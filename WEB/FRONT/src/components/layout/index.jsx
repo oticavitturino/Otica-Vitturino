@@ -20,7 +20,7 @@ function Layout({ children }) {
         {children}
       </main>
     </div>
-  );
+  )
 }
 
 export default Layout;

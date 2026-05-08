@@ -10,7 +10,6 @@ function Card({ children, className, ...props}) {
             {children}
         </div>
     )
-
 }
 
 export default Card
