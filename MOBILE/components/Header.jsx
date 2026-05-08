@@ -1,12 +1,18 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { useState } from 'react'
-import { useRouter } from 'expo-router';
+import { useRouter } from 'expo-router'
+// import { AuthContext } from '../contexts/AuthContext' - para quando for integrar
 
 export function Header() {
 
     const router = useRouter();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const userScore = 0; // provisóriamente
+
+    // const userContext = useContext(AuthContext); - para quando for integrar
+    // const userScore = userContext?.userScore || 0; - para quando for integrar
 
     // Função executada ao clicar no botão de usuário
     function handleUserMenuClick() {
@@ -19,7 +25,7 @@ export function Header() {
             {/* 1: Ícone de score */}
             <View style={styles.scoreContainer}>
                 <Image style={styles.scoreImage} source={require('../assets/img/medal.png')} />
-                <Text style={styles.scoreText}>300</Text>
+                <Text style={styles.scoreText}>{userScore}</Text>
             </View>
 
             {/* 2: Logo */}
