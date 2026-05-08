@@ -2,12 +2,13 @@ import './style.css'
 import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
+import Button from '../../components/button'
 import XIcon from '../../assets/x.png'
 import ChartIcon from '../../assets/file-chart-column.png'
 
 function Scheduling_Panel() {
-    // Apenas para testes mockados
 
+    // Apenas para testes mockados
     const agendamentos = [
         {
             id: 1,
@@ -91,6 +92,10 @@ function Scheduling_Panel() {
         }
     ];
 
+    function addSchedulingDate() {
+
+    }
+
     return (
         <Layout>
             <div className='scheduling-page-wrapper'>
@@ -139,6 +144,9 @@ function Scheduling_Panel() {
                             </List_Item>
                         ))}
                     </div>
+
+                    {/* 7: Botão de adicionar datas disponíveis */}
+                    <Button className='btn-add-date' onPress={addSchedulingDate}>Adicionar datas disponíveis</Button>
                 </Container>
             </div>
         </Layout>
