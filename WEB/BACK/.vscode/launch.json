@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch SpringBootApp",
+            "request": "launch",
+            "mainClass": "com.br.example.main.MainApplication",
+            "projectName": "main",
+            "env": {
+                "URL_FRONT": "http://localhost:5173",
+                "DB_USER": "admin",
+                "DB_PASSWORD": "admin",
+                "DB_URL": "jdbc:h2:mem:usermanagementdb",
+                "JWT_SECRET": "my-secret-key"
+            }
+        }
+    ]
+}
