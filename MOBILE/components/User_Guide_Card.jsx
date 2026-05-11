@@ -20,8 +20,12 @@ export function User_Guide_Card({ onClose }) {
 const styles = StyleSheet.create({
     overlay: {
         position: 'absolute',
-        top: 0, bottom: 0, left: 0, right: 0,
-        zIndex: 999, elevation: 999,
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 999,
+        elevation: 999,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 24,
