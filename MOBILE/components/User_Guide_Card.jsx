@@ -4,14 +4,19 @@ import { Button } from './Button'
 export function User_Guide_Card({ onClose }) {
     return (
         <View style={styles.overlay}>
+            {/* 1: Container principal */}
             <View style={styles.container}>
+
+                {/* 2: Texto com scroll */}
                 <ScrollView>
                     <Text style={styles.userGuideText}>Ao usar a função <Text style={styles.userGuideTextSpan}>"Agendar Consulta"</Text>, selecione um dia disponível no calendário (marcado em verde) e em seguida o tipo de agendamento desejado.</Text>
                     <Text style={styles.userGuideText}>Utilizando a função <Text style={styles.userGuideTextSpan}>"Acompanhar Produção"</Text>, seus produtos em andamento estarão disponíveis na tela e basta clicar em cima deles para verficar os seus detalhes.</Text>
                     <Text style={styles.userGuideText}>Na sessão de <Text style={styles.userGuideTextSpan}>"Registrar Ocorrência/Reclamação"</Text>, haverá dois botões onde você poderá registrar qualquer problema que venha a ter. Basta clicar no botão desejado que irá abrir um espaço para você digitar e um botão para o envio do seu problema. No final dessa sessão estarão listados todas as suas ocorrências/reclamações.</Text>
                     <Text style={styles.userGuideText}>Na função <Text style={styles.userGuideTextSpan}>"Indicar Aplicativo"</Text>, você poderá compartilhar o App com outras pessoas e receber pontos que se tornarão descontos nos seus próximos serviços agendados.</Text>
                 </ScrollView>
-                <Button title='Entendi' style={styles.gotItButton} textStyle={styles.gotItButtonText} onPress={onClose}/>
+
+                {/* 3: Botão transparente */}
+                <Button title='Entendi' style={styles.gotItButton} textStyle={styles.gotItButtonText} onPress={onClose} />
             </View>
         </View>
     )
