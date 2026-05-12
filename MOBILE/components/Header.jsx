@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { useState } from 'react'
 import { useRouter } from 'expo-router'
+import { Profile_Card } from './Profile_Card';
 // import { AuthContext } from '../contexts/AuthContext' - para quando for integrar
 
 export function Header() {
@@ -39,6 +40,9 @@ export function Header() {
                     <Image style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} resizeMode='contain' />
                 </View>
             </Pressable>
+
+            {/* 4: Card de profile */}
+            <Profile_Card isVisible={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
         </View>
     )
 }
