@@ -1,4 +1,5 @@
-import { View, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
@@ -6,6 +7,40 @@ import { Button } from '../components/Button'
 export default function Login() {
 
   const router = useRouter();
+
+  const [emailInput, setEmailInput] = useState('');
+
+  const [passwordInput, setPasswordInput] = useState('');
+
+  const users = [
+    {
+      id: 1,
+      email: "caiovtech@outlook.com",
+      password: "123456"
+    },
+    {
+      id: 2,
+      email: "danieldanielsilva08@gmail.com",
+      password: "123456"
+    }
+  ];
+
+  function checkLogin() {
+    Keyboard.dismiss();
+
+    const userFound = users.find(
+      (user) => user.email === emailInput && user.password === passwordInput
+    );
+
+    if (userFound) {
+      router.replace('/homepage');
+    } else {
+      Alert.alert(
+        "Acesso Negado",
+        "E-mail ou senha incorretos. Tente novamente."
+      );
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -21,9 +56,9 @@ export default function Login() {
 
           {/* 2: Form (Inputs & Button) */}
           <View style={styles.formContainer}>
-            <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} />
-            <Input placeholder='Digite sua senha' secureTextEntry={true} />
-            <Button title='Entrar' onPress={() => router.replace('/homepage')} />
+            <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} value={emailInput} onChangeText={setEmailInput} />
+            <Input placeholder='Digite sua senha' secureTextEntry={true} value={passwordInput} onChangeText={setPasswordInput} />
+            <Button title='Entrar' onPress={checkLogin} />
           </View>
 
         </View>
