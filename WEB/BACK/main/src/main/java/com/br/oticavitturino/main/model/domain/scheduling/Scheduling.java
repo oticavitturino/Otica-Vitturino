@@ -22,10 +22,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "scheduling")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Scheduling {
 
     @Id
@@ -48,4 +48,8 @@ public class Scheduling {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User customer;
+
+    public Scheduling(LocalDateTime scheduling_date) {
+        this.scheduling_date = scheduling_date;
+    }
 }
