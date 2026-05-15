@@ -12,7 +12,11 @@
                 "DB_USER": "admin",
                 "DB_PASSWORD": "admin",
                 "DB_URL": "jdbc:h2:mem:usermanagementdb",
-                "JWT_SECRET": "my-secret-key"
+                "JWT_SECRET": "my-secret-key",
+                "EMAIL_HOST": "smtp.gmail.com",
+                "EMAIL_PORT": "587",
+                "EMAIL_USERNAME": "danieldanielsilva08@gmail.com",
+                "EMAIL_PASSWORD": "3e5f6j7c8d9g10!PRO",
             }
         }
     ]

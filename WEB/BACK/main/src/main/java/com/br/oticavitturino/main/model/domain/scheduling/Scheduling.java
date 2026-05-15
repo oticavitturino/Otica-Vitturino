@@ -1,9 +1,9 @@
 package com.br.oticavitturino.main.model.domain.scheduling;
 import java.time.LocalDateTime;
 
+import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.br.oticavitturino.main.model.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,9 +45,9 @@ public class Scheduling {
     private StatusEnum status;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnore
-    private User customer;
+    private Customer customer;
 
     public Scheduling(LocalDateTime scheduling_date) {
         this.scheduling_date = scheduling_date;

@@ -2,6 +2,7 @@ package com.br.oticavitturino.main.model.domain.admin;
 
 import com.br.oticavitturino.main.model.domain.user.User;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,5 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "admin")
 public class Admin extends User {
-   private String name; 
+
+   @Column(name = "name", length = 255, nullable = false)
+   private String name;
 }
