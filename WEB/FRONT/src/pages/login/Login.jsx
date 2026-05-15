@@ -11,35 +11,35 @@ function Login() {
 
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-
   const [showError, setShowError] = useState(false);
 
   const navigate = useNavigate();
 
-  const users = [
-    {
-      id: 1,
-      email: "caiovtech@outlook.com",
-      password: "123456"
-    },
-    {
-      id: 2,
-      email: "danieldanielsilva08@gmail.com",
-      password: "123456"
-    }
-  ]
-
   // Função de checkagem de login
-  function checkLogin(event) {
+  async function handleLogin(event) {
     event.preventDefault();
 
-    const userFound = users.find(
-      (user) => user.email === emailInput && user.password === passwordInput
-    );
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: emailInput,
+          password: passwordInput
+        })
+      });
 
-    if (userFound) {
-      navigate('/home');
-    } else {
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
+        navigate('/home');
+      } else {
+        setShowError(true);
+      }
+    } catch (error) {
+      console.error("Erro ao se conectar com o servidor: ", error);
       setShowError(true);
     }
   }
@@ -56,7 +56,7 @@ function Login() {
         <h2>Fazer Login</h2>
 
         {/* 4: Formulário de login */}
-        <form className='login-form' onSubmit={checkLogin}>
+        <form className='login-form' onSubmit={handleLogin}>
           <Input placeholder='Digite seu e-mail' type='email' value={emailInput} onChange={(event) => setEmailInput(event.target.value)} required />
           <Input placeholder='Digite sua senha' type='password' value={passwordInput} onChange={(event) => setPasswordInput(event.target.value)} required />
           <Button className='btn-enter' type='submit'>Entrar</Button>
