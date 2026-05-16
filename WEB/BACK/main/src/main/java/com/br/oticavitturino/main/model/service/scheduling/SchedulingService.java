@@ -1,8 +1,8 @@
 package com.br.oticavitturino.main.model.service.scheduling;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,10 @@ import com.br.oticavitturino.main.model.repository.scheduling.SchedulingReposito
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 @Service
 public class SchedulingService {
@@ -36,7 +36,7 @@ public class SchedulingService {
     private JavaMailSender mailSender;
 
     @Autowired
-    private ResourceLoader resourceLoader;
+    private TemplateEngine templateEngine;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
@@ -50,31 +50,27 @@ public class SchedulingService {
 
     // Administrador pode excluir datas disponíveis para agendamento;
     public void deleteDateAvailable(DateAvailableDTO schedulingDTO) {
-        Scheduling scheduling = repository.findBySchedulingDate(schedulingDTO.date_available());
-        if (scheduling != null) {
-            repository.delete(scheduling);
-        }
+        Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.date_available()))
+                .ifPresent(repository::delete);
     }
 
     // Administrador pode confirmar/cancelar um agendamento;
-    public void confirmOrCancelAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = repository.findBySchedulingDate(schedulingDTO.scheduling_date());
-        if (scheduling == null) {
-            throw new IllegalArgumentException("Scheduling date not found in the database!");
-        }
+    public void confirmOrCancelAppointment(Long SchedulingId, StatusEnum status) {
+        Scheduling scheduling = Optional.ofNullable(repository.findById(SchedulingId).orElse(null))
+                .orElseThrow(() -> new IllegalArgumentException("Scheduling not found in the database!"));
 
-        if (schedulingDTO.status() == StatusEnum.CONCLUIDO) {
-            scheduling.setStatus(StatusEnum.CONCLUIDO);
+        if (status == StatusEnum.CONCLUIDO) {
             try {
-                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName());
-            } catch (MessagingException | IOException e) {
+                scheduling.setStatus(StatusEnum.CONCLUIDO);
+                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
+            } catch (MessagingException e) {
                 e.printStackTrace();
             }
-        } else if (schedulingDTO.status() == StatusEnum.CANCELADO) {
-            scheduling.setStatus(StatusEnum.CANCELADO);
+        } else if (status == StatusEnum.CANCELADO) {
             try {
-                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName());
-            } catch (MessagingException | IOException e) {
+                scheduling.setStatus(StatusEnum.CONCLUIDO);
+                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
+            } catch (MessagingException e) {
                 e.printStackTrace();
             }
         }
@@ -91,46 +87,43 @@ public class SchedulingService {
 
     // Cliente pode agendar uma consulta;
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = repository.findBySchedulingDate(schedulingDTO.scheduling_date());
-        if (scheduling != null) {
-            Customer customer = customerRepository.findByName(schedulingDTO.name());
-            if (customer == null) {
-                throw new IllegalArgumentException("Customer not found in the database!");
-            }
-            scheduling.setCustomer(customer);
-            scheduling.setStatus(StatusEnum.PENDENTE);
-            repository.save(scheduling);
-        } else {
-            throw new IllegalArgumentException("Scheduling date not found in the database!");
-        }
+        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.scheduling_date()))
+                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
+
+        Customer customer = Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
+
+        scheduling.setCustomer(customer);
+        scheduling.setStatus(StatusEnum.PENDENTE);
+        repository.save(scheduling);
+
         return schedulingDTO;
     }
 
     // Cliente pode cancelar um agendamento;
     public void cancelAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = repository.findBySchedulingDate(schedulingDTO.scheduling_date());
-        if (scheduling != null) {
-            scheduling.setCustomer(null);
-            scheduling.setStatus(StatusEnum.CANCELADO);
-            repository.save(scheduling);
-        } else {
-            throw new IllegalArgumentException("Scheduling date not found in the database!");
-        }
+        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.scheduling_date()))
+                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
+
+        scheduling.setCustomer(null);
+        scheduling.setStatus(StatusEnum.CANCELADO);
+        repository.save(scheduling);
     }
 
-    private void sendEmailNotification(String to, String subject, String username) throws MessagingException, IOException {
-         MimeMessage message = mailSender.createMimeMessage();
-         MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
+    private void sendEmailNotification(String to, String subject, String username, String message) throws MessagingException {
+         MimeMessage mimeMessage = mailSender.createMimeMessage();
+         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
 
-         Resource resource = resourceLoader.getResource("classpath:templates/confirmation-email-template/index.html");
-         String emailContent = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-        
-         emailContent = emailContent.replace("{{username}}", username);
+         Context context = new Context();
+         context.setVariable("username", username);
+         context.setVariable("message", message);
+
+         String emailContent = templateEngine.process("confirmation-email-template.html", context);
 
          helper.setFrom(fromEmail);
          helper.setTo(to);
          helper.setSubject(subject);
          helper.setText(emailContent, true);
-         mailSender.send(message);
+         mailSender.send(mimeMessage);
     }
 }
