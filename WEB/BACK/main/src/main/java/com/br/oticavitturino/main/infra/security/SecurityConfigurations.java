@@ -44,6 +44,12 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/scheduling/addDateAvailable").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/scheduling/deleteDateAvailable").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/scheduling/confirmOrCancelAppointment").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/scheduling/getAllDatesAvailable").hasAnyRole("ADMIN", "CUSTOMER")
+                    .requestMatchers(HttpMethod.POST, "/scheduling/scheduleAppointment").hasRole("CUSTOMER")
+                    .requestMatchers(HttpMethod.POST, "/scheduling/cancelAppointment").hasRole("CUSTOMER")
                     .anyRequest().authenticated()
                 )
 

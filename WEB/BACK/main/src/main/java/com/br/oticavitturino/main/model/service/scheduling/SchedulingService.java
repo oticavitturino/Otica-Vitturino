@@ -101,11 +101,11 @@ public class SchedulingService {
     }
 
     // Cliente pode cancelar um agendamento;
-    public void cancelAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.scheduling_date()))
+    public void cancelAppointment(Long schedulingId) {
+        Scheduling scheduling = Optional.ofNullable(repository.findById(schedulingId).orElse(null))
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
 
-        scheduling.setCustomer(null);
+        scheduling.setCustomer(customerRepository.findById(scheduling.getCustomer().getId()).orElse(null));
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
     }

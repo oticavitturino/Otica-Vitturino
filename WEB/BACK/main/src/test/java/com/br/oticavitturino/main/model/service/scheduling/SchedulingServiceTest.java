@@ -134,7 +134,7 @@ public class SchedulingServiceTest {
 
         schedulingService.confirmOrCancelAppointment(id, StatusEnum.CANCELADO);
 
-        assertEquals(StatusEnum.CONCLUIDO, scheduling.getStatus());
+        assertEquals(StatusEnum.CANCELADO, scheduling.getStatus());
         verify(repository, times(1)).save(scheduling);
         verify(mailSender, times(1)).send(any(MimeMessage.class));
     }
@@ -174,13 +174,13 @@ public class SchedulingServiceTest {
     @Test
     @DisplayName("Teste de cancelar um agendamento")
     void testCancelAppointment() {
-        SchedulingDTO dto = new SchedulingDTO(null, SchedulingEnum.CONSULTA, testDate, null);
+        Long id = 1L;
         Scheduling scheduling = new Scheduling(testDate);
         scheduling.setCustomer(new Customer());
 
-        when(repository.findBySchedulingDate(testDate)).thenReturn(scheduling);
+        when(repository.findById(id)).thenReturn(Optional.of(scheduling));
 
-        schedulingService.cancelAppointment(dto);
+        schedulingService.cancelAppointment(id);
 
         assertNull(scheduling.getCustomer());
         assertEquals(StatusEnum.CANCELADO, scheduling.getStatus());
