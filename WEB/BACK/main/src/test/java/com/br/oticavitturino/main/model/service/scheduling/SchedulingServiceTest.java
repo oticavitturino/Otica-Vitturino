@@ -61,8 +61,8 @@ public class SchedulingServiceTest {
         testDate = LocalDateTime.now().plusDays(1);
 
         Scheduling scheduling = new Scheduling();
-        scheduling.setScheduling_type(SchedulingEnum.CONSULTA);
-        scheduling.setScheduling_date(testDate);
+        scheduling.setSchedulingType(SchedulingEnum.CONSULTA);
+        scheduling.setSchedulingDate(testDate);
         scheduling.setStatus(StatusEnum.PENDENTE);
         
         ReflectionTestUtils.setField(schedulingService, "fromEmail", "nao-responda@vitturino.com.br");
@@ -100,7 +100,7 @@ public class SchedulingServiceTest {
 
         Long id = 1L;
         Scheduling scheduling = new Scheduling(testDate);
-        scheduling.setScheduling_type(SchedulingEnum.CONSULTA);
+        scheduling.setSchedulingType(SchedulingEnum.CONSULTA);
         scheduling.setStatus(StatusEnum.PENDENTE);
         scheduling.setCustomer(customer);
         
@@ -124,7 +124,7 @@ public class SchedulingServiceTest {
 
         Long id = 1L;
         Scheduling scheduling = new Scheduling(testDate);
-        scheduling.setScheduling_type(SchedulingEnum.CONSULTA);
+        scheduling.setSchedulingType(SchedulingEnum.CONSULTA);
         scheduling.setStatus(StatusEnum.PENDENTE);
         scheduling.setCustomer(customer);
         

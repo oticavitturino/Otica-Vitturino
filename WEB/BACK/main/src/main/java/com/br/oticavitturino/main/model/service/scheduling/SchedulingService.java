@@ -45,7 +45,7 @@ public class SchedulingService {
     public DateAvailableDTO addDateAvailable(DateAvailableDTO schedulingDTO) {
         Scheduling scheduling = new Scheduling(schedulingDTO.date_available());
         repository.save(scheduling);
-        return new DateAvailableDTO(scheduling.getScheduling_date());
+        return new DateAvailableDTO(scheduling.getSchedulingDate());
     }
 
     // Administrador pode excluir datas disponíveis para agendamento;
@@ -60,19 +60,11 @@ public class SchedulingService {
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling not found in the database!"));
 
         if (status == StatusEnum.CONCLUIDO) {
-            try {
-                scheduling.setStatus(StatusEnum.CONCLUIDO);
-                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
+            scheduling.setStatus(StatusEnum.CONCLUIDO);
+            sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
         } else if (status == StatusEnum.CANCELADO) {
-            try {
-                scheduling.setStatus(StatusEnum.CONCLUIDO);
-                sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
-            } catch (MessagingException e) {
-                e.printStackTrace();
-            }
+            scheduling.setStatus(StatusEnum.CANCELADO);
+            sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
         }
         repository.save(scheduling);
     }
@@ -81,7 +73,7 @@ public class SchedulingService {
     public List<DateAvailableDTO> getAllDatesAvailable() {
         List<Scheduling> schedulings = repository.findAll();
         return schedulings.stream()
-                .map(s -> new DateAvailableDTO(s.getScheduling_date()))
+                .map(s -> new DateAvailableDTO(s.getSchedulingDate()))
                 .toList();
     }
 
@@ -110,20 +102,25 @@ public class SchedulingService {
         repository.save(scheduling);
     }
 
-    private void sendEmailNotification(String to, String subject, String username, String message) throws MessagingException {
-         MimeMessage mimeMessage = mailSender.createMimeMessage();
-         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
+    private void sendEmailNotification(String to, String subject, String username, String message) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
 
-         Context context = new Context();
-         context.setVariable("username", username);
-         context.setVariable("message", message);
+            Context context = new Context();
+            context.setVariable("username", username);
+            context.setVariable("message", message);
 
-         String emailContent = templateEngine.process("confirmation-email-template.html", context);
+            String emailContent = templateEngine.process("confirmation-email-template.html", context);
 
-         helper.setFrom(fromEmail);
-         helper.setTo(to);
-         helper.setSubject(subject);
-         helper.setText(emailContent, true);
-         mailSender.send(mimeMessage);
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(emailContent, true);
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            System.err.println("Erro ao tentar enviar e-mail para: " + to + " - Erro: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

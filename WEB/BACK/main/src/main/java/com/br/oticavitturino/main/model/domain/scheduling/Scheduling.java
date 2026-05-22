@@ -34,11 +34,11 @@ public class Scheduling {
 
     @Column(name = "scheduling_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private SchedulingEnum scheduling_type;
+    private SchedulingEnum schedulingType;
 
     @Column(name = "scheduling_date", nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-    private LocalDateTime scheduling_date;
+    private LocalDateTime schedulingDate;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -49,7 +49,7 @@ public class Scheduling {
     @JsonIgnore
     private Customer customer;
 
-    public Scheduling(LocalDateTime scheduling_date) {
-        this.scheduling_date = scheduling_date;
+    public Scheduling(LocalDateTime schedulingDate) {
+        this.schedulingDate = schedulingDate;
     }
 }
