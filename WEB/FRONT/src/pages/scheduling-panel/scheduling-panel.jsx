@@ -4,7 +4,7 @@ import Container from '../../components/container'
 import List_Item from '../../components/list-item'
 import Button from '../../components/button'
 import XIcon from '../../assets/x.png'
-import ChartIcon from '../../assets/file-chart-column.png'
+import CheckIcon from '../../assets/check.png'
 
 function Scheduling_Panel() {
 
@@ -123,7 +123,7 @@ function Scheduling_Panel() {
                             <List_Item key={agendamento.id} actions={
                                 <>
                                     <button className="icon-btn chart-btn">
-                                        <img src={ChartIcon} className="action-icon"></img>
+                                        <img src={CheckIcon} className="action-icon"></img>
                                     </button>
 
                                     <button className="icon-btn x-btn">
