@@ -2,8 +2,8 @@
     width: 100%;
     padding: 40px 50px;
     background-color: transparent;
-    border: 3px solid rgba(29, 162, 153, 0.5);
-    border-radius: 7px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Mobile */
