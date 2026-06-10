@@ -58,6 +58,7 @@
     width: 350px;
     margin-top: 30px;
     margin-bottom: 15px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s ease;
 }
 
@@ -88,6 +89,7 @@
 }
 
 .error-card h3 {
+    font-family: 'Poppins';
     font-size: 1.7rem;
     font-weight: 600;
     color: #3C7975;
@@ -95,6 +97,7 @@
 }
 
 .error-card p {
+    font-family: 'Poppins';
     font-size: 1rem;
     color: #666666;
     margin: 0;
@@ -107,8 +110,10 @@
     width: 50%;
     margin: 0 auto;
     height: 40px;
+    font-family: 'Poppins';
     font-size: 1rem;
     background-color: #1DA299;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     color: #FFFFFF;
 }
 

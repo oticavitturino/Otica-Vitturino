@@ -18,6 +18,7 @@
     margin-top: 17.5vh;
     margin-bottom: 20px;
     margin-left: 26%;
+    background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -105,6 +106,7 @@
     font-size: 1.1rem;
     height: 55px;
     width: 100%;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s ease;
 }
 
@@ -344,6 +346,10 @@
         display: flex;
         flex-direction: column;
         align-items: stretch !important;
+    }
+
+    .registered-users-container {
+        margin-bottom: 20px;
     }
 
     .registered-users-container .list-item {
