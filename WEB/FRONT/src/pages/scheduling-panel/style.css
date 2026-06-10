@@ -31,6 +31,7 @@
 .scheduling-scroll-area {
     width: 100%;
     max-height: 72%;
+    flex-grow: 1;
     overflow-y: auto;
     padding-right: 10px;
     display: flex;
@@ -81,6 +82,15 @@
     padding-left: 10px;
 }
 
+.empty-state-text {
+    font-family: 'Poppins', sans-serif;
+    color: #3C7975;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+    font-weight: 500;
+}
+
 .btn-add-date {
     background-color: #1DA299;
     color: #FFFFFF;
@@ -88,19 +98,164 @@
     height: 60px;
     width: 270px;
     flex-shrink: 0;
-    margin-top: 40px;
+    margin-top: auto;
+    margin-bottom: 30px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s ease;
 }
 
 .btn-add-date:hover {
-    background-color: #187e77;
+    background-color: #187E77;
 }
 
 .item-content {
     flex-grow: 1;
     width: 100%;
     display: block;
+}
+
+.add-remove-date-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.date-x-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.date-x-btn:hover {
+    opacity: 0.7;
+}
+
+.date-x-btn-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(0);
+}
+
+.add-remove-date-card h3 {
+    font-family: 'Poppins';
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.add-date-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin: 0;
+    gap: 10px;
+}
+
+.input-group label {
+    font-family: 'Poppins';
+    font-size: 1.1rem;
+    color: #666666;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.input-group input[type="datetime-local"] {
+    width: 40%;
+    padding: 6px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    border: 1px solid #CCCCCC;
+    border-radius: 8px !important;
+    color: #333333;
+}
+
+.btn-confirm-date {
+    width: 10%;
+    border-radius: 8px !important;
+    color: #3C7975;
+    background-color: #B8B8B8;
+    transition: 0.1s ease-in;
+}
+
+.btn-confirm-date:hover {
+    background-color: #eeeeee;
+}
+
+.add-remove-date-scroll-area {
+    width: 100%;
+    height: 270px;
+    margin-bottom: 12px;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+    border-radius: 5px;
+}
+
+.add-remove-date-scroll-area .list-item {
+    width: 100% !important;
+    min-height: 45px !important;
+    flex-shrink: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 8px !important;
+    padding: 0 10px !important;
+}
+
+.add-remove-date-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.add-remove-date-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.add-remove-date-scroll-area::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+.empty-dates-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #666666; 
+    text-align: center;
+    margin: auto;
+    font-weight: 500;
+}
+
+.date-only-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #FFFFFF;
 }
 
 @keyframes welcome-container-animation {
@@ -137,6 +292,53 @@
         width: 225px;
         margin-bottom: 12px;
     }
+
+    .add-remove-date-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .input-group label {
+        font-size: 1rem;
+    }
+
+    .input-group input[type="datetime-local"] {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn-confirm-date {
+        font-size: 1.1rem;
+        padding: 4px 10px;
+    }
+
+    .add-remove-date-scroll-area {
+        height: 240px;
+    }
+
+    .add-remove-date-scroll-area .list-item {
+        min-height: 42px !important;
+        height: 42px !important;
+        padding: 0 10px !important;
+        margin-bottom: 5px !important;
+    }
+
+    .add-remove-date-scroll-area .icon-btn {
+        height: 24px;
+        width: 24px;
+        min-width: 24px;
+    }
+
+    .add-remove-date-scroll-area .action-icon {
+        height: 12px;
+    }
+
+     .empty-dates-text {
+        font-size: 1rem;
+    }
+
+    .date-only-row {
+        font-size: 0.9rem;
+    }
 }
 
 /* 1366 * 768 */
@@ -167,18 +369,72 @@
         width: 192px;
         margin-bottom: 14px;
     }
+
+    .add-remove-date-card {
+        width: 40%;
+        gap: 15px;
+    }
+
+    .add-remove-date-card h3 {
+        font-size: 1rem;
+    }
+
+    .input-group label {
+        font-size: 0.9rem;
+    }
+
+    .input-group input[type="datetime-local"] {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+
+    .btn-confirm-date {
+        font-size: 1rem;
+        padding: 3px 8px;
+    }
+
+    .add-remove-date-scroll-area {
+        height: 210px;
+    }
+
+    .add-remove-date-scroll-area .list-item {
+        min-height: 37px !important;
+        height: 37px !important;
+        padding: 0 10px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .add-remove-date-scroll-area .icon-btn {
+        height: 20px;
+        width: 20px;
+        min-width: 20px;
+    }
+
+    .add-remove-date-scroll-area .action-icon {
+        height: 10px;
+    }
+
+    .empty-dates-text {
+        font-size: 0.9rem;
+    }
+
+    .date-only-row {
+        font-size: 0.8rem;
+    }
 }
 
 /* Mobile */
 
 @media (max-width: 768px) {
     .main-container-scheduling-panel {
-        margin-left: 0;
-        margin-top: 120px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 100px;
         margin-bottom: 20px;
+        width: 100% !important;
         height: auto;
-        width: 100%;
-        padding: 20px 10px;
+        border-radius: 0;
+        padding: 40px 15px;
     }
 
     .main-container-scheduling-panel h2 {
@@ -190,6 +446,12 @@
         max-height: none;
         overflow-y: visible;
         padding-right: 0;
+    }
+
+    .empty-state-text {
+        margin: 0 !important;
+        margin-top: 10px !important;
+        font-size: 1.1rem;
     }
 
     .main-container-scheduling-panel .list-legend {
@@ -231,5 +493,63 @@
         width: 210px;
         font-size: 0.8rem;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .add-remove-date-card {
+        width: 90%;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .add-date-form {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .input-group label {
+        font-size: 1rem;
+        white-space: normal;
+    }
+
+    .input-group input[type="datetime-local"] {
+        width: 100%;
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .btn-confirm-date {
+        width: 100%;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .add-remove-date-scroll-area {
+        height: 200px;
+        max-height: none;
+        overflow-y: auto;
+        padding-right: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .add-remove-date-scroll-area::-webkit-scrollbar {
+        display: none;
+    }
+
+    .add-remove-date-scroll-area .list-item {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .empty-dates-text {
+        font-size: 0.95rem;
+        margin-top: 40px; 
     }
 }
