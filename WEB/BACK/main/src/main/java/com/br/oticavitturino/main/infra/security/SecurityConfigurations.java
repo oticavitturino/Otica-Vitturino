@@ -48,6 +48,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.DELETE, "/scheduling/deleteDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/confirmOrCancelAppointment").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/scheduling/getAllDatesAvailable").hasAnyRole("ADMIN", "CUSTOMER")
+                    .requestMatchers(HttpMethod.GET, "/scheduling/getAllSchedulings").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/scheduleAppointment").hasRole("CUSTOMER")
                     .requestMatchers(HttpMethod.POST, "/scheduling/cancelAppointment").hasRole("CUSTOMER")
                     .anyRequest().authenticated()

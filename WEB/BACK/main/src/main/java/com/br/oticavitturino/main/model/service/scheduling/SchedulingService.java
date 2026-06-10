@@ -3,9 +3,15 @@ package com.br.oticavitturino.main.model.service.scheduling;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
@@ -17,11 +23,6 @@ import com.br.oticavitturino.main.model.repository.scheduling.SchedulingReposito
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 @Service
 public class SchedulingService {
@@ -42,10 +43,14 @@ public class SchedulingService {
     private String fromEmail;
 
     // Administrador pode adicionar datas disponíveis para agendamento;
-    public DateAvailableDTO addDateAvailable(DateAvailableDTO schedulingDTO) {
-        Scheduling scheduling = new Scheduling(schedulingDTO.date_available());
-        repository.save(scheduling);
-        return new DateAvailableDTO(scheduling.getSchedulingDate());
+    public List<DateAvailableDTO> addDateAvailable(List<DateAvailableDTO> dateAvailableDTOs) {
+        List<Scheduling> schedulings = dateAvailableDTOs.stream()
+                .map(dto -> new Scheduling(dto.date_available()))
+                .collect(Collectors.toList());
+        repository.saveAll(schedulings);
+        return schedulings.stream()
+                .map(s -> new DateAvailableDTO(s.getSchedulingDate()))
+                .collect(Collectors.toList());
     }
 
     // Administrador pode excluir datas disponíveis para agendamento;
@@ -56,7 +61,7 @@ public class SchedulingService {
 
     // Administrador pode confirmar/cancelar um agendamento;
     public void confirmOrCancelAppointment(Long SchedulingId, StatusEnum status) {
-        Scheduling scheduling = Optional.ofNullable(repository.findById(SchedulingId).orElse(null))
+        Scheduling scheduling = repository.findById(SchedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling not found in the database!"));
 
         if (status == StatusEnum.CONCLUIDO) {
@@ -69,17 +74,29 @@ public class SchedulingService {
         repository.save(scheduling);
     }
 
+    // Administrador pode visualizar todos os agendamentos;
+    public List<SchedulingDTO> getAllSchedulings() {
+        List<Scheduling> schedulings = repository.findAll();
+        return schedulings.stream()
+                .map(s -> new SchedulingDTO(
+                        s.getCustomer() != null ? s.getCustomer().getName() : null,
+                        s.getSchedulingType(),
+                        s.getSchedulingDate(),
+                        s.getStatus()))
+                .collect(Collectors.toList());
+    }
+
     // Cliente pode visualizar as datas disponíveis para agendamento;
     public List<DateAvailableDTO> getAllDatesAvailable() {
         List<Scheduling> schedulings = repository.findAll();
         return schedulings.stream()
                 .map(s -> new DateAvailableDTO(s.getSchedulingDate()))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     // Cliente pode agendar uma consulta;
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.scheduling_date()))
+        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.schedulingDate()))
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
 
         Customer customer = Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
@@ -94,10 +111,9 @@ public class SchedulingService {
 
     // Cliente pode cancelar um agendamento;
     public void cancelAppointment(Long schedulingId) {
-        Scheduling scheduling = Optional.ofNullable(repository.findById(schedulingId).orElse(null))
+        Scheduling scheduling = repository.findById(schedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
 
-        scheduling.setCustomer(customerRepository.findById(scheduling.getCustomer().getId()).orElse(null));
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
     }

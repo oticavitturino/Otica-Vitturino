@@ -32,7 +32,7 @@ public class Scheduling {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "scheduling_type", nullable = false)
+    @Column(name = "scheduling_type")
     @Enumerated(EnumType.STRING)
     private SchedulingEnum schedulingType;
 
@@ -40,12 +40,12 @@ public class Scheduling {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime schedulingDate;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
     @OneToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;
 

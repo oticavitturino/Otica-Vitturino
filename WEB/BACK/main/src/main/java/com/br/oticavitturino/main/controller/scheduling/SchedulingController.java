@@ -26,7 +26,7 @@ public class SchedulingController {
 
     // Sessão do Administrador;
     @PostMapping("/addDateAvailable")
-    public ResponseEntity<Void> addDateAvailable(@RequestBody DateAvailableDTO dateAvailability) {
+    public ResponseEntity<Void> addDateAvailable(@RequestBody List<DateAvailableDTO> dateAvailability) {
         service.addDateAvailable(dateAvailability);
         return ResponseEntity.ok().build();
     }
@@ -41,6 +41,11 @@ public class SchedulingController {
     public ResponseEntity<String> confirmOrCancelAppointment(@RequestParam Long schedulingId, @RequestParam StatusEnum status) {
         service.confirmOrCancelAppointment(schedulingId, status);
         return ResponseEntity.ok("Scheduling status updated successfully!");
+    }
+
+    @GetMapping("/getAllSchedulings")
+    public ResponseEntity<List<SchedulingDTO>> getAllSchedulings() {
+        return ResponseEntity.ok(service.getAllSchedulings());
     }
 
     // Sessão do Cliente;

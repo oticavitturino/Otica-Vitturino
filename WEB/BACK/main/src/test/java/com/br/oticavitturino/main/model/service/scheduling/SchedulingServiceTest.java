@@ -72,11 +72,12 @@ public class SchedulingServiceTest {
     @DisplayName("Teste de adicionar data disponível para agendamento")
     void testAddDateAvailable() {
         DateAvailableDTO dto = new DateAvailableDTO(testDate);
-        DateAvailableDTO result = schedulingService.addDateAvailable(dto);
+        List<DateAvailableDTO> result = schedulingService.addDateAvailable(List.of(dto));
 
         assertNotNull(result);
-        assertEquals(testDate, result.date_available());
-        verify(repository, times(1)).save(any(Scheduling.class));
+        assertEquals(1, result.size());
+        assertEquals(testDate, result.get(0).date_available());
+        verify(repository, times(1)).saveAll(any(List.class));
     }
 
     @Test
@@ -182,7 +183,6 @@ public class SchedulingServiceTest {
 
         schedulingService.cancelAppointment(id);
 
-        assertNull(scheduling.getCustomer());
         assertEquals(StatusEnum.CANCELADO, scheduling.getStatus());
         verify(repository, times(1)).save(scheduling);
     }
