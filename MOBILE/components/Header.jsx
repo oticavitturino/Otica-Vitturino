@@ -86,10 +86,6 @@ const styles = StyleSheet.create({
     userButton: {
         marginRight: 8
     },
-    userIcon: {
-        width: 42,
-        height: 42
-    },
     glowContainer: {
         width: 50,
         height: 50,
@@ -104,5 +100,9 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 0.9,
         shadowRadius: 10
+    },
+    userIcon: {
+        width: 42,
+        height: 42
     }
 })
