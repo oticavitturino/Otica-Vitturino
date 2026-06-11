@@ -26,12 +26,14 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.br.oticavitturino.main.model.domain.customer.Customer;
+import com.br.oticavitturino.main.model.domain.scheduling.AvailableSlot;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
 import com.br.oticavitturino.main.model.domain.scheduling.SchedulingDTO;
 import com.br.oticavitturino.main.model.domain.scheduling.SchedulingEnum;
 import com.br.oticavitturino.main.model.domain.scheduling.StatusEnum;
 import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
+import com.br.oticavitturino.main.model.repository.scheduling.AvailableSlotRepository;
 import com.br.oticavitturino.main.model.repository.scheduling.SchedulingRepository;
 
 import jakarta.mail.internet.MimeMessage;
@@ -41,6 +43,9 @@ public class SchedulingServiceTest {
 
     @Mock
     private SchedulingRepository repository;
+
+    @Mock
+    private AvailableSlotRepository availableSlotRepository;
 
     @Mock
     private CustomerRepository customerRepository;
@@ -77,19 +82,19 @@ public class SchedulingServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(testDate, result.get(0).date_available());
-        verify(repository, times(1)).saveAll(any(List.class));
+        verify(availableSlotRepository, times(1)).saveAll(any(List.class));
     }
 
     @Test
     @DisplayName("Teste de excluir data disponível para agendamento")
     void testDeleteDateAvailable() {
         DateAvailableDTO dto = new DateAvailableDTO(testDate);
-        Scheduling scheduling = new Scheduling(testDate);
-        when(repository.findBySchedulingDate(testDate)).thenReturn(scheduling);
+        AvailableSlot slot = new AvailableSlot(testDate);
+        when(availableSlotRepository.findBySlotDate(testDate)).thenReturn(slot);
 
         schedulingService.deleteDateAvailable(dto);
 
-        verify(repository, times(1)).delete(scheduling);
+        verify(availableSlotRepository, times(1)).delete(slot);
     }
 
     @Test
@@ -144,32 +149,32 @@ public class SchedulingServiceTest {
     @Test
     @DisplayName("Teste de obter todas as datas disponíveis para agendamento")
     void testGetAllDatesAvailable() {
-        Scheduling s1 = new Scheduling(testDate);
-        Scheduling s2 = new Scheduling(testDate.plusHours(1));
-        when(repository.findAll()).thenReturn(List.of(s1, s2));
+        AvailableSlot slot1 = new AvailableSlot(testDate);
+        AvailableSlot slot2 = new AvailableSlot(testDate.plusHours(1));
+        when(availableSlotRepository.findAll()).thenReturn(List.of(slot1, slot2));
 
         List<DateAvailableDTO> results = schedulingService.getAllDatesAvailable();
 
         assertEquals(2, results.size());
-        verify(repository, times(1)).findAll();
+        verify(availableSlotRepository, times(1)).findAll();
     }
 
     @Test
     @DisplayName("Teste de agendar um atendimento")
     void testScheduleAppointment() {
         SchedulingDTO dto = new SchedulingDTO("John Doe", SchedulingEnum.CONSULTA, testDate, StatusEnum.PENDENTE);
-        Scheduling scheduling = new Scheduling(testDate);
+        AvailableSlot slot = new AvailableSlot(testDate);
         Customer customer = new Customer();
         customer.setName("John Doe");
 
-        when(repository.findBySchedulingDate(testDate)).thenReturn(scheduling);
+        when(availableSlotRepository.findBySlotDate(testDate)).thenReturn(slot);
         when(customerRepository.findByName("John Doe")).thenReturn(customer);
 
         SchedulingDTO result = schedulingService.scheduleAppointment(dto);
 
-        assertEquals(customer, scheduling.getCustomer());
-        assertEquals(StatusEnum.PENDENTE, scheduling.getStatus());
-        verify(repository, times(1)).save(scheduling);
+        assertNotNull(result);
+        verify(repository, times(1)).save(any(Scheduling.class));
+        verify(availableSlotRepository, times(1)).delete(slot);
     }
 
     @Test

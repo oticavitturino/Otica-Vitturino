@@ -14,11 +14,13 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.br.oticavitturino.main.model.domain.customer.Customer;
+import com.br.oticavitturino.main.model.domain.scheduling.AvailableSlot;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
 import com.br.oticavitturino.main.model.domain.scheduling.SchedulingDTO;
 import com.br.oticavitturino.main.model.domain.scheduling.StatusEnum;
 import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
+import com.br.oticavitturino.main.model.repository.scheduling.AvailableSlotRepository;
 import com.br.oticavitturino.main.model.repository.scheduling.SchedulingRepository;
 
 import jakarta.mail.MessagingException;
@@ -29,6 +31,9 @@ public class SchedulingService {
 
     @Autowired
     private SchedulingRepository repository;
+
+    @Autowired
+    private AvailableSlotRepository availableSlotRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -44,19 +49,19 @@ public class SchedulingService {
 
     // Administrador pode adicionar datas disponíveis para agendamento;
     public List<DateAvailableDTO> addDateAvailable(List<DateAvailableDTO> dateAvailableDTOs) {
-        List<Scheduling> schedulings = dateAvailableDTOs.stream()
-                .map(dto -> new Scheduling(dto.date_available()))
+        List<AvailableSlot> slots = dateAvailableDTOs.stream()
+                .map(dto -> new AvailableSlot(dto.date_available()))
                 .collect(Collectors.toList());
-        repository.saveAll(schedulings);
-        return schedulings.stream()
-                .map(s -> new DateAvailableDTO(s.getSchedulingDate()))
+        availableSlotRepository.saveAll(slots);
+        return slots.stream()
+                .map(slot -> new DateAvailableDTO(slot.getSlotDate()))
                 .collect(Collectors.toList());
     }
 
     // Administrador pode excluir datas disponíveis para agendamento;
     public void deleteDateAvailable(DateAvailableDTO schedulingDTO) {
-        Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.date_available()))
-                .ifPresent(repository::delete);
+        Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.date_available()))
+                .ifPresent(availableSlotRepository::delete);
     }
 
     // Administrador pode confirmar/cancelar um agendamento;
@@ -76,10 +81,10 @@ public class SchedulingService {
 
     // Administrador pode visualizar todos os agendamentos;
     public List<SchedulingDTO> getAllSchedulings() {
-        List<Scheduling> schedulings = repository.findAll();
-        return schedulings.stream()
+        return repository.findAll().stream()
+                .filter(scheduling -> scheduling.getCustomer() != null)
                 .map(s -> new SchedulingDTO(
-                        s.getCustomer() != null ? s.getCustomer().getName() : null,
+                        s.getCustomer().getName(),
                         s.getSchedulingType(),
                         s.getSchedulingDate(),
                         s.getStatus()))
@@ -88,23 +93,26 @@ public class SchedulingService {
 
     // Cliente pode visualizar as datas disponíveis para agendamento;
     public List<DateAvailableDTO> getAllDatesAvailable() {
-        List<Scheduling> schedulings = repository.findAll();
-        return schedulings.stream()
-                .map(s -> new DateAvailableDTO(s.getSchedulingDate()))
+        return availableSlotRepository.findAll().stream()
+                .map(slot -> new DateAvailableDTO(slot.getSlotDate()))
                 .collect(Collectors.toList());
     }
 
     // Cliente pode agendar uma consulta;
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
-        Scheduling scheduling = Optional.ofNullable(repository.findBySchedulingDate(schedulingDTO.schedulingDate()))
-                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
+        AvailableSlot slot = Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.schedulingDate()))
+                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not available!"));
 
         Customer customer = Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
 
+        Scheduling scheduling = new Scheduling();
+        scheduling.setSchedulingDate(slot.getSlotDate());
         scheduling.setCustomer(customer);
+        scheduling.setSchedulingType(schedulingDTO.scheduling_type());
         scheduling.setStatus(StatusEnum.PENDENTE);
         repository.save(scheduling);
+        availableSlotRepository.delete(slot);
 
         return schedulingDTO;
     }

@@ -55,8 +55,9 @@ public class SchedulingController {
     }
 
     @PostMapping("/scheduleAppointment")
-    public ResponseEntity<SchedulingDTO> scheduleAppointment(@RequestBody SchedulingDTO schedulingDTO) {
-        return ResponseEntity.ok(service.scheduleAppointment(schedulingDTO));
+    public ResponseEntity<Void> scheduleAppointment(@RequestBody SchedulingDTO schedulingDTO) {
+        service.scheduleAppointment(schedulingDTO);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/cancelAppointment")

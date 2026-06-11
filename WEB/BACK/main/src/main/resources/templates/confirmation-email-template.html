@@ -5,20 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${#strings.containsIgnoreCase(message, 'cancel') ? 'Cancelamento de Agendamento' : 'Confirmação de Agendamento'}">Confirmação de Agendamento</title>
 </head>
-<body style="margin: 0; padding: 0;">
-    <!-- Container -->
-    <div style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; position: relative; z-index: 0; width: 100%; height: 100vh; padding: 5%; background-image: linear-gradient(rgba(231, 231, 231, 0.5), rgba(231, 231, 231, 0.5)), url('WEB\FRONT\public\img\pexels-steve-29506613.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
-        
-        <!-- Título -->
-        <h1 th:text="${message}" style="font-family: 'Poppins', sans-serif; font-size: 2.2rem; font-weight: 600; color: #3C7975;">
-            Confirmação de Agendamento
-        </h1>
+<body style="margin: 0; padding: 0; background-color: #E7E7E7; font-family: 'Poppins', Arial, sans-serif;">
+    <!-- Container principal utilizando tabelas para compatibilidade -->
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #E7E7E7;">
+        <tr>
+            <!-- Imagem de fundo no td com fallback de cor -->
+            <td align="center" background="https://drive.google.com/uc?export=view&id=1ENHsoZ47Le6EedfNbhlk_FrkYpilu6pA" style="background-size: cover; background-position: center; padding: 50px 20px;">
+                
+                <!-- Caixa de conteúdo -->
+                <table border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width: 600px; width: 100%; background-color: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 40px; text-align: center;">
+                    <tr>
+                        <td align="center">
+                            <!-- Título -->
+                            <h1 th:text="${message}" style="font-size: 28px; font-weight: 600; color: #3C7975; margin-top: 0; margin-bottom: 30px;">
+                                Confirmação de Agendamento
+                            </h1>
 
-        <!-- Ilustração de Confirmação -->
-        <img th:unless="${#strings.containsIgnoreCase(message, 'cancel')}" src="WEB\FRONT\src\assets\ilustracao-de-elogio-desenhada-de-mao.png" alt="Ilustração de Confirmação" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; width: 25%; object-fit: cover; z-index: -1; opacity: 0.7;" />
+                            <!-- Ilustração de Confirmação -->
+                            <img th:unless="${#strings.containsIgnoreCase(message, 'cancel')}" src="https://drive.google.com/uc?export=view&id=184jgO45uNciK_pASYzjqKUpf6f2yGJY-" alt="Ilustração de Confirmação" style="display: block; width: 200px; max-width: 100%; height: auto; margin: 0 auto; opacity: 0.8;" />
 
-        <!-- Ilustração de Cancelamento -->
-        <img th:if="${#strings.containsIgnoreCase(message, 'cancel')}" src="https://seusite.com.br/assets/ilustracao-de-cancelamento.png" alt="Ilustração de Cancelamento" style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; width: 25%; object-fit: cover; z-index: -1; opacity: 0.7;" />
-    </div>
+                            <!-- Ilustração de Cancelamento -->
+                            <img th:if="${#strings.containsIgnoreCase(message, 'cancel')}" src="https://drive.google.com/uc?export=view&id=1KynaJhis8jztwYHw2RekxK81kYrefZ9S" alt="Ilustração de Cancelamento" style="display: block; width: 200px; max-width: 100%; height: auto; margin: 0 auto; opacity: 0.8;" />
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
