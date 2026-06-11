@@ -9,12 +9,14 @@
     width: 100%;
 }
 
+/* 1: Imagem da logo */
 .login-logo {
     width: 20%;
     margin-bottom: 4%;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+/* 2: Container externo */
 .login-container {
     display: flex;
     flex-direction: column;
@@ -27,6 +29,7 @@
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+/* 3: Título */
 .login-container h2 {
     font-family: Poppins, sans-serif;
     font-size: 2.2rem;
@@ -36,6 +39,7 @@
     margin-bottom: 6%;
 }
 
+/* 4: Formulário de login */
 .login-form {
     display: flex;
     flex-direction: column;
@@ -66,6 +70,7 @@
     background-color: #187e77;
 }
 
+/* 5: Card de erro de login */
 .modal-overlay {
     position: fixed;
     top: 0;

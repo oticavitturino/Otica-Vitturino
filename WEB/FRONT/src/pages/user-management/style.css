@@ -9,6 +9,7 @@
     width: 100%;
 }
 
+/* 1: Container externo */
 .main-container-user-management {
     display: flex;
     flex-direction: column;
@@ -22,46 +23,21 @@
     animation: welcome-container-animation 0.5s ease-in;
 }
 
+/* 2: Título principal */
 .main-container-user-management h2 {
     font-family: Poppins, sans-serif;
     color: #3C7975;
     margin-bottom: 45px;
 }
 
+/* 3: Container interno */
 .content-wrapper {
     display: flex;
     justify-content: flex-start;
     width: 100%;
 }
 
-.user-management-scroll-area {
-    width: 100%;
-    max-height: 500px;
-    overflow-y: auto;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
-}
-
-.user-management-scroll-area::-webkit-scrollbar {
-    width: 6px;
-}
-
-.user-management-scroll-area::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.user-management-scroll-area::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-}
-
-.user-management-scroll-area .list-item {
-    flex-shrink: 0 !important;
-}
-
+/* 4: Container de cadastro de usuários */
 .user-registration-container {
     display: flex;
     flex-direction: column;
@@ -75,12 +51,14 @@
     background-color: rgba(217, 217, 217, 0.3);
 }
 
+/* 5: Título secundário 1 */
 .user-registration-container h3 {
     font-family: Poppins, sans-serif;
     color: #3C7975;
     margin-bottom: 30px;
 }
 
+/* 6: Formulário de cadastro de usuários */
 .user-registration-form {
     display: flex;
     flex-direction: column;
@@ -114,6 +92,7 @@
     background-color: #187e77;
 }
 
+/* 7: Container de usuários registrados */
 .registered-users-container {
     display: flex;
     flex-direction: column;
@@ -127,12 +106,43 @@
     background-color: rgba(217, 217, 217, 0.3);
 }
 
+/* 8: Título secundário 2 */
 .registered-users-container h3 {
     font-family: Poppins, sans-serif;
     color: #3C7975;
     margin-bottom: 30px;
 }
 
+/* 9: Área de scroll / List item de teste mockado */
+.user-management-scroll-area {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
+}
+
+.user-management-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+
+.user-management-scroll-area::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.user-management-scroll-area::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+}
+
+.user-management-scroll-area .list-item {
+    flex-shrink: 0 !important;
+}
+
+/* 11: Dados de cada usuário */
 .registered-users-container .item-content {
     display: flex !important;
     justify-content: center !important;

@@ -10,10 +10,6 @@
     left: 0;
 }
 
-.header-logo {
-    width: 10%;
-}
-
 .hamburger-btn {
     display: none; 
     background: transparent;
@@ -33,6 +29,10 @@
     filter: brightness(0) saturate(100%) invert(30%) sepia(88%) saturate(415%) hue-rotate(127deg) brightness(96%) contrast(88%);
 }
 
+.header-logo {
+    width: 10%;
+}
+
 /* Mobile */
 
 @media (max-width: 768px) {
@@ -45,6 +45,7 @@
     .hamburger-btn {
         display: block;
     }
+    
     .header-logo {
         width: 40%;
     }
