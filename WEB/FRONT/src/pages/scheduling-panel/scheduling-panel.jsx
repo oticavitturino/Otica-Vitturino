@@ -108,10 +108,10 @@ function Scheduling_Panel() {
     }
 
     // Função de confirmar ou cancelar agendamento
-    async function handleUpdateAppointmentStatus(schedulingId, newStatus) {
+    async function handleUpdateAppointmentStatus(userId, newStatus) {
         try {
             const url = new URL('http://localhost:8080/scheduling/confirmOrCancelAppointment');
-            url.searchParams.append('schedulingId', schedulingId);
+            url.searchParams.append('userId', userId);
             url.searchParams.append('status', newStatus);
 
             const response = await fetch(url, {
@@ -120,6 +120,7 @@ function Scheduling_Panel() {
 
             if (response.ok) {
                 alert(`Agendamento ${newStatus.toLowerCase()} com sucesso!`);
+                fetchAllSchedulings();
             } else {
                 alert('Erro ao atualizar o status do agendamento.');
             }
@@ -172,18 +173,18 @@ function Scheduling_Panel() {
                                     const formattedTime = timePart.substring(0, 5);
 
                                     return (
-                                        <List_Item key={appointment.id} actions={
+                                        <List_Item key={appointment.userId} actions={
                                             <>
                                                 <button
                                                     className="icon-btn chart-btn"
-                                                    onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CONFIRMADO')}
+                                                    onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CONFIRMADO')}
                                                 >
                                                     <img src={CheckIcon} className="action-icon" alt="Confirmar"></img>
                                                 </button>
 
                                                 <button
                                                     className="icon-btn x-btn"
-                                                    onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CANCELADO')}
+                                                    onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CANCELADO')}
                                                 >
                                                     <img src={XIcon} className="action-icon" alt="Cancelar"></img>
                                                 </button>
