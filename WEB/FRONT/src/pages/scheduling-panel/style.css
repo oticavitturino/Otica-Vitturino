@@ -314,6 +314,10 @@
         font-size: 0.85rem;
     }
 
+    .empty-state-text {
+        font-size: 1.1rem;
+    }
+
     .btn-add-date {
         font-size: 0.85rem;
         height: 50px;
@@ -389,6 +393,10 @@
     .scheduling-scroll-area .list-legend span,
     .scheduling-scroll-area .list-row-data span {
         font-size: 0.75rem;
+    }
+
+    .empty-state-text {
+        font-size: 1rem;
     }
 
     .btn-add-date {

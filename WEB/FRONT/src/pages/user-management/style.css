@@ -121,6 +121,7 @@
     padding-right: 10px;
     display: flex;
     flex-direction: column;
+    flex: 1;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.6) transparent;
 }
@@ -142,7 +143,15 @@
     flex-shrink: 0 !important;
 }
 
-/* 11: Dados de cada usuário */
+.empty-state-text {
+    font-family: 'Poppins', sans-serif;
+    color: #3C7975;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+    font-weight: 500;
+}
+
 .registered-users-container .item-content {
     display: flex !important;
     justify-content: center !important;
@@ -158,6 +167,13 @@
 
     100% {
         opacity: 1;
+    }
+}
+
+/* Aplica o transform apenas na página de Usuários e apenas em telas acima de 1600px */
+@media (min-width: 1601px) {
+    .user-management-wrapper .empty-state-text {
+        transform: translateY(-25px);
     }
 }
 
@@ -198,10 +214,6 @@
         width: 100%;
     }
 
-    .check-icon-form {
-        width: 40px;
-    }
-
     .btn-register {
         height: 50px;
         font-size: 1rem;
@@ -226,6 +238,10 @@
 
     .user-management-scroll-area {
         max-height: 400px;
+    }
+
+    .empty-state-text {
+        font-size: 1.1rem;
     }
 }
 
@@ -295,6 +311,10 @@
 
     .user-management-scroll-area {
         max-height: 350px;
+    }
+
+    .empty-state-text {
+        font-size: 1rem;
     }
 }
 
