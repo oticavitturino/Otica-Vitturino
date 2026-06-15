@@ -79,7 +79,7 @@ function Scheduling_Panel() {
                 alert('Erro ao adicionar data.')
             }
         } catch (error) {
-            console.log('Erro de requisição: ', error)
+            console.log('Erro de requisição: ', error);
         }
     }
 
