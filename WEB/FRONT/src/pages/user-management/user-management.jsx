@@ -5,78 +5,61 @@ import Container from '../../components/container'
 import Input from '../../components/input'
 import Button from '../../components/button'
 import List_item from '../../components/list-item'
-import CheckIcon from '../../assets/user-round-check.png'
 import PenIcon from '../../assets/pen.png'
 import TrashIcon from '../../assets/trash-2.png'
 
 function User_Management() {
 
   const [dateInputType, setDateInputType] = useState('text');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    birthDate: ''
+  });
+  const [users, setUsers] = useState([]);
 
-  // Apenas para testes mockados
+  // Função para atualizar os dados do formulário a cada digitação
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  const users = [
-    {
-      id: 1,
-      nome: "Carlos Viana",
-      login: "carlos_v04"
-    },
-    {
-      id: 2,
-      nome: "Maria Heloisa",
-      login: "marihelo07"
-    },
-    {
-      id: 3,
-      nome: "Pablo Costa",
-      login: "p_costa"
-    },
-    {
-      id: 4,
-      nome: "Raquel Souza",
-      login: "rahsouza"
-    },
-    {
-      id: 5,
-      nome: "Marina Sampaio",
-      login: "marinasamp"
-    },
-    {
-      id: 6,
-      nome: "Douglas Henrique",
-      login: "doug_henrique"
-    },
-    {
-      id: 7,
-      nome: "Silvia Pamplona Matos",
-      login: "silvia_p_m"
-    },
-    {
-      id: 8,
-      nome: "João César",
-      login: "johncesar"
-    },
-    {
-      id: 9,
-      nome: "Humberto Filho",
-      login: "humberto_f"
-    },
-    {
-      id: 10,
-      nome: "Gabriel Coelho",
-      login: "gabcoelho"
-    },
-    {
-      id: 11,
-      nome: "Marcos de Paula",
-      login: "marcos_p"
-    },
-    {
-      id: 12,
-      nome: "Samara Rodrigues",
-      login: "samara_rod"
+  // Função de registrar novo usuário
+  async function handleUserRegistration(event) {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          address: formData.address,
+          birthDate: formData.birthDate,
+          active: true,
+          profile: 'CLIENTE'
+        })
+      });
+
+      if (response.ok) {
+        alert('Usuário cadastrado com sucesso!');
+        setFormData({ name: '', email: '', password: '', phone: '', address: '', birthDate: '' });
+        setDateInputType('text');
+      } else {
+        alert('Erro ao cadastrar usuário. Verifique os dados.');
+      }
+    } catch (error) {
+      console.error('Erro de requisição: ', error);
     }
-  ]
+  }
 
   return (
     <Layout>
@@ -97,14 +80,19 @@ function User_Management() {
               <h3>Cadastrar usuário</h3>
 
               {/* 6: Formulário de cadastro de usuários */}
-              <form className='user-registration-form' type='submit'>
-                <Input placeholder='Login' type='text' required />
-                <Input placeholder='Nome' type='text' required />
-                <Input placeholder='E-mail' type='email' required />
-                <Input placeholder='Senha' type='password' required />
+              <form className='user-registration-form' onSubmit={handleUserRegistration}>
+                <Input placeholder='Nome' type='text' name='name' value={formData.name} onChange={handleInputChange} required />
+                <Input placeholder='E-mail' type='email' name='email' value={formData.email} onChange={handleInputChange} required />
+                <Input placeholder='Senha' type='password' name='password' value={formData.password} onChange={handleInputChange} required />
+                <Input placeholder='Telefone' type='tel' name='phone' value={formData.phone} onChange={handleInputChange} required />
+                <Input placeholder='Endereço' type='text' name='address' value={formData.address} onChange={handleInputChange} required />
+
                 <Input
                   placeholder='Data de nascimento'
                   type={dateInputType}
+                  name='birthDate'
+                  value={formData.birthDate}
+                  onChange={handleInputChange}
                   onFocus={() => {
                     if (dateInputType !== 'date') {
                       setDateInputType('date');
@@ -116,8 +104,7 @@ function User_Management() {
                     }
                   }}
                   required />
-                <img src={CheckIcon} className='check-icon-form' />
-                <Button className='btn-register'>Cadastrar</Button>
+                <Button className='btn-register' type='submit'>Cadastrar</Button>
               </form>
 
             </Container>
@@ -128,25 +115,28 @@ function User_Management() {
               {/* 8: Título secundário 2 */}
               <h3>Usuários registrados</h3>
 
-              {/* 9: Área de scroll / List item de teste mockado */}
+              {/* 9: Área de scroll */}
               <div className='user-management-scroll-area'>
+                {users.length === 0 ? (
+                  <p className="empty-state-text">Nenhum usuário cadastrado.</p>
+                ) : (
+                  /* 10: Ícones de ação (só renderiza se tiver usuário) */
+                  users.map((user) => (
+                    <List_item key={user.id} actions={
+                      <>
+                        <button className="icon-btn edit-btn">
+                          <img src={PenIcon} alt="Editar usuário" className="action-icon" />
+                        </button>
 
-                {/* 10: Ícones de ação */}
-                {users.map((user) => (
-                  <List_item key={user.id} actions={
-                    <>
-                      <button className="icon-btn edit-btn">
-                        <img src={PenIcon} alt="Editar usuário" className="action-icon" />
-                      </button>
-
-                      <button className="icon-btn delete-btn">
-                        <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
-                      </button>
-                    </>
-                  }>
-                    {/* 11: Dados de cada usuário */}
-                    <span>{user.nome} | {user.login}</span></List_item>
-                ))}
+                        <button className="icon-btn delete-btn">
+                          <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
+                        </button>
+                      </>
+                    }>
+                      <span>{user.name} | {user.email}</span>
+                    </List_item>
+                  ))
+                )}                
               </div>
             </Container>
           </div>
