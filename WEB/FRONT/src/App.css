@@ -38,3 +38,61 @@ body::before {
     transform: scale(1.05);
     z-index: -1;
 }
+
+/* Classes Utilitárias Comuns */
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.icon-btn:hover {
+    opacity: 0.7;
+}
+
+.action-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.item-content {
+    flex-grow: 1;
+    width: 100%;
+    display: block;
+}
+
+/* Animações Comuns */
+
+@keyframes welcome-container-animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Mobile Utilities */
+
+@media (max-width: 768px) {
+    .icon-btn {
+        width: 25px;
+        height: 25px;
+        flex-shrink: 0;
+    }
+
+    .action-icon {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+    }
+}

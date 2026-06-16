@@ -280,22 +280,6 @@
     color: #FFFFFF;
 }
 
-.item-content {
-    flex-grow: 1;
-    width: 100%;
-    display: block;
-}
-
-@keyframes welcome-container-animation {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {

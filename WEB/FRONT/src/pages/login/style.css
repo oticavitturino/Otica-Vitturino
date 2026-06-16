@@ -119,20 +119,10 @@
     font-size: 1rem;
     background-color: #1DA299;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-    color: #FFFFFF;
-}
-
-@keyframes welcome-container-animation {
-    0% {
-        opacity: 0;
+    font-size: 0.9rem;
     }
 
-    100% {
-        opacity: 1;
-    }
-}
-
-/* 1600 * 900 */
+    /* 1600 * 900 */
 
 @media (max-width: 1600px) {
     .login-container {
