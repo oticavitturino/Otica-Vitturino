@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
+import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -36,4 +37,7 @@ public class Customer extends User {
 
     @OneToOne(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
     private Scheduling scheduling;
+
+    @OneToOne(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Occurrence occurrence;
 }
