@@ -37,7 +37,7 @@ public class Occurrence {
     @OneToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
-    private Customer customerOccurrence;
+    private Customer customerId;
 
     public Occurrence(String description, LocalDateTime sentAt) {
         this.description = description;

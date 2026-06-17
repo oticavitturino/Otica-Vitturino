@@ -22,9 +22,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
 import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceDTO;
-import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceNoCustomerDTO;
+import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceListDTO;
+import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
 import com.br.oticavitturino.main.model.repository.occurrence.OccurrenceRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,33 +35,48 @@ public class OccurrenceServiceTest {
     @Mock
     private OccurrenceRepository repository;
 
+    @Mock
+    private CustomerRepository customerRepository;
+
     @InjectMocks
     private OccurrenceService service;
 
     private Occurrence occurrence;
-    private OccurrenceNoCustomerDTO dto;
+    private OccurrenceDTO dto;
+    private Customer customer;
 
     @BeforeEach
     void setUp() {
+        customer = new Customer();
+        customer.setId(1L);
+        customer.setName("João Silva");
+
         occurrence = new Occurrence("Aro do óculos quebrado", LocalDateTime.now());
-        dto = new OccurrenceNoCustomerDTO(1L, "Aro do óculos quebrado", LocalDateTime.now());
+        occurrence.setCustomerId(customer);
+        
+        dto = new OccurrenceDTO(1L, "Aro do óculos quebrado", LocalDateTime.now(), 1L, "João Silva");
     }
 
     @Test
     void testCreateOccurrence() {
         // Arrange
-        Occurrence savedOccurrence = mock(Occurrence.class);
-        when(savedOccurrence.getId()).thenReturn(1L);
-        when(savedOccurrence.getDescription()).thenReturn(dto.description());
-        when(savedOccurrence.getSentAt()).thenReturn(dto.sentAt());
+        when(customerRepository.findByName(dto.customerName())).thenReturn(customer);
+        
+        Occurrence savedOccurrence = new Occurrence();
+        savedOccurrence.setId(1L);
+        savedOccurrence.setDescription(dto.description());
+        savedOccurrence.setSentAt(dto.sentAt());
+        savedOccurrence.setCustomerId(customer);
+        
         when(repository.save(any(Occurrence.class))).thenReturn(savedOccurrence);
 
         // Act
-        OccurrenceNoCustomerDTO result = service.createOccurrence(dto);
+        OccurrenceDTO result = service.createOccurrence(dto);
 
         // Assert
         assertNotNull(result);
         assertEquals(dto.description(), result.description());
+        assertEquals(dto.customerName(), result.customerName());
         verify(repository, times(1)).save(any(Occurrence.class));
     }
 
@@ -84,7 +101,7 @@ public class OccurrenceServiceTest {
         when(repository.findById(id)).thenReturn(Optional.empty());
 
         // Act & Assert
-        Exception exception = assertThrows(RuntimeException.class, () -> {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             service.deleteOccurrence(id);
         });
         
@@ -94,13 +111,29 @@ public class OccurrenceServiceTest {
     }
 
     @Test
+    void testGetOccurrencesByCustomerId() {
+        // Arrange
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+        when(repository.findByCustomerId(1L)).thenReturn(Arrays.asList(occurrence));
+
+        // Act
+        List<OccurrenceListDTO> result = service.getOccurrencesByCustomerId(1L);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(occurrence.getDescription(), result.get(0).description());
+        verify(repository, times(1)).findByCustomerId(1L);
+    }
+
+    @Test
     void testGetAllOccurrences() {
         // Arrange
         Occurrence mockOccurrence = mock(Occurrence.class);
         when(mockOccurrence.getId()).thenReturn(1L);
         when(mockOccurrence.getDescription()).thenReturn("Aro do óculos quebrado");
         when(mockOccurrence.getSentAt()).thenReturn(LocalDateTime.now());
-        when(mockOccurrence.getCustomerOccurrence()).thenReturn(null);
+        when(mockOccurrence.getCustomerId()).thenReturn(null);
         
         when(repository.findAll()).thenReturn(Arrays.asList(mockOccurrence));
 

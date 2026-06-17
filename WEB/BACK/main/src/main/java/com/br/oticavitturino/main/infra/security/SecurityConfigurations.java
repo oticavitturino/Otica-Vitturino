@@ -51,6 +51,9 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.GET, "/scheduling/getAllSchedulings").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/scheduleAppointment").hasRole("CUSTOMER")
                     .requestMatchers(HttpMethod.POST, "/scheduling/cancelAppointment").hasRole("CUSTOMER")
+                    .requestMatchers(HttpMethod.POST, "/occurrences/register").hasRole("CUSTOMER")
+                    .requestMatchers(HttpMethod.GET, "/occurrences/listAll").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/occurrences/{id}").hasAnyRole("ADMIN", "CUSTOMER")
                     .anyRequest().authenticated()
                 )
 
