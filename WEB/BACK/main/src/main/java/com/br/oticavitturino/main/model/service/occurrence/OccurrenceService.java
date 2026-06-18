@@ -11,6 +11,7 @@ import com.br.oticavitturino.main.model.repository.occurrence.OccurrenceReposito
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceListDTO;
 
@@ -24,6 +25,7 @@ public class OccurrenceService {
     private CustomerRepository customerRepository;
 
     // Cliente pode registrar ocorrêncas ou reclamações;
+    @Transactional
     public OccurrenceDTO createOccurrence(OccurrenceDTO dto) {
         Customer customer = customerRepository.findByName(dto.customerName());
         if (customer == null) {
@@ -32,7 +34,7 @@ public class OccurrenceService {
         Occurrence occurrence = new Occurrence();
         occurrence.setDescription(dto.description());
         occurrence.setSentAt(dto.sentAt());
-        occurrence.setCustomerId(customer);
+        occurrence.setCustomer(customer);
         Occurrence savedOccurrence = occurrenceRepository.save(occurrence);
 
         return new OccurrenceDTO(
@@ -45,6 +47,7 @@ public class OccurrenceService {
     }
 
     // Cliente e Administrador podrão excluir ocorrências ou reclamações (O cliente só pode excluir as suas próprias ocorrências);
+    @Transactional
     public void deleteOccurrence(Long id) {
         Occurrence occurrence = occurrenceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Occurrence not found with id: " + id));
@@ -52,6 +55,7 @@ public class OccurrenceService {
     }
 
     // Cliente pode visualizar suas próprias ocorrências ou reclamações;
+    @Transactional(readOnly = true)
     public List<OccurrenceListDTO> getOccurrencesByCustomerId(Long customerId) {
         customerRepository.findById(customerId)
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + customerId));
@@ -64,14 +68,15 @@ public class OccurrenceService {
     }
 
     // Administrador pode visualizar todas as ocorrências;
+    @Transactional(readOnly = true)
     public List<OccurrenceDTO> getAllOccurrences() {
         return occurrenceRepository.findAll().stream()
                 .map(occurrence -> new OccurrenceDTO(
                         occurrence.getId(),
                         occurrence.getDescription(),
                         occurrence.getSentAt(),
-                        occurrence.getCustomerId() != null ? occurrence.getCustomerId().getId() : null,
-                        occurrence.getCustomerId() != null ? occurrence.getCustomerId().getName() : null
+                        occurrence.getCustomer() != null ? occurrence.getCustomer().getId() : null,
+                        occurrence.getCustomer() != null ? occurrence.getCustomer().getName() : null
                  )).collect(Collectors.toList());
     }
 }

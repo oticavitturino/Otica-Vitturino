@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface OccurrenceRepository extends JpaRepository<Occurrence, Long> {
     @Query
-    (nativeQuery = true, value = "SELECT * FROM occurrences WHERE customer_id = :customerId")
+    (nativeQuery = true, value = "SELECT * FROM OCCURRENCE WHERE customer_id = :customerId")
     List<Occurrence> findByCustomerId(@Param("customerId") Long customerId);
 }

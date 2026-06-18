@@ -1,6 +1,7 @@
 package com.br.oticavitturino.main.model.domain.customer;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
@@ -10,6 +11,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +40,6 @@ public class Customer extends User {
     @OneToOne(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
     private Scheduling scheduling;
 
-    @OneToOne(mappedBy = "customerOccurrence", orphanRemoval = true, cascade = CascadeType.ALL)
-    private Occurrence occurrence;
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Occurrence> occurrences;
 }

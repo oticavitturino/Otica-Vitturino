@@ -40,7 +40,7 @@ public class OccurrenceController {
     }
 
     // Sessão de ambos (cliente e administrador);
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteOccurrence(@RequestParam Long id) {
         service.deleteOccurrence(id);
         return ResponseEntity.noContent().build();

@@ -1,6 +1,7 @@
 package com.br.oticavitturino.main.model.domain.occurrence;
 
 import java.time.LocalDateTime;
+
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,7 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,13 +35,14 @@ public class Occurrence {
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
-    private Customer customerId;
+    private Customer customer;
 
-    public Occurrence(String description, LocalDateTime sentAt) {
+    public Occurrence(String description, LocalDateTime sentAt, Customer customer) {
         this.description = description;
         this.sentAt = sentAt;
+        this.customer = customer;
     }
 }

@@ -25,6 +25,7 @@ import com.br.oticavitturino.main.model.repository.scheduling.SchedulingReposito
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SchedulingService {
@@ -48,6 +49,7 @@ public class SchedulingService {
     private String fromEmail;
 
     // Administrador pode adicionar datas disponíveis para agendamento;
+    @Transactional
     public List<DateAvailableDTO> addDateAvailable(List<DateAvailableDTO> dateAvailableDTOs) {
         List<AvailableSlot> slots = dateAvailableDTOs.stream()
                 .map(dto -> new AvailableSlot(dto.date_available()))
@@ -59,12 +61,14 @@ public class SchedulingService {
     }
 
     // Administrador pode excluir datas disponíveis para agendamento;
+    @Transactional
     public void deleteDateAvailable(DateAvailableDTO schedulingDTO) {
         Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.date_available()))
                 .ifPresent(availableSlotRepository::delete);
     }
 
     // Administrador pode confirmar/cancelar um agendamento;
+    @Transactional
     public void confirmOrCancelAppointment(Long SchedulingId, StatusEnum status) {
         Scheduling scheduling = repository.findById(SchedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling not found in the database!"));
@@ -80,6 +84,7 @@ public class SchedulingService {
     }
 
     // Administrador pode visualizar todos os agendamentos;
+    @Transactional(readOnly = true)
     public List<SchedulingDTO> getAllSchedulings() {
         return repository.findAll().stream()
                 .filter(scheduling -> scheduling.getCustomer() != null)
@@ -92,6 +97,7 @@ public class SchedulingService {
     }
 
     // Cliente pode visualizar as datas disponíveis para agendamento;
+    @Transactional(readOnly = true)
     public List<DateAvailableDTO> getAllDatesAvailable() {
         return availableSlotRepository.findAll().stream()
                 .map(slot -> new DateAvailableDTO(slot.getSlotDate()))
@@ -99,6 +105,7 @@ public class SchedulingService {
     }
 
     // Cliente pode agendar uma consulta;
+    @Transactional
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
         AvailableSlot slot = Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.schedulingDate()))
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not available!"));
@@ -118,6 +125,7 @@ public class SchedulingService {
     }
 
     // Cliente pode cancelar um agendamento;
+    @Transactional
     public void cancelAppointment(Long schedulingId) {
         Scheduling scheduling = repository.findById(schedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
