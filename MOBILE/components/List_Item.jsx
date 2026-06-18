@@ -25,7 +25,7 @@ export function List_Item({ title, dotColor, expandable, onPress, headerStyle, t
                 {dotColor && <View style={[styles.dot, { backgroundColor: dotColor }]} />}
 
                 {/* 4: Título do list item */}
-                <Text style={[styles.title, titleStyle]} numberOfLines={1}>
+                <Text style={[styles.title, titleStyle]}>
                     {title}
                 </Text>
             </Pressable>
