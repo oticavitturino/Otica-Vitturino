@@ -1,10 +1,18 @@
-import { View, ScrollView, Text, Image, StyleSheet } from 'react-native'
+import { View, ScrollView, Text, Image, StyleSheet, Alert, Modal, TouchableOpacity } from 'react-native'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item';
 import { User_Guide_Card } from '../components/User_Guide_Card'
+
+const colorsByType = {
+    "CONSULTA": '#33AB5B',
+    "MANUTENCAO": '#4085AF',
+    "LIMPEZA": '#963765'
+};
+
+const defaultColor = '#8C8C8C';
 
 LocaleConfig.locales['pt-br'] = {
     monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -15,45 +23,131 @@ LocaleConfig.locales['pt-br'] = {
 };
 LocaleConfig.defaultLocale = 'pt-br';
 
-const agendamentos = [
-    {
-        id: '1',
-        title: 'Limpeza - 6 mar (16:30)',
-        color: '#963765'
-    },
-    {
-        id: '2',
-        title: 'Consulta - 30 mar (14:00)',
-        color: '#33AB5B'
-    },
-    {
-        id: '3',
-        title: 'Manutenção - 15 mai (09:00)',
-        color: '#4085AF'
-    },
-    {
-        id: '4',
-        title: 'Consulta - 22 abr (10:45)',
-        color: '#33AB5B'
-    },
-    {
-        id: '5',
-        title: 'Limpeza - 31 dez (23:59)',
-        color: '#963765'
-    }
-]
-
 export default function BookingPage() {
 
     const [selectedDate, setSelectedDate] = useState('');
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+    const [availableDates, setAvailableDates] = useState([]);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [hoursForSelectedDay, setHoursForSelectedDay] = useState([]);
 
     // Função de seleção de dia do calendário
     function handlePressedDay(day) {
-        setSelectedDate(day.dateString);
+        const dateStr = day.dateString;
+        setSelectedDate(dateStr);
 
+        const filteredHours = availableDates.filter((item) => {
+            if (item.date) {
+                const itemDay = item.date.split('T')[0];
+                return itemDay === dateStr;
+            }
+            return false;
+        });
+
+        setHoursForSelectedDay(filteredHours);
+        setIsModalVisible(true);
     }
 
-    const [isGuideVisible, setIsGuideVisible] = useState(false);
+    // Função para formatar as datas disponíveis par o calendário
+    function getMarkedDates() {
+        let marks = {};
+
+        availableDates.forEach((item) => {
+            if (item.date) {
+                const dayString = item.date.split('T')[0];
+                const dotColor = colorsByType[item.scheduling_type] || defaultColor;
+
+                marks[dayString] = {
+                    marked: true,
+                    dotColor: dotColor
+                };
+            }
+        });
+
+        if (selectedDate) {
+            marks[selectedDate] = {
+                ...marks[selectedDate],
+                selected: true,
+                disableTouchEvent: true,
+                selectedColor: '#1DA299',
+                selectedTextColor: '#FFFFFF'
+            };
+        }
+
+        return marks;
+    }
+
+    // Função para buscar datas disponíveis na API
+    async function fetchAvailableDates() {
+        try {
+            const response = await fetch('http://localhost:8080/scheduling/getAllDatesAvailable');
+            if (response.ok) {
+                const data = await response.json();
+                setAvailableDates(data);
+            } else {
+                console.error('Falha ao buscar datas disponíveis')
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAvailableDates();
+    }, []);
+
+    // Função para agendar consulta
+    async function appointmentScheduling(selectedItem) {
+
+        const userName = "Usuário";
+        const schedulingType = "CONSULTA";
+
+        try {
+            const response = await fetch('http://localhost:8080/scheduling/scheduleAppointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: userName,
+                    scheduling_type: selectedItem ? selectedItem.scheduling_type : "CONSULTA",
+                    schedulingDate: selectedItem ? selectedItem.schedulingDate : new Date().toISOString(),
+                    status: "PENDENTE"
+                })
+            });
+
+            if (response.ok) {
+                Alert.alert('Sucesso', 'Agendamento confirmado!');
+                fetchAvailableDates();
+            } else {
+                Alert.alert('Erro', 'O agendamento não foi confirmado.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    // Função para cancelar agendamento
+    async function cancelAppointment(schedulingID) {
+        try {
+            const response = await fetch('http://localhost:8080/scheduling/cancelAppointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(schedulingID)
+            });
+
+            if (response.ok) {
+                Alert.alert('Sucesso', 'O agendamento foi cancelado com sucesso!');
+                fetchAvailableDates();
+            } else {
+                Alert.alert('Erro', 'Falha ao cancelar agendamento.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
 
     return (
         <>
@@ -76,12 +170,7 @@ export default function BookingPage() {
                     <View style={styles.calendarContainer}>
                         <Calendar
                             onDayPress={handlePressedDay}
-                            markedDates={{
-                                [selectedDate]: {
-                                    selected: true,
-                                    disableTouchEvent: true
-                                }
-                            }}
+                            markedDates={getMarkedDates()}
                             theme={{
                                 backgroundColor: 'transparent',
                                 calendarBackground: 'transparent',
@@ -125,16 +214,104 @@ export default function BookingPage() {
                     <Text style={styles.bookingText}>Agendamentos:</Text>
 
                     {/* 7: Renderização dos agendamentos */}
-                    {agendamentos.map((item) => (
-                        <List_Item key={item.id} title={item.title} dotColor={item.color} />
-                    ))}
+                    {availableDates.length > 0 ? (
+                        availableDates.map((item) => {
+                            // FORMATANDO A DATA AQUI!
+                            let formattedDate = "Data inválida";
+                            let formattedTime = "";
+
+                            if (item.schedulingDate) {
+                                const dateParts = item.schedulingDate.split('T');
+
+                                formattedDate = dateParts[0].split('-').reverse().join('/');
+                                formattedTime = dateParts[1] ? dateParts[1].substring(0, 5) : "";
+                            }
+
+                            const itemDotColor = colorsByType[item.scheduling_type] || defaultColor;
+
+                            return (
+                                <View key={item.id} style={styles.listItemContainer}>
+                                    <View style={styles.listItemWrapper}>
+                                        <List_Item
+                                            title={`${item.scheduling_type}\n${formattedDate} às ${formattedTime}`}
+                                            dotColor={itemDotColor}
+                                        />
+                                    </View>
+
+                                    {/* 8: Botão de Cancelar */}
+                                    <Button
+                                        title="X"
+                                        style={styles.cancelButton}
+                                        textStyle={styles.cancelButtonText}
+                                        onPress={() => {
+                                            Alert.alert(
+                                                "Confirmar Cancelamento",
+                                                "Tem certeza que deseja cancelar este agendamento?",
+                                                [
+                                                    { text: "Não", style: "cancel" },
+                                                    { text: "Sim", onPress: () => cancelAppointment(item.id) }
+                                                ]
+                                            );
+                                        }}
+                                    />
+                                </View>
+                            );
+                        })
+                    ) : (
+                        <Text style={styles.bookingText}>Nenhuma data disponível encontrada.</Text>
+                    )}
                 </View>
             </ScrollView>
 
-            {/* 8: Card do guia de uso */}
+            {/* 9: Card do guia de uso */}
             {isGuideVisible && (
                 <User_Guide_Card onClose={() => setIsGuideVisible(false)} />
             )}
+
+            {/* 10: Pop-up de Horários Disponíveis */}
+            <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => setIsModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.modalTitle}>Horários para {selectedDate.split('-').reverse().join('/')}</Text>
+
+                        <ScrollView style={styles.hoursList}>
+                            {hoursForSelectedDay.length > 0 ? (
+                                hoursForSelectedDay.map((item) => {
+                                    const timeString = item.date ? item.date.split('T')[1].substring(0, 5) : "Horário";
+
+                                    return (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={styles.hourCard}
+                                            onPress={() => {
+                                                setIsModalVisible(false);
+                                                appointmentScheduling(item);
+                                            }}
+                                        >
+                                            <Text style={styles.hourText}>{timeString} - {item.scheduling_type}</Text>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            ) : (
+                                <Text style={styles.noHoursText}>Não há horários disponíveis para este dia.</Text>
+                            )}
+                        </ScrollView>
+
+                        {/* 11: Botão para fechar o pop-up */}
+                        <Button
+                            title="Fechar"
+                            style={styles.closeModalButton}
+                            textStyle={styles.closeModalButtonText}
+                            onPress={() => setIsModalVisible(false)}
+                        />
+                    </View>
+                </View>
+            </Modal>
         </>
     )
 }
@@ -221,8 +398,91 @@ const styles = StyleSheet.create({
     bookingText: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
+        textAlign: "center",
         marginTop: 14,
         marginBottom: 18,
         color: '#1DA299'
+    },
+    listItemContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 10
+    },
+    listItemWrapper: {
+        flex: 1
+    },
+    cancelButton: {
+        width: 65,
+        height: 65,
+        backgroundColor: '#c92e2c',
+        marginBottom: 8,
+        marginLeft: 10,
+        borderRadius: 8
+    },
+    cancelButtonText: {
+        color: '#FFF',
+        fontSize: 18
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        width: '85%',
+        maxHeight: '70%',
+        backgroundColor: '#FFF',
+        borderRadius: 20,
+        padding: 22,
+        alignItems: 'center',
+        elevation: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+    },
+    modalTitle: {
+        fontFamily: 'PoppinsSemiBold',
+        fontSize: 18,
+        color: '#1DA299',
+        marginBottom: 16,
+    },
+    hoursList: {
+        width: '100%',
+        marginBottom: 16,
+    },
+    hourCard: {
+        width: '100%',
+        backgroundColor: '#EEEDED',
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderRadius: 10,
+        marginBottom: 10,
+        alignItems: 'center',
+    },
+    hourText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 16,
+        color: '#6E6E6E',
+    },
+    noHoursText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 14,
+        color: '#8C8C8C',
+        textAlign: 'center',
+        marginVertical: 20,
+    },
+    closeModalButton: {
+        width: '100%',
+        height: 48,
+        backgroundColor: '#D9D9D9',
+        borderRadius: 10,
+    },
+    closeModalButtonText: {
+        color: '#1DA299',
+        fontSize: 16,
+        fontFamily: 'PoppinsSemiBold',
     }
 })
