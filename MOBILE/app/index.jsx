@@ -7,38 +7,41 @@ import { Button } from '../components/Button'
 export default function Login() {
 
   const router = useRouter();
-
   const [emailInput, setEmailInput] = useState('');
-
   const [passwordInput, setPasswordInput] = useState('');
 
-  const users = [
-    {
-      id: 1,
-      email: "caiovtech@outlook.com",
-      password: "123456"
-    },
-    {
-      id: 2,
-      email: "danieldanielsilva08@gmail.com",
-      password: "123456"
+  async function handleLogin() {
+    if (!emailInput || !passwordInput) {
+      Alert.alert('Atenção', 'Preencha e-mail e senha para continuar.');
+      return;
     }
-  ];
 
-  function checkLogin() {
-    Keyboard.dismiss();
+    try {
+      const response = await fetch('http://localhost:8080/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: emailInput,
+          password: passwordInput
+        })
+      });
 
-    const userFound = users.find(
-      (user) => user.email === emailInput && user.password === passwordInput
-    );
+      if (response.ok) {
+        const data = await response.json();
 
-    if (userFound) {
-      router.replace('/homepage');
-    } else {
-      Alert.alert(
-        "Acesso Negado",
-        "E-mail ou senha incorretos. Tente novamente."
-      );
+        if (data.token) {
+          await AsyncStorage.setItem('userToken', data.token);
+        }
+
+        router.replace('/homepage');
+      } else {
+        Alert.alert('Erro', 'E-mail ou senha incorretos.');
+      }
+    } catch (error) {
+      console.error('Erro de requisição: ', error);
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
     }
   }
 
@@ -58,7 +61,7 @@ export default function Login() {
           <View style={styles.formContainer}>
             <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} value={emailInput} onChangeText={setEmailInput} />
             <Input placeholder='Digite sua senha' secureTextEntry={true} value={passwordInput} onChangeText={setPasswordInput} />
-            <Button title='Entrar' onPress={checkLogin} />
+            <Button title='Entrar' onPress={handleLogin} />
           </View>
 
         </View>
