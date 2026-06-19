@@ -39,7 +39,7 @@ function Login() {
         setShowError(true);
       }
     } catch (error) {
-      console.error("Erro ao se conectar com o servidor: ", error);
+      console.error("Erro de requisição: ", error);
       setShowError(true);
     }
   }
