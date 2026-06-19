@@ -216,13 +216,11 @@ export default function BookingPage() {
                     {/* 7: Renderização dos agendamentos */}
                     {availableDates.length > 0 ? (
                         availableDates.map((item) => {
-                            // FORMATANDO A DATA AQUI!
                             let formattedDate = "Data inválida";
                             let formattedTime = "";
 
                             if (item.schedulingDate) {
                                 const dateParts = item.schedulingDate.split('T');
-
                                 formattedDate = dateParts[0].split('-').reverse().join('/');
                                 formattedTime = dateParts[1] ? dateParts[1].substring(0, 5) : "";
                             }
@@ -230,31 +228,29 @@ export default function BookingPage() {
                             const itemDotColor = colorsByType[item.scheduling_type] || defaultColor;
 
                             return (
-                                <View key={item.id} style={styles.listItemContainer}>
-                                    <View style={styles.listItemWrapper}>
-                                        <List_Item
-                                            title={`${item.scheduling_type}\n${formattedDate} às ${formattedTime}`}
-                                            dotColor={itemDotColor}
-                                        />
-                                    </View>
+                                <List_Item
+                                    key={item.id}
+                                    title={`${item.scheduling_type}\n${formattedDate} às ${formattedTime}`}
+                                    dotColor={itemDotColor}
 
-                                    {/* 8: Botão de Cancelar */}
-                                    <Button
-                                        title="X"
-                                        style={styles.cancelButton}
-                                        textStyle={styles.cancelButtonText}
-                                        onPress={() => {
-                                            Alert.alert(
-                                                "Confirmar Cancelamento",
-                                                "Tem certeza que deseja cancelar este agendamento?",
-                                                [
-                                                    { text: "Não", style: "cancel" },
-                                                    { text: "Sim", onPress: () => cancelAppointment(item.id) }
-                                                ]
-                                            );
-                                        }}
-                                    />
-                                </View>
+                                    rightElement={
+                                        <Button
+                                            title="X"
+                                            style={styles.cancelButton}
+                                            textStyle={styles.cancelButtonText}
+                                            onPress={() => {
+                                                Alert.alert(
+                                                    "Confirmar Cancelamento",
+                                                    "Tem certeza que deseja cancelar este agendamento?",
+                                                    [
+                                                        { text: "Não", style: "cancel" },
+                                                        { text: "Sim", onPress: () => cancelAppointment(item.id) }
+                                                    ]
+                                                );
+                                            }}
+                                        />
+                                    }
+                                />
                             );
                         })
                     ) : (
@@ -413,16 +409,16 @@ const styles = StyleSheet.create({
         flex: 1
     },
     cancelButton: {
-        width: 65,
-        height: 65,
+        width: 45,
+        height: 45,
         backgroundColor: '#c92e2c',
-        marginBottom: 8,
-        marginLeft: 10,
-        borderRadius: 8
+        borderRadius: 8,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     cancelButtonText: {
         color: '#FFF',
-        fontSize: 18
+        fontSize: 14
     },
     modalOverlay: {
         flex: 1,

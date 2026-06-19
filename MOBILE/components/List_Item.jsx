@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-export function List_Item({ title, dotColor, expandable, onPress, headerStyle, titleStyle, children }) {
+export function List_Item({ title, dotColor, expandable, onPress, headerStyle, titleStyle, children, rightElement }) {
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -28,6 +28,12 @@ export function List_Item({ title, dotColor, expandable, onPress, headerStyle, t
                 <Text style={[styles.title, titleStyle]}>
                     {title}
                 </Text>
+
+                {rightElement && (
+                    <View style={styles.rightElementContainer}>
+                        {rightElement}
+                    </View>
+                )}
             </Pressable>
 
             {/* 5: Corpo do list item (quando for expansível) */}
@@ -75,6 +81,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         includeFontPadding: false,
         color: '#6E6E6E'
+    },
+    rightElementContainer: {
+        marginLeft: 12,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     body: {
         padding: 16,
