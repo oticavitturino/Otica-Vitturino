@@ -35,6 +35,9 @@ public class Occurrence {
     @Column(name = "sent_at", nullable = false)
     private LocalDateTime sentAt;
 
+    @Column(name = "category", nullable = false)
+    private String category;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonIgnore
