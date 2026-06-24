@@ -2,36 +2,54 @@ import './style.css'
 import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
+import Button from '../../components/button'
+import Card from '../../components/card'
 import ReplyIcon from '../../assets/message-square-reply.png'
 import TrashIcon from '../../assets/trash-2.png'
+import XIcon from '../../assets/x.png'
+import { useState, useEffect } from 'react'
 
 
 function Incident_History() {
-    // Apenas para testes mockados
 
-    const ocorrencia = [
-        {
-            id: 1,
-            usuario: "Luiza Amanda Vasconcelos",
-            categoria: "Ocorrência",
-            descricao: "O parafuso da lateral direita do óculos quebrou",
-            data: "11/03/2026"
-        },
-        {
-            id: 2,
-            usuario: "Guilherme Alves",
-            categoria: "Reclamação",
-            descricao: "Eu estou achando que meu óculos está demorando demais p...",
-            data: "28/01/2026"
-        },
-        {
-            id: 3,
-            usuario: "Carlos Viana",
-            categoria: "Ocorrência",
-            descricao: "Meu óculos está emperrando quando tento fechar ele",
-            data: "04/02/2026"
+    const [occurrenceToDelete, setOccurrenceToDelete] = useState(null);
+    const [occurrences, setOccurrences] = useState([]);
+
+    async function fetchAllOccurences() {
+        try {
+            const response = await fetch('http://localhost:8080/occurrences/listAll');
+            if (response.ok) {
+                const data = await response.json();
+                setOccurrences(data);
+            } else {
+                console.error('Falha ao buscar ocorrências.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
         }
-    ];
+    }
+
+    async function deleteOccurrence(id) {
+        try {
+            const response = await fetch(`http://localhost:8080/occurrences/delete/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                setOccurrenceToDelete(null);
+                fetchAllOccurences();
+            } else {
+                console.error('Falha ao excluir a ocorrência.');
+                alert('Erro ao excluir. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAllOccurences();
+    }, []);
 
     return (
         <Layout>
@@ -42,43 +60,76 @@ function Incident_History() {
                     {/* 2: Título */}
                     <h2>Gerencie aqui as ocorrências/reclamações</h2>
 
-                    {/* 3: Área de scroll / List item de teste mockado */}
+                    {/* 3: Área de scroll */}
                     <div className='incident-scroll-area'>
-
-                        {/* 4: Legendas */}
-                        <div className='list-legend'>
-                            <span>Usuário</span>
-                            <span>Categoria</span>
-                            <span>Descrição</span>
-                            <span>Data</span>
-                            <span></span>
-                        </div>
-
-                        {/* 5: Ícones de ação */}
-                        {ocorrencia.map((ocorrencia) => (
-                            <List_Item key={ocorrencia.id} actions={
-                                <>
-                                    <button className="icon-btn chart-btn">
-                                        <img src={ReplyIcon} className="action-icon"></img>
-                                    </button>
-
-                                    <button className="icon-btn chart-btn">
-                                        <img src={TrashIcon} className="action-icon"></img>
-                                    </button>
-                                </>
-                            }>
-
-                                {/* 6: Dados de cada usuário */}
-                                <div className="list-row-data">
-                                    <span>{ocorrencia.usuario}</span>
-                                    <span>{ocorrencia.categoria}</span>
-                                    <span>{ocorrencia.descricao}</span>
-                                    <span>{ocorrencia.data}</span>
+                        {occurrences.length === 0 ? (
+                            <p className="empty-state-text">Nenhuma ocorrência encontrada.</p>
+                        ) : (
+                            <>
+                                {/* 4: Legendas */}
+                                <div className='list-legend'>
+                                    <span>Usuário</span>
+                                    <span>Categoria</span>
+                                    <span>Descrição</span>
+                                    <span>Data</span>
                                     <span></span>
                                 </div>
 
-                            </List_Item>
-                        ))}
+                                {/* 5: Ícones de ação e renderização da lista */}
+                                {occurrences.map((item) => {
+                                    const rawDate = item.sentAt || "";
+                                    let formattedDate = rawDate;
+                                    let formattedTime = "";
+
+                                    if (rawDate.includes('T')) {
+                                        const [datePart, timePart] = rawDate.split('T');
+                                        const [year, month, day] = datePart.split('-');
+                                        formattedDate = `${day}/${month}/${year}`;
+                                        formattedTime = timePart.substring(0, 5);
+                                    }
+
+                                    return (
+                                        <List_Item key={item.id} actions={
+                                            <>
+                                                <button className="icon-btn chart-btn">
+                                                    <img src={ReplyIcon} className="action-icon" alt="Responder" />
+                                                </button>
+
+                                                <button className="icon-btn chart-btn" onClick={() => setOccurrenceToDelete(item)}>
+                                                    <img src={TrashIcon} className="action-icon" alt="Excluir" />
+                                                </button>
+                                            </>
+                                        }>
+                                            <div className="list-row-data">
+                                                <span>{item.customerName}</span>
+                                                <span>{item.category}</span>
+                                                <span>{item.description}</span>
+                                                <span>{formattedDate} {formattedTime}</span>
+                                                <span></span>
+                                            </div>
+                                        </List_Item>
+                                    );
+                                })}
+
+                                {/* 6: Pop-up de exclusão de ocorrência/reclamação */}
+                                {occurrenceToDelete && (
+                                    <div className='modal-overlay' onClick={() => setOccurrenceToDelete(null)}>
+                                        <Card className='exclude-occurrence-card' onClick={(e) => e.stopPropagation()}>
+                                            <button className="occurrence-x-btn" onClick={() => setOccurrenceToDelete(null)}>
+                                                <img src={XIcon} className="occurrence-x-btn-img" alt="Fechar"></img>
+                                            </button>
+
+                                            <h3>Deseja excluir essa <br />{occurrenceToDelete.category}?</h3>
+
+                                            <div className='btn-container'>
+                                                <Button className='yes-btn' onClick={() => deleteOccurrence(occurrenceToDelete.id)}>Sim</Button>
+                                                <Button className='no-btn' onClick={() => setOccurrenceToDelete(null)}>Não</Button>
+                                            </div>
+                                        </Card>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </div>
                 </Container>
             </div>
