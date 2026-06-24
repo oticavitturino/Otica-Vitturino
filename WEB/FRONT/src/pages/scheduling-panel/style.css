@@ -274,6 +274,7 @@
     text-align: center;
     margin: auto;
     font-weight: 500;
+    transform: translateY(-150%);
 }
 
 .date-only-row {
