@@ -33,7 +33,8 @@
 /* 3: Área de scroll / List item de teste mockado */
 .incident-scroll-area {
     width: 100%;
-    max-height: 60vh;
+    max-height: 72%;
+    flex-grow: 1;
     overflow-y: auto;
     padding-right: 10px;
     display: flex;
@@ -59,6 +60,15 @@
     flex-shrink: 0 !important;
 }
 
+.empty-state-text {
+    font-family: 'Poppins', sans-serif;
+    color: #3C7975;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: auto;
+    font-weight: 500;
+}
+
 /* 4: Legendas */
 .main-container-incident-history .list-legend {
     display: grid;
@@ -77,7 +87,7 @@
     padding-bottom: 10px;
 }
 
-/* 6: Dados de cada usuário */
+/* 5: Ícones de ação e renderização da lista */
 .main-container-incident-history .list-row-data {
     display: grid;
     grid-template-columns: 1fr 0.5fr 2.3fr 0.7fr 60px;
@@ -90,6 +100,100 @@
     text-align: left;
     font-size: 0.9rem;
     padding-left: 10px;
+}
+
+/* 6: Pop-up de exclusão de ocorrência/reclamação */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.exclude-occurrence-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.exclude-occurrence-card h3 {
+    font-family: 'Poppins';
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.occurrence-x-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0;
+    transition: opacity 0.2s ease;
+}
+
+.occurrence-x-btn:hover {
+    opacity: 0.7;
+}
+
+.occurrence-x-btn-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(0);
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px;
+}
+
+.yes-btn {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1rem;
+    height: 50px;
+    width: 120px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.yes-btn:hover {
+    background-color: #187E77;
+}
+
+.no-btn {
+    background-color: #CC5031;
+    color: #FFFFFF;
+    font-size: 1rem;
+    height: 50px;
+    width: 120px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.no-btn:hover {
+    background-color: #c73d1a;
 }
 
 /* 1600 * 900 */
@@ -105,12 +209,34 @@
         margin-bottom: 30px;
     }
 
-    .incident-scroll-area .list-legend span {
+    .incident-scroll-area .list-legend span,
+    .incident-scroll-area .list-row-data span {
         font-size: 0.85rem;
     }
 
-    .incident-scroll-area .list-row-data span {
-        font-size: 0.85rem;
+    .empty-state-text {
+        font-size: 1.1rem;
+    }
+
+    .exclude-occurrence-card {
+        gap: 12px;
+    }
+
+    .exclude-occurrence-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .yes-btn,
+    .no-btn {
+        height: 45px;
+        width: 110px;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
+
+    .occurrence-x-btn-img {
+        width: 24px;
+        height: 24px;
     }
 }
 
@@ -132,12 +258,35 @@
         height: 35px;
     }
 
-    .incident-scroll-area .list-legend span {
+    .incident-scroll-area .list-legend span,
+    .incident-scroll-area .list-row-data span {
         font-size: 0.75rem;
     }
 
-    .incident-scroll-area .list-row-data span {
-        font-size: 0.75rem;
+    .empty-state-text {
+        font-size: 1rem;
+    }
+
+    .exclude-occurrence-card {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .exclude-occurrence-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .yes-btn,
+    .no-btn {
+        height: 40px;
+        width: 100px;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .occurrence-x-btn-img {
+        width: 20px;
+        height: 20px;
     }
 }
 
@@ -162,6 +311,12 @@
         max-height: none;
         overflow-y: visible;
         padding-right: 0;
+    }
+
+    .empty-state-text {
+        margin: 0 !important;
+        margin-top: 10px !important;
+        font-size: 1.1rem;
     }
 
     .main-container-incident-history .list-legend {
@@ -192,5 +347,33 @@
         padding: 15px 10px;
         margin-bottom: 10px;
         width: 100% !important;
+    }
+
+    .exclude-occurrence-card {
+        width: 85%;
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .exclude-occurrence-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .btn-container {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .yes-btn,
+    .no-btn {
+        height: 50px;
+        width: 45%;
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .occurrence-x-btn-img {
+        width: 26px;
+        height: 26px;
     }
 }
