@@ -180,6 +180,8 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 15px;
+    flex-wrap: nowrap;
 }
 
 .input-group {
@@ -199,7 +201,7 @@
 }
 
 .input-group input[type="datetime-local"] {
-    width: 40%;
+    width: 220px;
     padding: 6px 12px;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
@@ -210,11 +212,16 @@
 
 /* 9: Botão de adicionar data disponível */
 .btn-confirm-date {
-    width: 10%;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
     border-radius: 8px !important;
     color: #3C7975;
     background-color: #B8B8B8;
     transition: 0.1s ease-in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-confirm-date:hover {
@@ -263,7 +270,7 @@
 .empty-dates-text {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1rem;
-    color: #666666; 
+    color: #666666;
     text-align: center;
     margin: auto;
     font-weight: 500;
@@ -327,6 +334,11 @@
         padding: 4px 10px;
     }
 
+    .btn-confirm-date {
+        width: 40px;
+        height: 40px;
+    }
+
     .add-remove-date-scroll-area {
         height: 240px;
     }
@@ -348,7 +360,7 @@
         height: 12px;
     }
 
-     .empty-dates-text {
+    .empty-dates-text {
         font-size: 1rem;
     }
 
@@ -411,6 +423,11 @@
     .btn-confirm-date {
         font-size: 1rem;
         padding: 3px 8px;
+    }
+
+    .btn-confirm-date {
+        width: 35px;
+        height: 35px;
     }
 
     .add-remove-date-scroll-area {
@@ -570,6 +587,6 @@
 
     .empty-dates-text {
         font-size: 0.95rem;
-        margin-top: 40px; 
+        margin-top: 40px;
     }
 }
