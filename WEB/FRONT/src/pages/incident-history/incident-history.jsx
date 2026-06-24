@@ -15,6 +15,7 @@ function Incident_History() {
     const [occurrenceToDelete, setOccurrenceToDelete] = useState(null);
     const [occurrences, setOccurrences] = useState([]);
 
+    // Função de buscar todas as ocorrências
     async function fetchAllOccurences() {
         try {
             const response = await fetch('http://localhost:8080/occurrences/listAll');
@@ -29,6 +30,7 @@ function Incident_History() {
         }
     }
 
+    // Função de deletar ocorrência
     async function deleteOccurrence(id) {
         try {
             const response = await fetch(`http://localhost:8080/occurrences/delete/${id}`, {
