@@ -34,6 +34,7 @@ public class OccurrenceService {
         Occurrence occurrence = new Occurrence();
         occurrence.setDescription(dto.description());
         occurrence.setSentAt(dto.sentAt());
+        occurrence.setCategory(dto.category());
         occurrence.setCustomer(customer);
         Occurrence savedOccurrence = occurrenceRepository.save(occurrence);
 
@@ -41,6 +42,7 @@ public class OccurrenceService {
                 savedOccurrence.getId(),
                 savedOccurrence.getDescription(),
                 savedOccurrence.getSentAt(),
+                savedOccurrence.getCategory(),
                 customer.getId(),
                 customer.getName()
         );
@@ -63,7 +65,8 @@ public class OccurrenceService {
                 .map(occurrence -> new OccurrenceListDTO(
                         occurrence.getId(),
                         occurrence.getDescription(),
-                        occurrence.getSentAt()
+                        occurrence.getSentAt(),
+                        occurrence.getCategory()
                 )).collect(Collectors.toList());
     }
 
@@ -75,6 +78,7 @@ public class OccurrenceService {
                         occurrence.getId(),
                         occurrence.getDescription(),
                         occurrence.getSentAt(),
+                        occurrence.getCategory(),
                         occurrence.getCustomer() != null ? occurrence.getCustomer().getId() : null,
                         occurrence.getCustomer() != null ? occurrence.getCustomer().getName() : null
                  )).collect(Collectors.toList());

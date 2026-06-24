@@ -51,9 +51,9 @@ public class OccurrenceServiceTest {
         customer.setId(1L);
         customer.setName("João Silva");
 
-        occurrence = new Occurrence("Aro do óculos quebrado", LocalDateTime.now(), customer);
+        occurrence = new Occurrence("Aro do óculos quebrado", LocalDateTime.now(), "ocorrencia", customer);
         
-        dto = new OccurrenceDTO(1L, "Aro do óculos quebrado", LocalDateTime.now(), 1L, "João Silva");
+        dto = new OccurrenceDTO(1L, "Aro do óculos quebrado", LocalDateTime.now(), "ocorrencia", 1L, "João Silva");
     }
 
     @Test
@@ -65,6 +65,7 @@ public class OccurrenceServiceTest {
         savedOccurrence.setId(1L);
         savedOccurrence.setDescription(dto.description());
         savedOccurrence.setSentAt(dto.sentAt());
+        savedOccurrence.setCategory(dto.category());
         savedOccurrence.setCustomer(customer);
         
         when(repository.save(any(Occurrence.class))).thenReturn(savedOccurrence);
@@ -75,6 +76,7 @@ public class OccurrenceServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(dto.description(), result.description());
+        assertEquals(dto.category(), result.category());
         assertEquals(dto.customerName(), result.customerName());
         verify(repository, times(1)).save(any(Occurrence.class));
     }
@@ -132,6 +134,7 @@ public class OccurrenceServiceTest {
         when(mockOccurrence.getId()).thenReturn(1L);
         when(mockOccurrence.getDescription()).thenReturn("Aro do óculos quebrado");
         when(mockOccurrence.getSentAt()).thenReturn(LocalDateTime.now());
+        when(mockOccurrence.getCategory()).thenReturn("Óculos");
         when(mockOccurrence.getCustomer()).thenReturn(customer);
         
         when(repository.findAll()).thenReturn(Arrays.asList(mockOccurrence));
@@ -142,6 +145,7 @@ public class OccurrenceServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(1, result.size());
+        assertEquals("Óculos", result.get(0).category());
         assertEquals("João Silva", result.get(0).customerName());
         verify(repository, times(1)).findAll();
     }
