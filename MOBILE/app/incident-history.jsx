@@ -1,25 +1,63 @@
-import { View, ScrollView, Text, Image, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
-import { useState } from 'react'
+import { View, ScrollView, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native'
+import { useState, useEffect } from 'react'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item'
 import { Occurrence_Card } from '../components/Occurrence_Card'
 import { User_Guide_Card } from '../components/User_Guide_Card'
 
-const historico = [
-    {
-        id: '1',
-        title: 'Acho que meu óculos está demorando demais para chegar'
-    },
-    {
-        id: '2',
-        title: 'O óculos chegou, mas o parafuso que segura a perna esquerda caiu. Acho que veio danificado'
-    }
-]
-
 export default function Incident_History() {
 
     const [openCard, setOpenCard] = useState(null);
+    const [occurrences, setOccurrences] = useState([]);
+
+    //Função de retornar histórico de ocorrências
+    async function fetchAllOccurrences() {
+        try {
+            const response = await fetch('http://localhost:8080/occurrences/occurrenceCustomer?customerId=1');
+            if (response.ok) {
+                const data = await response.json();
+                setOccurrences(data);
+            } else {
+                console.error('Falha ao buscar histórico.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAllOccurrences();
+    }, []);
+
+    // Função de registrar ocorrência
+    async function registerOccurrence(categoryType, userDescription) {
+        try {
+            const response = await fetch('http://localhost:8080/occurrences/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    description: userDescription,
+                    sentAt: new Date().toISOString(),
+                    category: categoryType,
+                    customerId: 1,
+                    customerName: 'Usuário'
+                })
+            });
+
+            if (response.ok) {
+                Alert.alert('Sucesso', 'Ocorrência registrada!');
+                setOpenCard(null);
+                fetchAllOccurrences();
+            } else {
+                Alert.alert('Erro', 'Ocorrência não registrada. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
 
     // Função para fechar um card aberto ao abrir outro card
     function toggleCard(cardName) {
@@ -55,16 +93,26 @@ export default function Incident_History() {
 
                         {/* 5: Container dos cards */}
                         <View style={styles.cardsContainer}>
-                            <Occurrence_Card type='Ocorrência' isExpanded={openCard === 'Ocorrência'} onToggle={() => toggleCard('Ocorrência')} />
-                            <Occurrence_Card type='Reclamação' isExpanded={openCard === 'Reclamação'} onToggle={() => toggleCard('Reclamação')} />
+                            <Occurrence_Card
+                                type='Ocorrência'
+                                isExpanded={openCard === 'Ocorrência'}
+                                onToggle={() => toggleCard('Ocorrência')}
+                                onSubmit={(typedText) => registerOccurrence('Ocorrência', typedText)}
+                            />
+                            <Occurrence_Card
+                                type='Reclamação'
+                                isExpanded={openCard === 'Reclamação'}
+                                onToggle={() => toggleCard('Reclamação')}
+                                onSubmit={(typedText) => registerOccurrence('Reclamação', typedText)}
+                            />
                         </View>
 
                         {/* 6: Texto */}
                         <Text style={styles.historyText}>Histórico:</Text>
 
                         {/* 7: Itens do histórico */}
-                        {historico.map((item) => (
-                            <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.title} />
+                        {occurrences.map((item) => (
+                            <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.description} />
                         ))}
                     </View>
                 </ScrollView>

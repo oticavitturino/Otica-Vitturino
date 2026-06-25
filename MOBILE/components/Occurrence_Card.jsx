@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Alert, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from '../components/Button';
 
-export function Occurrence_Card({ type = 'Ocorrência', isExpanded, onToggle }) {
+export function Occurrence_Card({ type = 'Ocorrência', isExpanded, onToggle, onSubmit }) {
 
     const [occurrenceText, setOccurrenceText] = useState('');
 
@@ -13,9 +13,11 @@ export function Occurrence_Card({ type = 'Ocorrência', isExpanded, onToggle }) 
             return;
         }
 
-        Alert.alert(`Sua ${type.toLowerCase()} foi enviada com sucesso!`);
+        if (onSubmit) {
+            onSubmit(occurrenceText);
+        }
+
         setOccurrenceText('');
-        onToggle();
         Keyboard.dismiss();
     }
 
