@@ -225,6 +225,7 @@ function Scheduling_Panel() {
                                         type='datetime-local'
                                         value={dateTimeInput}
                                         onChange={(e) => setDateTimeInput(e.target.value)}
+                                        max='9999-12-31T23:59'
                                         required
                                     />
 

@@ -93,6 +93,7 @@ function User_Management() {
                   name='birthDate'
                   value={formData.birthDate}
                   onChange={handleInputChange}
+                  max='9999-12-31'
                   onFocus={() => {
                     if (dateInputType !== 'date') {
                       setDateInputType('date');
