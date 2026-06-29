@@ -45,7 +45,7 @@ function User_Management() {
           address: formData.address,
           birthDate: formData.birthDate,
           active: true,
-          profile: 'CLIENTE'
+          profile: 'CUSTOMER'
         })
       });
 
