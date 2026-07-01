@@ -15,6 +15,8 @@ import com.br.oticavitturino.main.model.domain.user.TypeProfile;
 import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService implements UserDetailsService {
 
@@ -26,6 +28,7 @@ public class UserService implements UserDetailsService {
         return repository.findByEmail(email);
     }
 
+    @Transactional
     public User register (RegisterUserDTO data) {
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         if (this.repository.findByEmail(data.email()) != null) throw new EmailWasRegistredException("Email was registred!");

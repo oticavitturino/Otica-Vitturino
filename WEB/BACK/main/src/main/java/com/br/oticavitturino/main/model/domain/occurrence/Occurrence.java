@@ -43,7 +43,7 @@ public class Occurrence {
     @JsonIgnore
     private Customer customer;
 
-    public Occurrence(String description, LocalDateTime sentAt, Customer customer) {
+    public Occurrence(String description, LocalDateTime sentAt, String ocorrencia, Customer customer) {
         this.description = description;
         this.sentAt = sentAt;
         this.customer = customer;

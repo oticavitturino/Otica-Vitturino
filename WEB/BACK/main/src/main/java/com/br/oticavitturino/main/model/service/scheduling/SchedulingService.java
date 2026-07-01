@@ -1,18 +1,13 @@
 package com.br.oticavitturino.main.model.service.scheduling;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
+import com.br.oticavitturino.main.infra.email.SendEmailMessage;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.scheduling.AvailableSlot;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
@@ -23,8 +18,6 @@ import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
 import com.br.oticavitturino.main.model.repository.scheduling.AvailableSlotRepository;
 import com.br.oticavitturino.main.model.repository.scheduling.SchedulingRepository;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -40,13 +33,7 @@ public class SchedulingService {
     private CustomerRepository customerRepository;
 
     @Autowired
-    private JavaMailSender mailSender;
-
-    @Autowired
-    private TemplateEngine templateEngine;
-
-    @Value("${spring.mail.username}")
-    private String fromEmail;
+    private SendEmailMessage sendMailMessage;
 
     // Administrador pode adicionar datas disponíveis para agendamento;
     @Transactional
@@ -75,10 +62,10 @@ public class SchedulingService {
 
         if (status == StatusEnum.CONCLUIDO) {
             scheduling.setStatus(StatusEnum.CONCLUIDO);
-            sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
+            sendMailMessage.sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
         } else if (status == StatusEnum.CANCELADO) {
             scheduling.setStatus(StatusEnum.CANCELADO);
-            sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
+            sendMailMessage.sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
         }
         repository.save(scheduling);
     }
@@ -132,27 +119,5 @@ public class SchedulingService {
 
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
-    }
-
-    private void sendEmailNotification(String to, String subject, String username, String message) {
-        try {
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
-
-            Context context = new Context();
-            context.setVariable("username", username);
-            context.setVariable("message", message);
-
-            String emailContent = templateEngine.process("confirmation-email-template.html", context);
-
-            helper.setFrom(fromEmail);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(emailContent, true);
-            mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            System.err.println("Erro ao tentar enviar e-mail para: " + to + " - Erro: " + e.getMessage());
-            e.printStackTrace();
-        }
     }
 }
