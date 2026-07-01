@@ -14,6 +14,7 @@ import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
 import com.br.oticavitturino.main.model.repository.message.MessageTemplateRepository;
 import com.br.oticavitturino.main.model.domain.message.TypeMessageEnum;
 
+import java.time.LocalDateTime;
 @Service
 public class MessageTemplateService {
 
@@ -56,6 +57,57 @@ public class MessageTemplateService {
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
                     String subject = "Compra realizada com sucesso!";
+                    sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
+                }
+            }
+
+            // Mesagem de Lembrete
+            // 15 dias;
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(15).isBefore(LocalDateTime.now()))) {
+                TypeMessageEnum type = TypeMessageEnum.LEMBRETE_15_DIAS;
+                String templateText = repository.findTemplateTextByType(type);
+                if (templateText != null && !templateText.isEmpty()) {
+                    String subject = "Lembrete!";
+                    sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
+                }
+            }
+
+            // 30 dias;
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(30).isBefore(LocalDateTime.now()))) {
+                TypeMessageEnum type = TypeMessageEnum.LEMBRETE_30_DIAS;
+                String templateText = repository.findTemplateTextByType(type);
+                if (templateText != null && !templateText.isEmpty()) {
+                    String subject = "Lembrete!";
+                    sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
+                }
+            }
+
+            // 3 meses;
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(90).isBefore(LocalDateTime.now()))) {
+                TypeMessageEnum type = TypeMessageEnum.LEMBRETE_90_DIAS;
+                String templateText = repository.findTemplateTextByType(type);
+                if (templateText != null && !templateText.isEmpty()) {
+                    String subject = "Lembrete!";
+                    sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
+                }
+            }
+
+            // 6 meses;
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(180).isBefore(LocalDateTime.now()))) {
+                TypeMessageEnum type = TypeMessageEnum.LEMBRETE_180_DIAS;
+                String templateText = repository.findTemplateTextByType(type);
+                if (templateText != null && !templateText.isEmpty()) {
+                    String subject = "Lembrete!";
+                    sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
+                }
+            }
+
+            // 1 ano;
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(365).isBefore(LocalDateTime.now()))) {
+                TypeMessageEnum type = TypeMessageEnum.LEMBRETE_365_DIAS;
+                String templateText = repository.findTemplateTextByType(type);
+                if (templateText != null && !templateText.isEmpty()) {
+                    String subject = "Lembrete!";
                     sendMailMessage.sendEmailNotification(customer.getEmail(), subject, customer.getName(), templateText);
                 }
             }

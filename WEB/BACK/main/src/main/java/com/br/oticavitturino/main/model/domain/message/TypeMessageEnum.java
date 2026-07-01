@@ -2,7 +2,11 @@ package com.br.oticavitturino.main.model.domain.message;
 
 public enum TypeMessageEnum {
 
-    LEMBRETE("LEMBRETE"),
+    LEMBRETE_15_DIAS("LEMBRETE_15_DIAS"),
+    LEMBRETE_30_DIAS("LEMBRETE_30_DIAS"),
+    LEMBRETE_90_DIAS("LEMBRETE_90_DIAS"),
+    LEMBRETE_180_DIAS("LEMBRETE_180_DIAS"),
+    LEMBRETE_365_DIAS("LEMBRETE_365_DIAS"),
     COMPRA("COMPRA"),
     ANIVERSARIO("ANIVERSARIO");
 

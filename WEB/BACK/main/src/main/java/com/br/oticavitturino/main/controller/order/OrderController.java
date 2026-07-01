@@ -8,7 +8,13 @@ import com.br.oticavitturino.main.model.service.order.OrderService;
 import com.br.oticavitturino.main.model.domain.order.OrderDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.br.oticavitturino.main.model.domain.order.OrderStatusEnum;
+import com.br.oticavitturino.main.model.domain.order.OrderModifyStatusDTO;
 
 @Controller
 @RequestMapping("/orders")
@@ -17,8 +23,15 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
+    @PostMapping("/createOrder")
     public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO dto) {
         OrderDTO createdOrder = service.createOrder(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+    }
+
+    @PutMapping("/modifyOrderStatus")
+    public ResponseEntity<OrderModifyStatusDTO> modifyOrderStatus(@RequestParam Long orderId, @RequestParam OrderStatusEnum newStatus) {
+        OrderModifyStatusDTO updatedOrder = service.modifyOrderStatus(orderId, newStatus);
+        return ResponseEntity.ok(updatedOrder);
     }
 }

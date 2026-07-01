@@ -18,6 +18,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,8 +38,15 @@ public class Order {
     @Column(name = "order_status", nullable = false)
     private OrderStatusEnum OrderStatus;
 
+    @Column(name = "order_date", nullable = false)
+    private LocalDateTime orderDate;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     @JsonIgnore
     private Customer customer;
+
+    public Order(OrderStatusEnum OrderStatus) {
+        this.OrderStatus = OrderStatus;
+    }
 }
