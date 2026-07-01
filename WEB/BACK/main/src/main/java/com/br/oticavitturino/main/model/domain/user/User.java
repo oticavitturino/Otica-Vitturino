@@ -47,6 +47,12 @@ public abstract class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private TypeProfile profile;
 
+    @Column(name = "my_referral_code", unique = true)
+    private String myReferralCode;
+
+    @Column(name = "points")
+    private int points = 0;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.profile == TypeProfile.ADMIN) {

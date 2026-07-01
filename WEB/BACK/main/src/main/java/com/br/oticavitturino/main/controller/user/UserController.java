@@ -35,7 +35,9 @@ public class UserController {
 
         var token = tokenService.generateToken(auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        var user = (com.br.oticavitturino.main.model.domain.user.User) auth.getPrincipal();
+
+        return ResponseEntity.ok(new LoginResponseDTO(token, user.getMyReferralCode()));
     }
 
     @PostMapping("/register")

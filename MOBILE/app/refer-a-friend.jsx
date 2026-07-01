@@ -1,5 +1,6 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
-import { useState } from 'react'
+import { View, Text, Image, StyleSheet, Share, Alert } from 'react-native'
+import { useState, useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { User_Guide_Card } from '../components/User_Guide_Card'
@@ -7,10 +8,45 @@ import { User_Guide_Card } from '../components/User_Guide_Card'
 export default function Refer_A_Friend() {
 
     const [isGuideVisible, setIsGuideVisible] = useState(false);
+    const [myReferralCode, setMyReferralCode] = useState('');
+
+    useEffect(() => {
+        async function loadReferralCode() {
+            try {
+                const code = await AsyncStorage.getItem('referralCode');
+                if (code) {
+                    setMyReferralCode(code);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar o código de indicação', error);
+            }
+        }
+        loadReferralCode();
+    }, []);
 
     // Função de compartilhar o aplicativo
     function shareWithAFriend() {
+        const shareMessage = `Oi! Estou usando o app da Ótica Vitturino para acompanhar meus serviços. Diga que eu te indiquei usando meu código ${myReferralCode} no seu primeiro atendimento e ganhe um bônus especial!`;
 
+        try {
+            const result = await Share.share({
+                message: shareMessage,
+                title: 'Convite para o App'
+            });
+
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    console.log('Compartilhado no app: ', result.activityType);
+                } else {
+                    console.log('Gaveta de compartilhamento fechada');
+                }
+            } else if (result.action === Share.dismissedAction) {
+                console.log('Compartilhamento cancelado');
+            }
+        } catch (error) {
+            Alert.alert('Erro', 'Não foi possível compartilhar no momento.');
+            console.error(error.message);
+        }
     }
 
     return (

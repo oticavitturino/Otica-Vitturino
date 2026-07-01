@@ -17,9 +17,11 @@ function User_Management() {
     password: '',
     phone: '',
     address: '',
-    birthDate: ''
+    birthDate: '',
+    referralCode: ''
   });
   const [users, setUsers] = useState([]);
+  const [showReferralInput, setShowReferralInput] = useState(false);
 
   // Função para atualizar os dados do formulário a cada digitação
   const handleInputChange = (event) => {
@@ -45,14 +47,16 @@ function User_Management() {
           address: formData.address,
           birthDate: formData.birthDate,
           active: true,
-          profile: 'CUSTOMER'
+          profile: 'CUSTOMER',
+          referralCode: formData.referralCode
         })
       });
 
       if (response.ok) {
         alert('Usuário cadastrado com sucesso!');
-        setFormData({ name: '', email: '', password: '', phone: '', address: '', birthDate: '' });
+        setFormData({ name: '', email: '', password: '', phone: '', address: '', birthDate: '', referralCode: '' });
         setDateInputType('text');
+        setShowReferralInput(false);
       } else {
         alert('Erro ao cadastrar usuário. Verifique os dados.');
       }
@@ -87,24 +91,45 @@ function User_Management() {
                 <Input placeholder='Telefone' type='tel' name='phone' value={formData.phone} onChange={handleInputChange} required />
                 <Input placeholder='Endereço' type='text' name='address' value={formData.address} onChange={handleInputChange} required />
 
-                <Input
-                  placeholder='Data de nascimento'
-                  type={dateInputType}
-                  name='birthDate'
-                  value={formData.birthDate}
-                  onChange={handleInputChange}
-                  max='9999-12-31'
-                  onFocus={() => {
-                    if (dateInputType !== 'date') {
-                      setDateInputType('date');
-                    }
-                  }}
-                  onBlur={(e) => {
-                    if (!e.target.value) {
-                      setDateInputType('text');
-                    }
-                  }}
-                  required />
+                <div className='input-row-inline'>
+                  <Input
+                    placeholder='Data de nascimento'
+                    type={dateInputType}
+                    name='birthDate'
+                    value={formData.birthDate}
+                    onChange={handleInputChange}
+                    max='9999-12-31'
+                    onFocus={() => {
+                      if (dateInputType !== 'date') {
+                        setDateInputType('date');
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (!e.target.value) {
+                        setDateInputType('text');
+                      }
+                    }}
+                    required />
+
+                  {!showReferralInput ? (
+                    <button
+                      type="button"
+                      className="btn-show-referral"
+                      onClick={() => setShowReferralInput(true)}
+                    >
+                      + Código
+                    </button>
+                  ) : (
+                    <Input
+                      placeholder='Cód. (Opcional)'
+                      type='text'
+                      name='referralCode'
+                      value={formData.referralCode}
+                      onChange={handleInputChange}
+                    />
+                  )}
+                </div>
+
                 <Button className='btn-register' type='submit'>Cadastrar</Button>
               </form>
 
@@ -137,7 +162,7 @@ function User_Management() {
                       <span>{user.name} | {user.email}</span>
                     </List_item>
                   ))
-                )}                
+                )}
               </div>
             </Container>
           </div>

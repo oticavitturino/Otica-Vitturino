@@ -34,6 +34,10 @@ export default function Login() {
 
         if (data.token) {
           await AsyncStorage.setItem('userToken', data.token);
+
+          if (data.referralCode) {
+            await AsyncStorage.setItem('referralCode', data.referralCode);
+          }
         }
 
         router.replace('/homepage');
