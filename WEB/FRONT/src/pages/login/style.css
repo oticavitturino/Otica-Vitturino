@@ -71,19 +71,6 @@
 }
 
 /* 5: Card de erro de login */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
 .error-card {
     width: 90%;
     max-width: 400px;
@@ -120,9 +107,9 @@
     background-color: #1DA299;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     font-size: 0.9rem;
-    }
+}
 
-    /* 1600 * 900 */
+/* 1600 * 900 */
 
 @media (max-width: 1600px) {
     .login-container {
@@ -238,8 +225,7 @@
         width: 100%;
         margin-top: 10vh;
         background-color: transparent !important;
-        box-shadow: none;
-        border: none;
+        box-shadow: none !important;
     }
 
     .login-container h2 {

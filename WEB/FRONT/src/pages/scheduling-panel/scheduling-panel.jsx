@@ -212,8 +212,8 @@ function Scheduling_Panel() {
                 {isAddDateModalOpen && (
                     <div className="modal-overlay" onClick={() => setIsAddDateModalOpen(false)}>
                         <Card className='add-remove-date-card' onClick={(e) => e.stopPropagation()}>
-                            <button className='date-x-btn' onClick={() => setIsAddDateModalOpen(false)}>
-                                <img src={XIcon} className='date-x-btn-img' alt='Fechar'></img>
+                            <button className='x-btn' onClick={() => setIsAddDateModalOpen(false)}>
+                                <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
                             </button>
 
                             <h3>Datas disponíveis</h3>

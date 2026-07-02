@@ -122,19 +122,6 @@
 }
 
 /* 8: Pop-up de adicionar/remover datas de agendamento disponíveis */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
 .add-remove-date-card {
     display: flex;
     flex-direction: column;
@@ -151,29 +138,6 @@
     font-weight: 500;
     color: #3C7975;
     margin: 0;
-}
-
-.date-x-btn {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    padding: 0;
-    transition: opacity 0.2s ease;
-}
-
-.date-x-btn:hover {
-    opacity: 0.7;
-}
-
-.date-x-btn-img {
-    width: 28px;
-    height: 28px;
-    object-fit: contain;
-    filter: brightness(0) invert(0);
 }
 
 .add-date-form {

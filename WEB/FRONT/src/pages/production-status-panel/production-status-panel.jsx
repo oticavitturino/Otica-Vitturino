@@ -2,9 +2,20 @@ import './style.css'
 import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
+import Button from '../../components/button'
+import Card from '../../components/card'
 import ReloadIcon from '../../assets/rotate-ccw.png'
+import XIcon from '../../assets/x.png'
+import { useState } from 'react'
 
 function Production_Status_Panel() {
+
+    const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+
+    function addProduct() {
+        setIsAddProductModalOpen(true);
+    }
+
     // Apenas para testes mockados
 
     const status = [
@@ -43,7 +54,31 @@ function Production_Status_Panel() {
             usuario: "Hector Soares",
             produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
             status: "Em produção"
-        }
+        },
+        {
+            id: 7,
+            usuario: "Hector Soares",
+            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
+            status: "Em produção"
+        },
+        {
+            id: 8,
+            usuario: "Hector Soares",
+            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
+            status: "Em produção"
+        },
+        {
+            id: 9,
+            usuario: "Hector Soares",
+            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
+            status: "Em produção"
+        },
+        {
+            id: 10,
+            usuario: "Hector Soares",
+            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
+            status: "Em produção"
+        },
     ];
 
     return (
@@ -70,14 +105,14 @@ function Production_Status_Panel() {
                         {status.map((status) => (
                             <List_Item key={status.id} actions={
                                 <>
-                                    <button className="icon-btn chart-btn">
-                                        <img src={ReloadIcon} className="action-icon"></img>
+                                    <button className='icon-btn chart-btn'>
+                                        <img src={ReloadIcon} className='action-icon'></img>
                                     </button>
                                 </>
                             }>
 
                                 {/* 6: Dados de cada usuário */}
-                                <div className="list-row-data">
+                                <div className='list-row-data'>
                                     <span>{status.usuario}</span>
                                     <span>{status.produto}</span>
                                     <span>{status.status}</span>
@@ -87,6 +122,22 @@ function Production_Status_Panel() {
                             </List_Item>
                         ))}
                     </div>
+
+                    {/* 7: Botão de adicionar produto */}
+                    <Button className='btn-add-product' onClick={addProduct}>Adicionar pedido</Button>
+
+                    {/* 8: Pop-up de adicionar produto */}
+                    {isAddProductModalOpen && (
+                        <div className='modal-overlay' onClick={() => setIsAddProductModalOpen(false)}>
+                            <Card className='add-product-card' onClick={(e) => e.stopPropagation()}>
+                                <button className='x-btn' onClick={() => setIsAddProductModalOpen(false)}>
+                                    <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                </button>
+
+                                <h3>Adicione um novo produto</h3>
+                            </Card>
+                        </div>
+                    )}
                 </Container>
             </div>
         </Layout>

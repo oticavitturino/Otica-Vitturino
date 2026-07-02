@@ -65,7 +65,7 @@ function Incident_History() {
                     {/* 3: Área de scroll */}
                     <div className='incident-scroll-area'>
                         {occurrences.length === 0 ? (
-                            <p className="empty-state-text">Nenhuma ocorrência encontrada.</p>
+                            <p className='empty-state-text'>Nenhuma ocorrência encontrada.</p>
                         ) : (
                             <>
                                 {/* 4: Legendas */}
@@ -93,16 +93,16 @@ function Incident_History() {
                                     return (
                                         <List_Item key={item.id} actions={
                                             <>
-                                                <button className="icon-btn chart-btn">
-                                                    <img src={ReplyIcon} className="action-icon" alt="Responder" />
+                                                <button className='icon-btn chart-btn'>
+                                                    <img src={ReplyIcon} className='action-icon' alt='Responder' />
                                                 </button>
 
-                                                <button className="icon-btn chart-btn" onClick={() => setOccurrenceToDelete(item)}>
-                                                    <img src={TrashIcon} className="action-icon" alt="Excluir" />
+                                                <button className='icon-btn chart-btn' onClick={() => setOccurrenceToDelete(item)}>
+                                                    <img src={TrashIcon} className='action-icon' alt='Excluir' />
                                                 </button>
                                             </>
                                         }>
-                                            <div className="list-row-data">
+                                            <div className='list-row-data'>
                                                 <span>{item.customerName}</span>
                                                 <span>{item.category}</span>
                                                 <span>{item.description}</span>
@@ -117,8 +117,8 @@ function Incident_History() {
                                 {occurrenceToDelete && (
                                     <div className='modal-overlay' onClick={() => setOccurrenceToDelete(null)}>
                                         <Card className='exclude-occurrence-card' onClick={(e) => e.stopPropagation()}>
-                                            <button className="occurrence-x-btn" onClick={() => setOccurrenceToDelete(null)}>
-                                                <img src={XIcon} className="occurrence-x-btn-img" alt="Fechar"></img>
+                                            <button className='x-btn' onClick={() => setOccurrenceToDelete(null)}>
+                                                <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
                                             </button>
 
                                             <h3>Deseja excluir essa <br />{occurrenceToDelete.category}?</h3>
