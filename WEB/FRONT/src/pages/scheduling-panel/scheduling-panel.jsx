@@ -152,7 +152,7 @@ function Scheduling_Panel() {
                     {/* 3: Área de scroll */}
                     <div className='scheduling-scroll-area'>
                         {appointments.length === 0 ? (
-                            <p className="empty-state-text">Nenhum agendamento cadastrado.</p>
+                            <p className='empty-state-text'>Nenhum agendamento cadastrado.</p>
                         ) : (
                             <>
                                 {/* 4: Legendas */}
@@ -176,21 +176,21 @@ function Scheduling_Panel() {
                                         <List_Item key={appointment.userId} actions={
                                             <>
                                                 <button
-                                                    className="icon-btn chart-btn"
+                                                    className='icon-btn chart-btn'
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CONFIRMADO')}
                                                 >
-                                                    <img src={CheckIcon} className="action-icon" alt="Confirmar"></img>
+                                                    <img src={CheckIcon} className='action-icon' alt='Confirmar'></img>
                                                 </button>
 
                                                 <button
-                                                    className="icon-btn x-btn"
+                                                    className='icon-btn x-btn'
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CANCELADO')}
                                                 >
                                                     <img src={XIcon} className="action-icon" alt="Cancelar"></img>
                                                 </button>
                                             </>
                                         }>
-                                            <div className="list-row-data">
+                                            <div className='list-row-data'>
                                                 <span>{appointment.name}</span>
                                                 <span>{appointment.scheduling_type}</span>
                                                 <span>{formattedDate}</span>
@@ -212,8 +212,8 @@ function Scheduling_Panel() {
                 {isAddDateModalOpen && (
                     <div className="modal-overlay" onClick={() => setIsAddDateModalOpen(false)}>
                         <Card className='add-remove-date-card' onClick={(e) => e.stopPropagation()}>
-                            <button className="date-x-btn" onClick={() => setIsAddDateModalOpen(false)}>
-                                <img src={XIcon} className="date-x-btn-img" alt="Fechar"></img>
+                            <button className='date-x-btn' onClick={() => setIsAddDateModalOpen(false)}>
+                                <img src={XIcon} className='date-x-btn-img' alt='Fechar'></img>
                             </button>
 
                             <h3>Datas disponíveis</h3>
@@ -237,18 +237,18 @@ function Scheduling_Panel() {
                             {/* 10: Scroll area das datas adicionadas */}
                             <div className='add-remove-date-scroll-area'>
                                 {availableDates.length === 0 ? (
-                                    <p className="empty-dates-text">Nenhuma data cadastrada.</p>
+                                    <p className='empty-dates-text'>Nenhuma data cadastrada.</p>
                                 ) : (
                                     availableDates.map((data, index) => (
                                         <List_Item key={index} actions={
                                             <button
-                                                className="icon-btn x-btn"
+                                                className='icon-btn x-btn'
                                                 onClick={() => handleDeleteAvailableDate(data)}
                                             >
-                                                <img src={XIcon} className="action-icon" alt="Remover"></img>
+                                                <img src={XIcon} className='action-icon' alt='Remover'></img>
                                             </button>
                                         }>
-                                            <div className="list-row-data date-only-row">
+                                            <div className='list-row-data date-only-row'>
                                                 <span>{formatBrazilianDate(data)}</span>
                                             </div>
                                         </List_Item>

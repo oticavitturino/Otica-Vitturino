@@ -145,6 +145,14 @@
     gap: 15px;
 }
 
+.add-remove-date-card h3 {
+    font-family: 'Poppins';
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
 .date-x-btn {
     background: transparent;
     border: none;
@@ -166,14 +174,6 @@
     height: 28px;
     object-fit: contain;
     filter: brightness(0) invert(0);
-}
-
-.add-remove-date-card h3 {
-    font-family: 'Poppins';
-    font-size: 1.7rem;
-    font-weight: 500;
-    color: #3C7975;
-    margin: 0;
 }
 
 .add-date-form {
