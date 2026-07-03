@@ -114,7 +114,9 @@
 }
 
 /* 8: Pop-up de adicionar produto */
-.add-product-card {
+/* 9: Pop-up de atualizar status do produto */
+.add-product-card,
+.update-status-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -124,12 +126,102 @@
     gap: 15px;
 }
 
-.add-product-card h3 {
+.add-product-card h3,
+.update-status-card h3 {
     font-family: 'Poppins';
     font-size: 1.7rem;
     font-weight: 500;
     color: #3C7975;
     margin: 0;
+}
+
+.update-status-card p {
+    font-family: 'Poppins';
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.add-product-form,
+.update-status-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.add-product-form .input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.update-status-form .input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.add-product-form .input-group label,
+.update-status-form .input-group label {
+    font-family: 'Poppins';
+    font-size: 1.1rem;
+    color: #666666;
+    margin: 0;
+    text-align: right;
+    justify-self: end;
+}
+
+.add-product-form .input-group input,
+.add-product-form .input-group select,
+.update-status-form .input-group input,
+.update-status-form .input-group select {
+    justify-self: start;
+    width: 100%;
+    max-width: 250px;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    border: 1px solid #CCCCCC !important;
+    border-radius: 8px !important;
+    background-color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    text-align: left;
+    color: #333333;
+    outline: none;
+    appearance: none;
+}
+
+.update-status-form .input-group select {
+    width: 250px;
+    flex-shrink: 0;
+}
+
+.add-product-form .input-group input:focus,
+.add-product-form .input-group select:focus,
+.update-status-form .input-group input:focus,
+.update-status-form .input-group select:focus {
+    border-color: #1DA299 !important;
+}
+
+.btn-confirm-product,
+.btn-update-status {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    height: 55px;
+    width: 35%;
+    margin: 15px auto 15px auto;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.btn-confirm-product:hover,
+.btn-update-status:hover {
+    background-color: #187E77;
 }
 
 /* 1600 * 900 */
@@ -163,6 +255,42 @@
 
     .add-product-card h3 {
         font-size: 1.3rem;
+    }
+
+    .add-product-form,
+    .update-status-form {
+        gap: 12px;
+    }
+
+    .add-product-form .input-group,
+    .update-status-form .input-group {
+        gap: 12px;
+    }
+
+    .add-product-form .input-group label,
+    .update-status-form .input-group label {
+        font-size: 1rem;
+    }
+
+    .add-product-form .input-group input,
+    .add-product-form .input-group select,
+    .update-status-form .input-group input,
+    .update-status-form .input-group select {
+        max-width: 220px;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+
+    .update-status-form .input-group select {
+        width: 220px;
+    }
+
+    .btn-confirm-product,
+    .btn-update-status {
+        font-size: 1rem;
+        height: 50px;
+        width: 35%;
+        margin: 12px auto;
     }
 }
 
@@ -208,6 +336,42 @@
 
     .add-product-card h3 {
         font-size: 1rem;
+    }
+
+    .add-product-form,
+    .update-status-form {
+        gap: 10px;
+    }
+
+    .add-product-form .input-group,
+    .update-status-form .input-group {
+        gap: 10px;
+    }
+
+    .add-product-form .input-group label,
+    .update-status-form .input-group label {
+        font-size: 0.9rem;
+    }
+
+    .add-product-form .input-group input,
+    .add-product-form .input-group select,
+    .update-status-form .input-group input,
+    .update-status-form .input-group select {
+        max-width: 190px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+    }
+
+    .update-status-form .input-group select {
+        width: 190px;
+    }
+
+    .btn-confirm-product,
+    .btn-update-status {
+        font-size: 0.95rem;
+        height: 45px;
+        width: 35%;
+        margin: 10px auto;
     }
 }
 
@@ -275,9 +439,47 @@
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     }
 
-    .add-product-card {
+    .add-product-card,
+    .update-status-card {
         width: 90%;
         padding: 20px;
         gap: 15px;
+    }
+
+    .add-product-card h3,
+    .update-status-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .add-product-form .input-group,
+    .update-status-form .input-group {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .add-product-form .input-group label,
+    .update-status-form .input-group label {
+        font-size: 1rem;
+        text-align: left;
+        justify-self: start;
+    }
+
+    .add-product-form .input-group input,
+    .add-product-form .input-group select,
+    .update-status-form .input-group input,
+    .update-status-form .input-group select {
+        max-width: 100%;
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .btn-confirm-product,
+    .btn-update-status {
+        font-size: 1.1rem;
+        height: 50px;
+        width: 100%;
+        margin: 20px 0 0 0;
     }
 }
