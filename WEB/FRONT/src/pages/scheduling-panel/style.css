@@ -445,14 +445,12 @@
 
 @media (max-width: 768px) {
     .main-container-scheduling-panel {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 100px;
+        margin-left: 0;
+        margin-top: 120px;
         margin-bottom: 20px;
-        width: 100% !important;
         height: auto;
-        border-radius: 0;
-        padding: 40px 15px;
+        width: 100%;
+        padding: 20px 10px;
     }
 
     .main-container-scheduling-panel h2 {
@@ -517,6 +515,10 @@
         width: 90%;
         padding: 20px;
         gap: 15px;
+    }
+
+    .add-remove-date-card h3 {
+        font-size: 1.3rem;
     }
 
     .add-date-form {
