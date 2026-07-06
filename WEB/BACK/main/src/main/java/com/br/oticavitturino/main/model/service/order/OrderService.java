@@ -1,17 +1,17 @@
 package com.br.oticavitturino.main.model.service.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.br.oticavitturino.main.model.repository.order.OrderRepository;
-import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
-import com.br.oticavitturino.main.model.domain.order.OrderDTO;
-import com.br.oticavitturino.main.model.domain.order.Order;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
-
+import com.br.oticavitturino.main.model.domain.order.Order;
+import com.br.oticavitturino.main.model.domain.order.OrderDTO;
 import com.br.oticavitturino.main.model.domain.order.OrderModifyStatusDTO;
 import com.br.oticavitturino.main.model.domain.order.OrderStatusEnum;
+import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
+import com.br.oticavitturino.main.model.repository.order.OrderRepository;
+
 @Service
 public class OrderService {
 
@@ -33,6 +33,13 @@ public class OrderService {
         return new OrderDTO(savedOrder.getName(), savedOrder.getOrderStatus(), savedOrder.getCustomer().getId());
     }
 
+    @Transactional(readOnly = true)
+    public OrderDTO getAllOrders() {
+        Order order = repository.findAll().stream().findFirst()
+                .orElseThrow(() -> new RuntimeException("No orders found"));
+        return new OrderDTO(order.getName(), order.getOrderStatus(), order.getCustomer().getId());
+    }
+
     @Transactional
     public OrderModifyStatusDTO modifyOrderStatus(Long orderId, OrderStatusEnum newStatus) {
         Order order = repository.findById(orderId)
@@ -40,5 +47,12 @@ public class OrderService {
         order.setOrderStatus(newStatus);
         Order updatedOrder = repository.save(order);
         return new OrderModifyStatusDTO(updatedOrder.getOrderStatus());
+    }
+
+    @Transactional
+    public void deleteOrder(Long orderId) {
+        Order order = repository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        repository.delete(order);
     }
 }

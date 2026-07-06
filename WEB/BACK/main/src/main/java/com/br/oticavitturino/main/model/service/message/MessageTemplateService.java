@@ -34,6 +34,14 @@ public class MessageTemplateService {
         return new MessageTemplateDTO(message.getType(), message.getTemplateText());
     }
 
+    @Transactional
+    public MessageTemplateDTO updateMessageTemplate(MessageTemplateDTO dto) {
+        MessageTemplate message = repository.findTemplateByType(dto.type());
+        message.setTemplateText(dto.templateText());
+        repository.save(message);
+        return new MessageTemplateDTO(message.getType(), message.getTemplateText());
+    }
+
     @Transactional(readOnly = true)
     @Scheduled(cron = "0 0 8 * * ?") // Executa todo dia às 08:00
     public void sendMessage() {

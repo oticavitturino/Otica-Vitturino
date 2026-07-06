@@ -18,7 +18,6 @@ import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
 
 import jakarta.transaction.Transactional;
-
 @Service
 public class UserService implements UserDetailsService {
 
