@@ -66,15 +66,106 @@
     flex-shrink: 0 !important;
 }
 
-/* 5: Texto da mensagem */
-.main-container-message-editor .message-text {
-    color: #FFFFFF !important;
+/* 5: Título e conteúdo da mensagem */
+.main-container-message-editor .message-content {
+    flex: 1;
+    min-width: 0;
+    padding-right: 15px;
+}
+
+.main-container-message-editor .message-title {
+    text-align: center;
+    font-size: 1rem;
+    display: block;
+}
+
+.main-container-message-editor .message-body {
     text-align: center;
     font-size: 0.95rem;
     white-space: pre-line;
     display: block;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/* 6: Pop-up de Edição de Mensagem */
+.edit-message-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.edit-message-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.edit-message-subtitle {
+    font-family: 'Poppins', sans-serif;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.edit-message-form {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    line-height: 1.5;
+    gap: 15px;
+}
+
+.edit-message-form .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.edit-message-form .input-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #666666;
+    margin: 0 0 8px 0;
+    text-align: left;
+}
+
+.edit-message-form .input-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #CCCCCC !important;
+    border-radius: 8px !important;
+    background-color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #333333;
+    outline: none;
+    resize: vertical;
+}
+
+.edit-message-form .input-group textarea:focus {
+    border-color: #1DA299 !important;
+}
+
+.btn-save-message {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    height: 55px;
+    width: 35%;
+    margin: 15px auto 15px auto;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.btn-save-message:hover {
+    background-color: #187E77;
 }
 
 /* 1600 * 900 */
@@ -90,8 +181,36 @@
         margin-bottom: 30px;
     }
 
-    .main-container-message-editor .message-text {
+    .main-container-message-editor .message-title {
+        font-size: 0.9rem;
+    }
+
+    .main-container-message-editor .message-body {
         font-size: 0.85rem;
+    }
+
+    .edit-message-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .edit-message-form {
+        gap: 12px;
+    }
+
+    .edit-message-form .input-group label {
+        font-size: 1rem;
+    }
+
+    .edit-message-form .input-group textarea {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn-save-message {
+        font-size: 1rem;
+        height: 50px;
+        width: 35%;
+        margin: 12px auto;
     }
 }
 
@@ -108,8 +227,43 @@
         margin-bottom: 27px;
     }
 
-    .main-container-message-editor .message-text {
+    .main-container-message-editor .message-title {
+        font-size: 0.8rem;
+    }
+
+
+    .main-container-message-editor .message-body {
         font-size: 0.75rem;
+    }
+
+    .edit-message-card {
+        width: 40%;
+        gap: 15px;
+    }
+
+    .edit-message-card h3 {
+        font-size: 1rem;
+    }
+
+    .edit-message-form {
+        gap: 10px;
+    }
+
+    .edit-message-form .input-group label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .edit-message-form .input-group textarea {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+
+    .btn-save-message {
+        font-size: 0.95rem;
+        height: 45px;
+        width: 35%;
+        margin: 10px auto;
     }
 }
 
@@ -142,8 +296,40 @@
         width: 100% !important;
     }
 
-    .main-container-message-editor .message-text {
+    .main-container-message-editor .message-title {
+        font-size: 0.95rem;
+        text-align: left;
+    }
+
+
+    .main-container-message-editor .message-body {
         font-size: 0.9rem;
         text-align: left;
+    }
+
+    .edit-message-card {
+        width: 90%;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .edit-message-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .edit-message-form .input-group label {
+        font-size: 1rem;
+    }
+
+    .edit-message-form .input-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .btn-save-message {
+        font-size: 1.1rem;
+        height: 50px;
+        width: 100%;
+        margin: 20px 0 0 0;
     }
 }

@@ -2,41 +2,115 @@ import './style.css'
 import Layout from '../../components/layout'
 import Container from '../../components/container'
 import List_Item from '../../components/list-item'
+import Card from '../../components/card'
 import PenIcon from '../../assets/pen.png'
+import PlusIcon from '../../assets/circle-plus.png'
+import XIcon from '../../assets/x.png'
+import { useState } from 'react'
 
 function Message_Editor() {
-    // Mensagens pré-programadas
 
-    const mensagens = [
+    // Mensagens pré-programadas
+    const [messages, setMessages] = useState([
         {
             id: 1,
-            texto: "15 dias:\nOlá, usuário! Como está sendo sua adaptação com o produto?\nComo você avalia nosso serviço até então?"
+            type: 'LEMBRETE_15_DIAS',
+            title: '15 dias - Mensagem de Adaptação',
+            content: ''
         },
         {
             id: 2,
-            texto: "30 dias:\nComo vai, usuário? Está precisando de algum suporte ou\norientações de como manusear seu produto? Me conta aqui!"
+            type: 'LEMBRETE_30_DIAS',
+            title: '30 dias - Mensagem de Suporte',
+            content: ''
         },
         {
             id: 3,
-            texto: "3 meses:\nUsuário, já se passaram 3 meses da sua aquisição!\nQue tal fazer aquele check-up para garantir a longevidade do seu produto?"
+            type: 'LEMBRETE_90_DIAS',
+            title: '3 meses - Mensagem de Check-up',
+            content: ''
         },
         {
             id: 4,
-            texto: "6 meses:\n6 meses já se passaram, o que acha de fazer uma\nrevisão no seu produto?"
+            type: 'LEMBRETE_180_DIAS',
+            title: '6 meses - Mensagem de Revisão',
+            content: ''
         },
         {
             id: 5,
-            texto: "9 meses:\nOlá, usuário! Que tal fazermos um ajuste no seu produto preventivamente?\nDeixar tudo em ordem?"
+            type: 'LEMBRETE_365_DIAS',
+            title: '1 ano - Mensagem de Renovação de Grau',
+            content: ''
         },
         {
             id: 6,
-            texto: "1 ano:\nComo vai, usuário? Já faz 1 ano desde a sua compra!\nVamos marcar uma consulta para renovação do grau do seu produto?"
+            type: 'COMPRA',
+            title: 'Mensagem de Confirmação de Pedido',
+            content: ''
         },
         {
             id: 7,
-            texto: "Aniversário:\nHoje é seu dia, usuário! Nós da Ótica Vitturino desejamos a você um dia\nabençoado e um feliz aniversário!\nQue sua vida seja repleta de felicidade!"
+            type: 'ANIVERSARIO',
+            title: 'Mensagem de Aniversário',
+            content: ''
         }
-    ];
+    ])
+
+    const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+    const [currentEditing, setCurrentEditing] = useState({
+        id: null,
+        type: '',
+        title: '',
+        content: '',
+        isNew: true // Identificar se é um POST ou PUT
+    });
+
+    // Função para abrir o pop-up com a mensagem selecionada
+    const handleOpenModal = (msg) => {
+        setCurrentEditing({
+            id: msg.id,
+            type: msg.type,
+            title: msg.title,
+            content: msg.content,
+            isNew: msg.content === "" // Se estiver vazio, é novo (POST). Se já tiver texto, é edição (PUT).
+        });
+        setIsMessageModalOpen(true);
+    };
+
+    // Função de criar ou atualizar mensagem (dependendo do contexto)
+    async function handleSaveMessage(event) {
+        event.preventDefault();
+
+        // Verificações se é POST ou PUT
+        const endpoint = currentEditing.isNew ? '/create' : '/update';
+        const method = currentEditing.isNew ? 'POST' : 'PUT';
+        const url = `http://localhost:8080/message-template${endpoint}`;
+
+        try {
+            const response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: currentEditing.type,
+                    templateText: currentEditing.content
+                })
+            });
+
+            if (response.ok) {
+                alert('Mensagem salva com sucesso!');
+                setMessages(messages.map(m =>
+                    m.id === currentEditing.id ? { ...m, content: currentEditing.content } : m
+                ));
+                setIsMessageModalOpen(false);
+            } else {
+                alert('Erro ao salvar a mensagem.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
 
     return (
         <Layout>
@@ -48,20 +122,66 @@ function Message_Editor() {
                     <h2>Editor de Mensagens Pré-Programadas</h2>
 
                     {/* 3: Área de scroll */}
-                    <div className="messages-scroll-area">
+                    <div className='messages-scroll-area'>
+
                         {/* 4: Ícone de ação */}
-                        {mensagens.map((msg) => (
+                        {messages.map((msg) => (
                             <List_Item key={msg.id} actions={
-                                <button className="icon-btn edit-btn">
-                                    <img src={PenIcon} className="action-icon" alt="Editar"></img>
+                                <button className='icon-btn edit-btn' onClick={() => handleOpenModal(msg)}>
+                                    {msg.content === "" ? (
+                                        <img src={PlusIcon} className='action-icon' alt='Adicionar'></img>
+                                    ) : (
+                                        <img src={PenIcon} className='action-icon' alt='Editar'></img>
+                                    )}
                                 </button>
                             }>
-                                {/* 5: Texto da mensagem */}
-                                <span className="message-text">{msg.texto}</span>
+                                {/* 5: Título e conteúdo da mensagem */}
+                                <div className='message-content'>
+                                    <span className='message-title'>
+                                        {msg.title}
+                                    </span>
 
+                                    <span className='message-body'>
+                                        {msg.content !== "" ? msg.content : <em>Nenhuma mensagem configurada.</em>}
+                                    </span>
+                                </div>
                             </List_Item>
                         ))}
                     </div>
+
+                    {/* 6: Pop-up de Edição de Mensagem */}
+                    {isMessageModalOpen && (
+                        <div className='modal-overlay' onClick={() => setIsMessageModalOpen(false)}>
+                            <Card className='edit-message-card' onClick={(e) => e.stopPropagation()}>
+                                <button className='x-btn' onClick={() => setIsMessageModalOpen(false)}>
+                                    <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                </button>
+
+                                <h3>{currentEditing.isNew ? 'Criar Mensagem' : 'Editar Mensagem'}</h3>
+                                <p className='edit-message-subtitle'>
+                                    {currentEditing.title}
+                                </p>
+
+                                <form className='edit-message-form' onSubmit={handleSaveMessage}>
+                                    <div className='input-group'>
+                                        <label>Corpo da Mensagem:</label>
+
+                                        <textarea
+                                            value={currentEditing.content}
+                                            onChange={(e) => setCurrentEditing({ ...currentEditing, content: e.target.value })}
+                                            required
+                                            rows="5"
+                                            placeholder='Digite o texto da mensagem aqui...'
+                                        />
+                                    </div>
+
+                                    <button type="submit" className='btn-save-message'>
+                                        Salvar
+                                    </button>
+                                </form>
+                            </Card>
+                        </div>
+                    )}
                 </Container>
             </div>
         </Layout>
