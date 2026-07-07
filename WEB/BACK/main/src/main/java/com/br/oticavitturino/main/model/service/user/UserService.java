@@ -1,7 +1,5 @@
 package com.br.oticavitturino.main.model.service.user;
 
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +14,7 @@ import com.br.oticavitturino.main.model.domain.user.RegisterUserDTO;
 import com.br.oticavitturino.main.model.domain.user.TypeProfile;
 import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
+import com.br.oticavitturino.main.infra.security.SecurityConfigurations;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -23,6 +22,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private SecurityConfigurations securityConfigurations;
     
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -58,28 +60,13 @@ public class UserService implements UserDetailsService {
             User referrer = repository.findByMyReferralCode(data.referralCode().trim().toUpperCase());
 
             if (referrer != null) {
-                referrer.setPoints(referrer.getPoints() + 50); // Esse "50" é só um exemplo, depois a gente muda quando definir a tabela de pontos
+                referrer.setPoints(referrer.getPoints() + 50);
             }
         }
 
-        String generatedCode = generateUniqueReferralCode(data.name());
+        String generatedCode = securityConfigurations.generateUniqueReferralCode(data.name());
         newUser.setMyReferralCode(generatedCode);
 
         return repository.save(newUser);
-    }
-
-    // Método para gerar código único de indicação
-    private String generateUniqueReferralCode(String fullName) {
-        String firstName = fullName.split(" ")[0].toUpperCase();
-        firstName = firstName.replaceAll("[^A-Z]", "");
-        String newCode;
-        Random random = new Random();
-
-        do {
-            int randomNumber = 1000 + random.nextInt(9000);
-            newCode = firstName + randomNumber;
-        } while (repository.findByMyReferralCode(newCode) != null);
-
-        return newCode;
     }
 }

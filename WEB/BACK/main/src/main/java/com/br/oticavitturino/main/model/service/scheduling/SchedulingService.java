@@ -13,6 +13,7 @@ import com.br.oticavitturino.main.model.domain.scheduling.AvailableSlot;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
 import com.br.oticavitturino.main.model.domain.scheduling.SchedulingDTO;
+import com.br.oticavitturino.main.model.domain.scheduling.SchedulingEnum;
 import com.br.oticavitturino.main.model.domain.scheduling.StatusEnum;
 import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
 import com.br.oticavitturino.main.model.repository.scheduling.AvailableSlotRepository;
@@ -100,6 +101,21 @@ public class SchedulingService {
         Customer customer = Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
 
+        // Pontuação para Consulta
+        if (schedulingDTO.scheduling_type() == SchedulingEnum.CONSULTA) {
+            customer.setPoints(customer.getPoints() + 30);
+        } 
+        
+        // Pontuação para Manutenção
+        else if (schedulingDTO.scheduling_type() == SchedulingEnum.MANUTENCAO) {
+            customer.setPoints(customer.getPoints() + 15);
+        }
+
+        // Pontuação para Limpeza
+        else if (schedulingDTO.scheduling_type() == SchedulingEnum.LIMPEZA) {
+            customer.setPoints(customer.getPoints() + 10);
+        }
+
         Scheduling scheduling = new Scheduling();
         scheduling.setSchedulingDate(slot.getSlotDate());
         scheduling.setCustomer(customer);
@@ -108,14 +124,35 @@ public class SchedulingService {
         repository.save(scheduling);
         availableSlotRepository.delete(slot);
 
+        // Adiciona pontos ao cliente por agendar uma consulta
+        customer.setPoints(customer.getPoints() + 30);
+
         return schedulingDTO;
     }
 
     // Cliente pode cancelar um agendamento;
     @Transactional
     public void cancelAppointment(Long schedulingId) {
+        Customer customer = repository.findById(schedulingId)
+                .map(Scheduling::getCustomer)
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found for the given scheduling ID!"));
         Scheduling scheduling = repository.findById(schedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
+
+        // Remove Pontuação para Consulta
+        if (scheduling.getSchedulingType() == SchedulingEnum.CONSULTA) {
+            customer.setPoints(customer.getPoints() - 30);
+        } 
+        
+        // Remove Pontuação para Manutenção
+        else if (scheduling.getSchedulingType() == SchedulingEnum.MANUTENCAO) {
+            customer.setPoints(customer.getPoints() - 15);
+        }
+
+        // Remove Pontuação para Limpeza
+        else if (scheduling.getSchedulingType() == SchedulingEnum.LIMPEZA) {
+            customer.setPoints(customer.getPoints() - 10);
+        }
 
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);

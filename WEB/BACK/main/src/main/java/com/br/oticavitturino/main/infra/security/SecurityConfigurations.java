@@ -1,6 +1,8 @@
 package com.br.oticavitturino.main.infra.security;
 
 import java.util.List;
+import java.util.Random;
+import com.br.oticavitturino.main.model.repository.user.UserRepository;
 
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class SecurityConfigurations {
 
     @Value("${api.url.front}")
     private String urlFront;
+
+    @Autowired
+    UserRepository UserRepository;
 
     @Autowired
     SecurityFilter securityFilter;
@@ -79,6 +84,21 @@ public class SecurityConfigurations {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    // Método para gerar código único de indicação
+    public String generateUniqueReferralCode(String fullName) {
+        String firstName = fullName.split(" ")[0].toUpperCase();
+        firstName = firstName.replaceAll("[^A-Z]", "");
+        String newCode;
+        Random random = new Random();
+
+        do {
+            int randomNumber = 1000 + random.nextInt(9000);
+            newCode = firstName + randomNumber;
+        } while (UserRepository.findByMyReferralCode(newCode) != null);
+
+        return newCode;
     }
 
     // Configuração de CORS
