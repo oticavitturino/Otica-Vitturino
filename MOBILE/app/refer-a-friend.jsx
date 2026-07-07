@@ -25,7 +25,7 @@ export default function Refer_A_Friend() {
     }, []);
 
     // Função de compartilhar o aplicativo
-    function shareWithAFriend() {
+    async function shareWithAFriend() {
         const shareMessage = `Oi! Estou usando o app da Ótica Vitturino para acompanhar meus serviços. Diga que eu te indiquei usando meu código ${myReferralCode} no seu primeiro atendimento e ganhe um bônus especial!`;
 
         try {
