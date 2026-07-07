@@ -25,6 +25,11 @@ public class CustomerController {
         return ResponseEntity.ok(service.getAllCustomers());
     }
 
+    @GetMapping("/score")
+    public ResponseEntity<?> getCustomerScore(@RequestParam Long id) {
+        return ResponseEntity.ok(service.getCustomerScore(id));
+    }
+    
     @PutMapping("/update")
     public ResponseEntity<CustomerDTO> updateCustomer(@RequestParam Long id, @RequestBody CustomerDTO customerDTO) {
         CustomerDTO updatedCustomer = service.updateCustomer(id, customerDTO);
