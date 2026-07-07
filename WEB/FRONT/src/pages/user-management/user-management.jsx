@@ -113,8 +113,8 @@ function User_Management() {
 
                   {!showReferralInput ? (
                     <button
-                      type="button"
-                      className="btn-show-referral"
+                      type='button'
+                      className='btn-show-referral'
                       onClick={() => setShowReferralInput(true)}
                     >
                       + Código
@@ -144,18 +144,18 @@ function User_Management() {
               {/* 9: Área de scroll */}
               <div className='user-management-scroll-area'>
                 {users.length === 0 ? (
-                  <p className="empty-state-text">Nenhum usuário cadastrado.</p>
+                  <p className='empty-state-text'>Nenhum usuário cadastrado.</p>
                 ) : (
                   /* 10: Ícones de ação (só renderiza se tiver usuário) */
                   users.map((user) => (
                     <List_item key={user.id} actions={
                       <>
-                        <button className="icon-btn edit-btn">
-                          <img src={PenIcon} alt="Editar usuário" className="action-icon" />
+                        <button className='icon-btn'>
+                          <img src={PenIcon} className='action-icon' alt='Editar usuário' />
                         </button>
 
-                        <button className="icon-btn delete-btn">
-                          <img src={TrashIcon} alt="Excluir usuário" className="action-icon" />
+                        <button className='icon-btn'>
+                          <img src={TrashIcon} className='action-icon' alt='Excluir usuário' />
                         </button>
                       </>
                     }>

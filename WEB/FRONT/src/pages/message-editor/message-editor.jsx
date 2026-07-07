@@ -127,7 +127,7 @@ function Message_Editor() {
                         {/* 4: Ícone de ação */}
                         {messages.map((msg) => (
                             <List_Item key={msg.id} actions={
-                                <button className='icon-btn edit-btn' onClick={() => handleOpenModal(msg)}>
+                                <button className='icon-btn' onClick={() => handleOpenModal(msg)}>
                                     {msg.content === "" ? (
                                         <img src={PlusIcon} className='action-icon' alt='Adicionar'></img>
                                     ) : (

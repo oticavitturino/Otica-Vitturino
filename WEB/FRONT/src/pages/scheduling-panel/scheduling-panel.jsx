@@ -176,14 +176,14 @@ function Scheduling_Panel() {
                                         <List_Item key={appointment.userId} actions={
                                             <>
                                                 <button
-                                                    className='icon-btn chart-btn'
+                                                    className='icon-btn'
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CONFIRMADO')}
                                                 >
                                                     <img src={CheckIcon} className='action-icon' alt='Confirmar'></img>
                                                 </button>
 
                                                 <button
-                                                    className='icon-btn x-btn'
+                                                    className='icon-btn'
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CANCELADO')}
                                                 >
                                                     <img src={XIcon} className="action-icon" alt="Cancelar"></img>

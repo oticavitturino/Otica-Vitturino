@@ -93,11 +93,11 @@ function Incident_History() {
                                     return (
                                         <List_Item key={item.id} actions={
                                             <>
-                                                <button className='icon-btn chart-btn'>
+                                                <button className='icon-btn'>
                                                     <img src={ReplyIcon} className='action-icon' alt='Responder' />
                                                 </button>
 
-                                                <button className='icon-btn chart-btn' onClick={() => setOccurrenceToDelete(item)}>
+                                                <button className='icon-btn' onClick={() => setOccurrenceToDelete(item)}>
                                                     <img src={TrashIcon} className='action-icon' alt='Excluir' />
                                                 </button>
                                             </>
