@@ -61,15 +61,6 @@
     flex-shrink: 0 !important;
 }
 
-.empty-state-text {
-    font-family: 'Poppins', sans-serif;
-    color: #3C7975;
-    font-size: 1.2rem;
-    text-align: center;
-    margin: auto;
-    font-weight: 500;
-}
-
 /* 4: Legendas */
 .main-container-scheduling-panel .list-legend {
     display: grid;
@@ -282,10 +273,6 @@
         font-size: 0.85rem;
     }
 
-    .empty-state-text {
-        font-size: 1.1rem;
-    }
-
     .btn-add-date {
         font-size: 0.85rem;
         height: 50px;
@@ -372,10 +359,6 @@
         font-size: 0.75rem;
     }
 
-    .empty-state-text {
-        font-size: 1rem;
-    }
-
     .btn-add-date {
         font-size: 0.75rem;
         height: 43px;
@@ -432,10 +415,6 @@
         height: 10px;
     }
 
-    .empty-dates-text {
-        font-size: 0.9rem;
-    }
-
     .date-only-row {
         font-size: 0.8rem;
     }
@@ -462,12 +441,6 @@
         max-height: none;
         overflow-y: visible;
         padding-right: 0;
-    }
-
-    .empty-state-text {
-        margin: 0 !important;
-        margin-top: 10px !important;
-        font-size: 1.1rem;
     }
 
     .main-container-scheduling-panel .list-legend {

@@ -61,15 +61,6 @@
     flex-shrink: 0 !important;
 }
 
-.empty-state-text {
-    font-family: 'Poppins', sans-serif;
-    color: #3C7975;
-    font-size: 1.2rem;
-    text-align: center;
-    margin: auto;
-    font-weight: 500;
-}
-
 /* 4: Legendas */
 .main-container-incident-history .list-legend {
     display: grid;
@@ -183,10 +174,6 @@
         font-size: 0.85rem;
     }
 
-    .empty-state-text {
-        font-size: 1.1rem;
-    }
-
     .exclude-occurrence-card {
         gap: 12px;
     }
@@ -236,10 +223,6 @@
         font-size: 0.75rem;
     }
 
-    .empty-state-text {
-        font-size: 1rem;
-    }
-
     .exclude-occurrence-card {
         padding: 10px 12px;
         gap: 10px;
@@ -284,12 +267,6 @@
         max-height: none;
         overflow-y: visible;
         padding-right: 0;
-    }
-
-    .empty-state-text {
-        margin: 0 !important;
-        margin-top: 10px !important;
-        font-size: 1.1rem;
     }
 
     .main-container-incident-history .list-legend {

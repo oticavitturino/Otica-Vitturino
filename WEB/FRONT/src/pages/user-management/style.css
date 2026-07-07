@@ -169,15 +169,6 @@
     flex-shrink: 0 !important;
 }
 
-.empty-state-text {
-    font-family: 'Poppins', sans-serif;
-    color: #3C7975;
-    font-size: 1.2rem;
-    text-align: center;
-    margin: auto;
-    font-weight: 500;
-}
-
 .registered-users-container .item-content {
     display: flex !important;
     justify-content: center !important;
@@ -263,10 +254,6 @@
     .user-management-scroll-area {
         max-height: 400px;
     }
-
-    .empty-state-text {
-        font-size: 1.1rem;
-    }
 }
 
 /* 1366 * 768 */
@@ -339,10 +326,6 @@
 
     .user-management-scroll-area {
         max-height: 350px;
-    }
-
-    .empty-state-text {
-        font-size: 1rem;
     }
 }
 
