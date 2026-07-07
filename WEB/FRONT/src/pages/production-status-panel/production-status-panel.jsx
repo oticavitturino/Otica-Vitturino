@@ -12,6 +12,7 @@ function Production_Status_Panel() {
 
     const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
     const [customers, setCustomers] = useState([]);
+    const [orders, setOrders] = useState([]);
     const [formData, setFormData] = useState({
         name: '',
         orderStatus: 'REALIZADO',
@@ -23,6 +24,8 @@ function Production_Status_Panel() {
         newStatus: 'REALIZADO',
         customerName: ''
     });
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
 
     // Função para atualizar o estado quando o usuário digitar algo
     const handleInputChange = (event) => {
@@ -35,10 +38,24 @@ function Production_Status_Panel() {
         setIsAddProductModalOpen(true);
     }
 
-    // Função para abrir o modal já com o ID e nome do client do pedido clicado
+    // Função para abrir pop-up de atualizar status
     function openUpdateModal(order) {
-        setUpdateData({ orderId: order.id, newStatus: 'REALIZADO', customerName: order.usuario });
+        const clientName = customers.find(c => c.id === order.customerId)?.name || `ID: ${order.customerId}`;
+
+        setUpdateData({
+            orderId: order.id,
+            newStatus: 'REALIZADO',
+            customerName: clientName
+        });
         setIsUpdateModalOpen(true);
+    }
+
+    // Função para abrir o pop-up de deletar produto
+    function openDeleteModal(order) {
+        const clientName = customers.find(c => c.id === order.customerId)?.name || `ID: ${order.customerId}`;
+
+        setItemToDelete({ ...order, customerName: clientName });
+        setIsDeleteModalOpen(true);
     }
 
     // Função de buscar todos os clientes (para adicionar o nome ao lado do ID para ficar visivelmente melhor de identificar)
@@ -55,6 +72,25 @@ function Production_Status_Panel() {
             }
         }
         fetchCustomers();
+    }, []);
+
+    // Função de buscar os dados na API
+    async function fetchAllProducts() {
+        try {
+            const response = await fetch('http://localhost:8080/orders/getAllOrders');
+            if (response.ok) {
+                const data = await response.json();
+                setOrders(data);
+            } else {
+                alert('Falha ao buscar produtos.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAllProducts();
     }, []);
 
     // Função de adicionar novo produto
@@ -78,15 +114,16 @@ function Production_Status_Panel() {
                 alert('Produto adicionado com sucesso!');
                 setFormData({ name: '', orderStatus: 'REALIZADO', customerId: '' })
                 setIsAddProductModalOpen(false);
+                fetchAllProducts();
             } else {
                 alert('Erro ao adicionar produto.');
             }
         } catch (error) {
-            console.log('Erro de requisição: ', error);
+            console.error('Erro de requisição: ', error);
         }
     }
 
-    // Função de modificar status do pedido
+    // Função de modificar status do produto
     async function updateProductStatus(event) {
         event.preventDefault();
 
@@ -103,78 +140,43 @@ function Production_Status_Panel() {
             if (response.ok) {
                 alert('Status atualizado com sucesso!');
                 setIsUpdateModalOpen(false);
+                fetchAllProducts();
             } else {
                 alert('Erro ao atualizar status.');
             }
         } catch (error) {
-            console.log('Erro de requisição: ', error);
+            console.error('Erro de requisição: ', error);
         }
     }
 
-    // Apenas para testes mockados
+    // Função para deletar produto da lista
+    async function confirmDeleteProduct(event) {
+        event.preventDefault();
 
-    const status = [
-        {
-            id: 1,
-            usuario: "Luiza Gurgel",
-            produto: "Óculos de Sol Pratti",
-            status: "Em produção"
-        },
-        {
-            id: 2,
-            usuario: "Pedro Torres",
-            produto: "JACK TITANIUM OPTICS",
-            status: "Em produção"
-        },
-        {
-            id: 3,
-            usuario: "Nádila Correia Costa",
-            produto: "Óculos de Grau  Kessy Clássico 315",
-            status: "Pedido realizado"
-        },
-        {
-            id: 4,
-            usuario: "Francisco Almeida",
-            produto: "RB4415VL OPTICS",
-            status: "Finalizado"
-        },
-        {
-            id: 5,
-            usuario: "Clara Costa",
-            produto: "Óculos de Sol Unissex Prada Redondo...",
-            status: "Pedido realizado"
-        },
-        {
-            id: 6,
-            usuario: "Hector Soares",
-            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
-            status: "Em produção"
-        },
-        {
-            id: 7,
-            usuario: "Hector Soares",
-            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
-            status: "Em produção"
-        },
-        {
-            id: 8,
-            usuario: "Hector Soares",
-            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
-            status: "Em produção"
-        },
-        {
-            id: 9,
-            usuario: "Hector Soares",
-            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
-            status: "Em produção"
-        },
-        {
-            id: 10,
-            usuario: "Hector Soares",
-            produto: "RB7307M OPTICS SCUDERIA FERRARI C...",
-            status: "Em produção"
-        },
-    ];
+        if (!itemToDelete) return;
+
+        const url = `http://localhost:8080/orders/deleteOrder?orderId=${itemToDelete.id}`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                alert('Produto removido com sucesso!');
+                setIsDeleteModalOpen(false);
+                setItemToDelete(null);
+                fetchAllProducts();
+            } else {
+                alert('Erro ao remover produto.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
 
     return (
         <Layout>
@@ -185,37 +187,49 @@ function Production_Status_Panel() {
                     {/* 2: Título */}
                     <h2>Gerencie aqui o status de produção</h2>
 
-                    {/* 3: Área de scroll / List item de teste mockado */}
+                    {/* 3: Área de scroll */}
                     <div className='production-scroll-area'>
-
-                        {/* 4: Legendas */}
-                        <div className='list-legend'>
-                            <span>Usuário</span>
-                            <span>Produto</span>
-                            <span>Status</span>
-                            <span></span>
-                        </div>
-
-                        {/* 5: Ícone de ação */}
-                        {status.map((item) => (
-                            <List_Item key={item.id} actions={
-                                <>
-                                    <button className='icon-btn chart-btn' onClick={() => openUpdateModal(item)}>
-                                        <img src={ReloadIcon} className='action-icon' alt="Atualizar"></img>
-                                    </button>
-                                </>
-                            }>
-
-                                {/* 6: Dados de cada usuário */}
-                                <div className='list-row-data'>
-                                    <span>{status.usuario}</span>
-                                    <span>{status.produto}</span>
-                                    <span>{status.status}</span>
+                        {orders.length === 0 ? (
+                            <p className='empty-state-text'>Nenhum produto em produção no momento.</p>
+                        ) : (
+                            <>
+                                {/* 4: Legendas */}
+                                <div className='list-legend'>
+                                    <span>Usuário</span>
+                                    <span>Produto</span>
+                                    <span>Status</span>
                                     <span></span>
                                 </div>
 
-                            </List_Item>
-                        ))}
+                                {/* 5: Ícones de ação e renderização da lista */}
+                                {orders.map((item) => {
+                                    // Procura o nome do cliente na lista de usuários através do ID
+                                    const clientName = customers.find(c => c.id === item.customerId)?.name || `ID: ${item.customerId}`;
+
+                                    return (
+                                        <List_Item key={item.id} actions={
+                                            <>
+                                                <button className='icon-btn' onClick={() => openUpdateModal(item)}>
+                                                    <img src={ReloadIcon} className='action-icon' alt="Atualizar"></img>
+                                                </button>
+
+                                                <button className='icon-btn' onClick={() => openDeleteModal(item)}>
+                                                    <img src={XIcon} className='action-icon' alt="Deletar"></img>
+                                                </button>
+                                            </>
+                                        }>
+                                            {/* 6: Dados vindos das propriedades do seu OrderDTO */}
+                                            <div className='list-row-data'>
+                                                <span>{clientName}</span>
+                                                <span>{item.name}</span>
+                                                <span>{item.orderStatus}</span>
+                                                <span></span>
+                                            </div>
+                                        </List_Item>
+                                    );
+                                })}
+                            </>
+                        )}
                     </div>
 
                     {/* 7: Botão de adicionar produto */}
@@ -245,7 +259,7 @@ function Production_Status_Panel() {
                                         />
                                     </div>
 
-                                    {/* Cliente (Select com Nome e ID) */}
+                                    {/* Cliente */}
                                     <div className='input-group'>
                                         <label>Cliente:</label>
                                         <select
@@ -264,7 +278,7 @@ function Production_Status_Panel() {
                                         </select>
                                     </div>
 
-                                    {/* Select de status */}
+                                    {/* Status */}
                                     <div className='input-group'>
                                         <label>Status do Pedido:</label>
                                         <select
@@ -305,14 +319,41 @@ function Production_Status_Panel() {
                                             onChange={(e) => setUpdateData({ ...updateData, newStatus: e.target.value })}
                                             required
                                         >
-                                            <option value="REALIZADO">Pedido Realizado</option>
-                                            <option value="EM_ANDAMENTO">Em Andamento</option>
-                                            <option value="CONCLUIDO">Finalizado</option>
+                                            <option value='REALIZADO'>Pedido Realizado</option>
+                                            <option value='EM_ANDAMENTO'>Em Andamento</option>
+                                            <option value='CONCLUIDO'>Finalizado</option>
                                         </select>
                                     </div>
 
-                                    <Button type="submit" className='btn-update-status'>Atualizar</Button>
+                                    <Button type='submit' className='btn-update-status'>Atualizar</Button>
                                 </form>
+                            </Card>
+                        </div>
+                    )}
+
+                    {/* 10: Pop-up de delete de produto */}
+                    {isDeleteModalOpen && itemToDelete && (
+                        <div className='modal-overlay' onClick={() => setIsDeleteModalOpen(false)}>
+                            <Card className='delete-product-card' onClick={(e) => e.stopPropagation()}>
+                                <button className='x-btn' onClick={() => setIsDeleteModalOpen(false)}>
+                                    <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                </button>
+
+                                <h3>Excluir Pedido</h3>
+
+                                <p style={{ fontFamily: 'Poppins', color: '#666', fontSize: '1.05rem', margin: '15px 0' }}>
+                                    Tem certeza que deseja apagar o pedido <b>{itemToDelete.id}</b> do(a) cliente <b>{itemToDelete.customerName}</b>? <br />
+                                    <span style={{ fontSize: '0.9rem', color: '#c0392b' }}>Esta ação não pode ser desfeita.</span>
+                                </p>
+
+                                <div className='delete-btn-group'>
+                                    <button className='btn-cancel-delete' onClick={() => setIsDeleteModalOpen(false)}>
+                                        Cancelar
+                                    </button>
+                                    <button className='btn-confirm-delete' onClick={confirmDeleteProduct}>
+                                        Sim, apagar
+                                    </button>
+                                </div>
                             </Card>
                         </div>
                     )}
