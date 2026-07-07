@@ -28,7 +28,7 @@ function Scheduling_Panel() {
                 const data = await response.json();
                 setAppointments(data);
             } else {
-                console.error('Falha ao buscar agendamentos');
+                alert('Falha ao buscar agendamentos');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -44,7 +44,7 @@ function Scheduling_Panel() {
                 const datesOnly = data.map(item => item.date_available);
                 setAvailableDates(datesOnly);
             } else {
-                console.error('Falha ao buscar datas disponíveis');
+                alert('Falha ao buscar datas disponíveis');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -79,7 +79,7 @@ function Scheduling_Panel() {
                 alert('Erro ao adicionar data.')
             }
         } catch (error) {
-            console.log('Erro de requisição: ', error);
+            console.error('Erro de requisição: ', error);
         }
     }
 

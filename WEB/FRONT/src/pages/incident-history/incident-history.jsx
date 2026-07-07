@@ -23,7 +23,7 @@ function Incident_History() {
                 const data = await response.json();
                 setOccurrences(data);
             } else {
-                console.error('Falha ao buscar ocorrências.');
+                alert('Falha ao buscar ocorrências.');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -41,7 +41,6 @@ function Incident_History() {
                 setOccurrenceToDelete(null);
                 fetchAllOccurences();
             } else {
-                console.error('Falha ao excluir a ocorrência.');
                 alert('Erro ao excluir. Tente novamente.');
             }
         } catch (error) {
