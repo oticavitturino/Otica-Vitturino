@@ -44,6 +44,8 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/customer/all").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/customer/update").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/addDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/scheduling/deleteDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/confirmOrCancelAppointment").hasRole("ADMIN")
@@ -52,6 +54,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.POST, "/orders/createOrder").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/orders/modifyOrderStatus").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/message-template/create").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/message-template/update").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/scheduleAppointment").hasRole("CUSTOMER")
                     .requestMatchers(HttpMethod.POST, "/scheduling/cancelAppointment").hasRole("CUSTOMER")
                     .requestMatchers(HttpMethod.POST, "/occurrences/register").hasRole("CUSTOMER")

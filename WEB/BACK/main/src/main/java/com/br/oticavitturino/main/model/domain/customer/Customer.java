@@ -50,4 +50,11 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Order> orders;
+
+    public Customer (String name, String phone, String address, LocalDate birthDate) {
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.birthDate = birthDate;
+    }
 }
