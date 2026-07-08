@@ -33,7 +33,7 @@ function Production_Status_Panel() {
         setFormData({ ...formData, [name]: value });
     }
 
-    // Função de abrir pop-up ao clicar no botão "Adicionar produto"
+    // Função para abrir pop-up ao clicar no botão "Adicionar produto"
     function addProduct() {
         setIsAddProductModalOpen(true);
     }
@@ -74,7 +74,7 @@ function Production_Status_Panel() {
         fetchCustomers();
     }, []);
 
-    // Função de buscar os dados na API
+    // Função para buscar todos os produtos em produção
     async function fetchAllProducts() {
         try {
             const response = await fetch('http://localhost:8080/orders/getAllOrders');
@@ -93,7 +93,7 @@ function Production_Status_Panel() {
         fetchAllProducts();
     }, []);
 
-    // Função de adicionar novo produto
+    // Função para adicionar novo produto
     async function handleAddProduct(event) {
         event.preventDefault();
 
@@ -123,7 +123,7 @@ function Production_Status_Panel() {
         }
     }
 
-    // Função de modificar status do produto
+    // Função para modificar status do produto
     async function updateProductStatus(event) {
         event.preventDefault();
 

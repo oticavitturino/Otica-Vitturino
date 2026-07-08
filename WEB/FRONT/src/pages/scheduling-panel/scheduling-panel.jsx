@@ -15,12 +15,12 @@ function Scheduling_Panel() {
     const [appointments, setAppointments] = useState([]);
     const [availableDates, setAvailableDates] = useState([]);
 
-    // Função de abrir pop-up ao clicar no botão "Adicionar datas disponíveis"
+    // Função para abrir pop-up ao clicar no botão "Adicionar datas disponíveis"
     function addSchedulingDate() {
         setIsAddDateModalOpen(true);
     }
 
-    // Função para buscar os dados na API
+    // Função para buscar todos os agendamentos
     async function fetchAllSchedulings() {
         try {
             const response = await fetch('http://localhost:8080/scheduling/getAllSchedulings');
@@ -35,7 +35,7 @@ function Scheduling_Panel() {
         }
     }
 
-    // Função para buscar as datas disponíveis na API
+    // Função para buscar as datas disponíveis
     async function fetchAvailableDates() {
         try {
             const response = await fetch('http://localhost:8080/scheduling/getAllDatesAvailable');
@@ -56,7 +56,7 @@ function Scheduling_Panel() {
         fetchAvailableDates();
     }, []);
 
-    // Função de adicionar nova data disponível
+    // Função para adicionar nova data disponível
     async function handleSaveAvailableDate(event) {
         event.preventDefault();
 
@@ -83,7 +83,7 @@ function Scheduling_Panel() {
         }
     }
 
-    // Função de remover data disponível
+    // Função para remover data disponível
     async function handleDeleteAvailableDate(dateToDelete) {
         try {
             const response = await fetch('http://localhost:8080/scheduling/deleteDateAvailable', {
@@ -107,7 +107,7 @@ function Scheduling_Panel() {
         }
     }
 
-    // Função de confirmar ou cancelar agendamento
+    // Função para confirmar ou cancelar agendamento
     async function handleUpdateAppointmentStatus(userId, newStatus) {
         try {
             const url = new URL('http://localhost:8080/scheduling/confirmOrCancelAppointment');

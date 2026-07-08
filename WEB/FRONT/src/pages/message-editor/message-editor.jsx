@@ -77,7 +77,7 @@ function Message_Editor() {
         setIsMessageModalOpen(true);
     };
 
-    // Função de criar ou atualizar mensagem (dependendo do contexto)
+    // Função para criar ou atualizar mensagem (dependendo do contexto)
     async function handleSaveMessage(event) {
         event.preventDefault();
 
