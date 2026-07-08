@@ -177,6 +177,70 @@
     padding: 0 20px !important;
 }
 
+/* 11: Pop-up de edição de usuário */
+.edit-user-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.edit-user-title {
+    font-family: 'Poppins', sans-serif;
+    color: #3C7975;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0 0 15px 0;
+}
+
+.edit-user-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.edit-user-form .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.edit-user-form .input-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #666666;
+    text-align: left;
+    margin-bottom: 6px;
+}
+
+.edit-user-form input {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+}
+
+.btn-save-user {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    height: 55px;
+    width: 50%;
+    margin: 10px auto 0 auto;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.btn-save-user:hover {
+    background-color: #187E77;
+}
+
 /* Aplica o transform apenas na página de Usuários e apenas em telas acima de 1600px */
 @media (min-width: 1601px) {
     .user-management-wrapper .empty-state-text {
@@ -254,6 +318,27 @@
     .user-management-scroll-area {
         max-height: 400px;
     }
+
+    .edit-user-title {
+        font-size: 1.3rem;
+    }
+
+    .edit-user-form {
+        gap: 12px;
+    }
+
+    .edit-user-form .input-group label {
+        font-size: 0.95rem;
+    }
+
+    .edit-user-form input {
+        height: 45px;
+    }
+
+    .btn-save-user {
+        height: 50px;
+        font-size: 1rem;
+    }
 }
 
 /* 1366 * 768 */
@@ -326,6 +411,33 @@
 
     .user-management-scroll-area {
         max-height: 350px;
+    }
+
+    .edit-user-card {
+        width: 40%;
+    }
+
+    .edit-user-title {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .edit-user-form {
+        gap: 10px;
+    }
+
+    .edit-user-form .input-group label {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .edit-user-form input {
+        height: 40px;
+    }
+
+    .btn-save-user {
+        height: 45px;
+        font-size: 0.95rem;
     }
 }
 
@@ -416,5 +528,24 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .edit-user-card {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .edit-user-title {
+        font-size: 1.3rem;
+    }
+
+    .edit-user-form input {
+        height: 50px;
+    }
+
+    .btn-save-user {
+        width: 100%;
+        height: 50px;
+        margin-top: 15px;
     }
 }
