@@ -33,25 +33,31 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User register (RegisterUserDTO data) {
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+
         if (this.repository.findByEmail(data.email()) != null) throw new EmailWasRegistredException("Email was registred!");
+
+        String encryptedName = securityConfigurations.encryptionService().encrypt(data.name());
+        String encryptedEmail = securityConfigurations.encryptionService().encrypt(data.email());
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        String encryptedPhone = data.phone() != null ? securityConfigurations.encryptionService().encrypt(data.phone()) : null;
+        String encryptedAddress = data.address() != null ? securityConfigurations.encryptionService().encrypt(data.address()) : null;
 
         User newUser;
 
         if (data.profile() == TypeProfile.ADMIN) {
             Admin admin = new Admin();
-            admin.setName(data.name());
+            admin.setName(encryptedName);
             newUser = admin;
         } else {
             Customer customer = new Customer();
-            customer.setName(data.name());
-            customer.setPhone(data.phone());
-            customer.setAddress(data.address());
+            customer.setName(encryptedName);
+            customer.setPhone(encryptedPhone);
+            customer.setAddress(encryptedAddress);
             customer.setBirthDate(data.birthDate());
             newUser = customer;
         }
 
-        newUser.setEmail(data.email());
+        newUser.setEmail(encryptedEmail);
         newUser.setPassword(encryptedPassword);
         newUser.setActive(true);
         newUser.setProfile(data.profile());

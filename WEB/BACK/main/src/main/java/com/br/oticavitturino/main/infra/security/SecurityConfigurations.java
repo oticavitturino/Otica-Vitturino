@@ -86,6 +86,12 @@ public class SecurityConfigurations {
         return new BCryptPasswordEncoder();
     }
 
+    // Configuração de criptografia de dados sensíveis
+    @Bean
+    public EncryptionService encryptionService() {
+        return new EncryptionService();
+    }
+
     // Método para gerar código único de indicação
     public String generateUniqueReferralCode(String fullName) {
         String firstName = fullName.split(" ")[0].toUpperCase();

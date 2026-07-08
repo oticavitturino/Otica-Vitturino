@@ -9,17 +9,25 @@ import com.br.oticavitturino.main.model.domain.customer.CustomerDTO;
 import com.br.oticavitturino.main.model.domain.customer.ScoreDTO;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.user.User;
+
+import com.br.oticavitturino.main.infra.security.SecurityConfigurations;
 @Service
 public class CustomerService {
 
     @Autowired
     private CustomerRepository repository;
 
+    @Autowired
+    private SecurityConfigurations securityConfiguration;
+
     @Transactional(readOnly = true)
     public CustomerDTO getAllCustomers() {
         Customer customer = repository.findAll().stream().findFirst()
                 .orElseThrow(() -> new RuntimeException("No customers found"));
-        return new CustomerDTO(customer.getName(), customer.getPhone(), customer.getAddress(), customer.getBirthDate());
+        String decryptedName = securityConfiguration.encryptionService().decrypt(customer.getName());
+        String decryptedPhone = securityConfiguration.encryptionService().decrypt(customer.getPhone());
+        String decryptedAddress = securityConfiguration.encryptionService().decrypt(customer.getAddress());
+        return new CustomerDTO(decryptedName, decryptedPhone, decryptedAddress, customer.getBirthDate());
     }
 
     @Transactional(readOnly = true)
@@ -34,9 +42,13 @@ public class CustomerService {
         Customer customer = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
 
-        customer.setName(customerDTO.name());
-        customer.setPhone(customerDTO.phone());
-        customer.setAddress(customerDTO.address());
+        String encryptedName = securityConfiguration.encryptionService().encrypt(customerDTO.name());
+        String encryptedPhone = securityConfiguration.encryptionService().encrypt(customerDTO.name());
+        String encryptedAddress = securityConfiguration.encryptionService().encrypt(customerDTO.name());
+
+        customer.setName(encryptedName);
+        customer.setPhone(encryptedPhone);
+        customer.setAddress(encryptedAddress);
         customer.setBirthDate(customerDTO.birthDate());
 
         Customer updatedCustomer = repository.save(customer);

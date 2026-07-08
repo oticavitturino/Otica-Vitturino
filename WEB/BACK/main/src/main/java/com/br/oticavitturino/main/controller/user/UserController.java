@@ -14,6 +14,7 @@ import com.br.oticavitturino.main.model.domain.user.AuthenticationDTO;
 import com.br.oticavitturino.main.model.domain.user.LoginResponseDTO;
 import com.br.oticavitturino.main.model.domain.user.RegisterUserDTO;
 import com.br.oticavitturino.main.model.service.user.UserService;
+import com.br.oticavitturino.main.model.domain.user.User;
 
 @RestController
 @RequestMapping("/auth")
@@ -35,7 +36,7 @@ public class UserController {
 
         var token = tokenService.generateToken(auth.getPrincipal());
 
-        var user = (com.br.oticavitturino.main.model.domain.user.User) auth.getPrincipal();
+        var user = (User) auth.getPrincipal();
 
         return ResponseEntity.ok(new LoginResponseDTO(token, user.getMyReferralCode()));
     }
