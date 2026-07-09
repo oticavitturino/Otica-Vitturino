@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+	backend:
+		build:
+			context: ./WEB/BACK/main
+			dockerfile: dockerfile
+		ports:
+			- "8080:8080"
+		restart: unless-stopped
+    depends_on:
+      - db
+		networks:
+			- app-network
+
+	frontend:
+		build:
+			context: ./WEB/FRONT
+			dockerfile: dockerfile
+		ports:
+			- "80:80"
+		depends_on:
+			- backend
+		restart: unless-stopped
+		networks:
+			- app-network
+
+	mobile:
+		build:
+			context: ./MOBILE
+			dockerfile: dockerfile
+		ports:
+			- "8081:8081"
+		volumes:
+			- ./MOBILE:/app
+		environment:
+			- EXPO_HOST=0.0.0.0
+		restart: unless-stopped
+		networks:
+			- app-network
+
+   db:
+    image: mysql:latest
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: usermanagementdb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - network-application
+
+networks:
+	app-network:
+		driver: bridge
+

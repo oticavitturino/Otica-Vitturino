@@ -1,0 +1,28 @@
+# Dependências e Logs
+node_modules
+npm-debug.log
+yarn-error.log
+yarn.lock
+
+# Diretórios de build e distribuição
+dist
+build
+out
+
+# Arquivos de Variáveis de Ambiente (MUITO IMPORTANTE)
+.env
+example.env
+
+# Controle de Versão
+.git
+.gitignore
+
+# Configurações de IDEs e Editores
+.vscode
+.idea
+
+# Arquivos do próprio Docker e Documentação
+dockerfile
+.dockerignore
+docker-compose.yml
+README.md
