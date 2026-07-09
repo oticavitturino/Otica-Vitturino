@@ -1,25 +1,45 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'expo-router'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Profile_Card } from './Profile_Card';
-// import { AuthContext } from '../contexts/AuthContext' - para quando for integrar
 
 export function Header() {
 
     const router = useRouter();
-
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const userScore = 0; // provisóriamente
-
-    // const userContext = useContext(AuthContext); - para quando for integrar
-    // const userScore = userContext?.userScore || 0; - para quando for integrar
+    const [userScore, setUserScore] = useState(0);
 
     // Função executada ao clicar no botão de usuário
     function handleUserMenuClick() {
         setIsMenuOpen(!isMenuOpen);
 
     }
+
+    // Função para buscar a pontuação do cliente
+    async function fetchScore() {
+        try {
+            const customerId = await AsyncStorage.getItem('userId');
+
+            if (!customerId) return;
+
+            const url = `http://localhost:8080/customer/score?id=${customerId}`;
+            const response = await fetch(url);
+
+            if (response.ok) {
+                const data = await response.json();
+                setUserScore(data); //
+            } else {
+                console.error(`Falha na API ao buscar score: Status ${response.status}`);
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchScore();
+    }, []);
 
     return (
         <View style={styles.header}>
