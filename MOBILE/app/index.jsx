@@ -11,6 +11,7 @@ export default function Login() {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  // Função de checkagem de login
   async function handleLogin() {
     if (!emailInput || !passwordInput) {
       Alert.alert('Atenção', 'Preencha e-mail e senha para continuar.');

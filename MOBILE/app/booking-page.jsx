@@ -77,7 +77,7 @@ export default function BookingPage() {
         return marks;
     }
 
-    // Função para buscar datas disponíveis na API
+    // Função para buscar datas disponíveis
     async function fetchAvailableDates() {
         try {
             const response = await fetch('http://localhost:8080/scheduling/getAllDatesAvailable');

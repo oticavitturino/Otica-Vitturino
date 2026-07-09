@@ -10,8 +10,9 @@ export default function Incident_History() {
 
     const [openCard, setOpenCard] = useState(null);
     const [occurrences, setOccurrences] = useState([]);
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
 
-    //Função de retornar histórico de ocorrências
+    //Função para retornar histórico de ocorrências
     async function fetchAllOccurrences() {
         try {
             const response = await fetch('http://localhost:8080/occurrences/occurrenceCustomer?customerId=1');
@@ -30,7 +31,7 @@ export default function Incident_History() {
         fetchAllOccurrences();
     }, []);
 
-    // Função de registrar ocorrência
+    // Função para registrar ocorrência
     async function registerOccurrence(categoryType, userDescription) {
         try {
             const response = await fetch('http://localhost:8080/occurrences/register', {
@@ -67,8 +68,6 @@ export default function Incident_History() {
             setOpenCard(cardName);
         }
     }
-
-    const [isGuideVisible, setIsGuideVisible] = useState(false);
 
     return (
         <>

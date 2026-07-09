@@ -7,6 +7,9 @@ import { User_Guide_Card } from '../components/User_Guide_Card'
 
 export default function Production_Page() {
 
+    const [openCardId, setOpenCardId] = useState(null);
+    const [isGuideVisible, setIsGuideVisible] = useState(false);
+
     // Status ENUM
     const STATUS_DICIONARIO = {
         'PEDIDO_REALIZADO': {
@@ -43,17 +46,13 @@ export default function Production_Page() {
         }
     ];
 
-    const [openCardId, setOpenCardId] = useState(null);
-
     function toggleCard(id) {
         if (openCardId === id) {
             setOpenCardId(null);
         } else {
             setOpenCardId(id);
         }
-    }
-
-    const [isGuideVisible, setIsGuideVisible] = useState(false);
+    }   
 
     return (
         <>
