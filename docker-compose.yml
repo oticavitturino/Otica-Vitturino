@@ -1,46 +1,57 @@
-version: '3.8'
-
 services:
-	backend:
-		build:
-			context: ./WEB/BACK/main
-			dockerfile: dockerfile
-		ports:
-			- "8080:8080"
-		restart: unless-stopped
+  backend:
+    build:
+      context: ./WEB/BACK/main
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
     depends_on:
-      - db
-		networks:
-			- app-network
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: homolog
+      DB_URL: jdbc:mysql://db:3306/usermanagementdb
+      DB_USER: admin
+      DB_PASSWORD: admin
+      JWT_SECRET: ${JWT_SECRET:-changeThisJwtSecretKeyForProduction}
+      ENCRYPTION_SECRET: ${ENCRYPTION_SECRET:-changeThisEncryptionSecret}
+      ENCRYPTION_SALT: ${ENCRYPTION_SALT:-changeThisEncryptionSalt}
+      URL_FRONT: ${URL_FRONT:-http://localhost}
+      EMAIL_USERNAME: ${EMAIL_USERNAME:-}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD:-}
+    networks:
+      - app-network
 
-	frontend:
-		build:
-			context: ./WEB/FRONT
-			dockerfile: dockerfile
-		ports:
-			- "80:80"
-		depends_on:
-			- backend
-		restart: unless-stopped
-		networks:
-			- app-network
+  frontend:
+    build:
+      context: ./WEB/FRONT
+      dockerfile: dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app-network
 
-	mobile:
-		build:
-			context: ./MOBILE
-			dockerfile: dockerfile
-		ports:
-			- "8081:8081"
-		volumes:
-			- ./MOBILE:/app
-		environment:
-			- EXPO_HOST=0.0.0.0
-		restart: unless-stopped
-		networks:
-			- app-network
+  mobile:
+    build:
+      context: ./MOBILE
+      dockerfile: dockerfile
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./MOBILE:/app
+      - /app/node_modules
+    environment:
+      EXPO_HOST: 0.0.0.0
+    restart: unless-stopped
+    networks:
+      - app-network
 
-   db:
-    image: mysql:latest
+  db:
+    image: mysql:8.4
     container_name: mysql-db
     ports:
       - "3306:3306"
@@ -52,10 +63,18 @@ services:
       MYSQL_DATABASE: usermanagementdb
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uadmin", "-padmin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     networks:
-      - network-application
+      - app-network
 
 networks:
-	app-network:
-		driver: bridge
+  app-network:
+    driver: bridge
 
+volumes:
+  db_data:
