@@ -88,8 +88,8 @@ public class SecurityConfigurations {
 
     // Configuração de criptografia de dados sensíveis
     @Bean
-    public EncryptionService encryptionService() {
-        return new EncryptionService();
+    public EncriptionService encryptionService() {
+        return new EncriptionService();
     }
 
     // Método para gerar código único de indicação
