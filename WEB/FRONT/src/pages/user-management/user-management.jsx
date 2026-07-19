@@ -59,7 +59,14 @@ function User_Management() {
   // Função para buscar todos os clientes
   async function fetchAllUsers() {
     try {
-      const response = await fetch('http://localhost:8080/customer/all');
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8080/customer/all', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
@@ -116,12 +123,14 @@ function User_Management() {
   async function handleUpdateUser(event) {
     event.preventDefault();
 
+    const token = localStorage.getItem('token');
     const url = `http://localhost:8080/customer/update?id=${updateData.id}`;
 
     try {
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -147,22 +156,11 @@ function User_Management() {
   return (
     <Layout>
       <div className='user-management-wrapper'>
-        {/* 1: Container externo */}
         <Container className='main-container-user-management'>
-
-          {/* 2: Título principal */}
           <h2>Gerencie aqui seus usuários</h2>
-
-          {/* 3: Container interno */}
           <div className='content-wrapper'>
-
-            {/* 4: Container de cadastro de usuários */}
             <Container className='user-registration-container'>
-
-              {/* 5: Título secundário 1 */}
               <h3>Cadastrar usuário</h3>
-
-              {/* 6: Formulário de cadastro de usuários */}
               <form className='user-registration-form' onSubmit={handleUserRegistration}>
                 <Input placeholder='Nome' type='text' name='name' value={formData.name} onChange={handleInputChange} required />
                 <Input placeholder='E-mail' type='email' name='email' value={formData.email} onChange={handleInputChange} required />
@@ -211,21 +209,14 @@ function User_Management() {
 
                 <Button className='btn-register' type='submit'>Cadastrar</Button>
               </form>
-
             </Container>
 
-            {/* 7: Container de usuários registrados */}
             <Container className='registered-users-container'>
-
-              {/* 8: Título secundário 2 */}
               <h3>Usuários registrados</h3>
-
-              {/* 9: Área de scroll */}
               <div className='user-management-scroll-area'>
                 {users.length === 0 ? (
                   <p className='empty-state-text'>Nenhum usuário cadastrado.</p>
                 ) : (
-                  /* 10: Ícones de ação (só renderiza se tiver usuário) */
                   users.map((user) => (
                     <List_item key={user.id} actions={
                       <>
@@ -240,7 +231,6 @@ function User_Management() {
                 )}
               </div>
 
-              {/* 11: Pop-up de edição de usuário */}
               {isUpdateModalOpen && (
                 <div className='modal-overlay' onClick={() => setIsUpdateModalOpen(false)}>
                   <Card className='edit-user-card' onClick={(e) => e.stopPropagation()}>
@@ -253,7 +243,6 @@ function User_Management() {
                     </h3>
 
                     <form className='edit-user-form' onSubmit={handleUpdateUser}>
-
                       <div className='input-group'>
                         <label>Nome:</label>
                         <Input
