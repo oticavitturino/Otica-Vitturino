@@ -1,23 +1,19 @@
 package com.br.oticavitturino.main.infra.security;
+
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
 @Service
-public class EncriptionService {
-
-    // Chave secreta para criptografia AES
-    @Value("${api.security.encryption.secret}")
-    private String SECRET_KEY;
-
-    @Value("${api.security.encryption.salt}")
-    private String HEX_SALT;
+public class EncryptionService {
 
     private final TextEncryptor encryptor;
 
-    public EncriptionService() {
-        this.encryptor = Encryptors.text(SECRET_KEY, HEX_SALT);
+    public EncryptionService(
+            @Value("${api.security.encryption.secret}") String secretKey,
+            @Value("${api.security.encryption.salt}") String salt) {
+        this.encryptor = Encryptors.text(secretKey, salt);
     }
 
     // Método para criptografar

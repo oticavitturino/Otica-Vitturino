@@ -15,6 +15,7 @@ import com.br.oticavitturino.main.model.domain.user.TypeProfile;
 import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
 import com.br.oticavitturino.main.infra.security.SecurityConfigurations;
+import com.br.oticavitturino.main.infra.security.EncryptionService;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -22,6 +23,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private EncryptionService encryptionService;
 
     @Autowired
     private SecurityConfigurations securityConfigurations;
@@ -36,11 +40,11 @@ public class UserService implements UserDetailsService {
 
         if (this.repository.findByEmail(data.email()) != null) throw new EmailWasRegistredException("Email was registred!");
 
-        String encryptedName = securityConfigurations.encryptionService().encrypt(data.name());
-        String encryptedEmail = securityConfigurations.encryptionService().encrypt(data.email());
+        String encryptedName = encryptionService.encrypt(data.name());
+        String encryptedEmail = encryptionService.encrypt(data.email());
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        String encryptedPhone = data.phone() != null ? securityConfigurations.encryptionService().encrypt(data.phone()) : null;
-        String encryptedAddress = data.address() != null ? securityConfigurations.encryptionService().encrypt(data.address()) : null;
+        String encryptedPhone = data.phone() != null ? encryptionService.encrypt(data.phone()) : null;
+        String encryptedAddress = data.address() != null ? encryptionService.encrypt(data.address()) : null;
 
         User newUser;
 
