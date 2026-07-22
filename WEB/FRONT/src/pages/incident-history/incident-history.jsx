@@ -23,12 +23,16 @@ function Incident_History() {
                 const data = await response.json();
                 setOccurrences(data);
             } else {
-                alert('Falha ao buscar ocorrências.');
+                console.error('Falha ao buscar ocorrências.');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
         }
     }
+
+    useEffect(() => {
+        fetchAllOccurences();
+    }, []);
 
     // Função de deletar ocorrência
     async function deleteOccurrence(id) {
@@ -47,10 +51,6 @@ function Incident_History() {
             console.error('Erro de requisição: ', error);
         }
     }
-
-    useEffect(() => {
-        fetchAllOccurences();
-    }, []);
 
     return (
         <Layout>

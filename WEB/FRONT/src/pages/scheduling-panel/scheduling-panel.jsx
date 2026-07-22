@@ -28,7 +28,7 @@ function Scheduling_Panel() {
                 const data = await response.json();
                 setAppointments(data);
             } else {
-                alert('Falha ao buscar agendamentos');
+                console.error('Falha ao buscar agendamentos');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -44,7 +44,7 @@ function Scheduling_Panel() {
                 const datesOnly = data.map(item => item.date_available);
                 setAvailableDates(datesOnly);
             } else {
-                alert('Falha ao buscar datas disponíveis');
+                console.error('Falha ao buscar datas disponíveis');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -206,58 +206,59 @@ function Scheduling_Panel() {
 
                     {/* 7: Botão de adicionar datas disponíveis */}
                     <Button className='btn-add-date' onClick={addSchedulingDate}>Adicionar datas disponíveis</Button>
+
+                    {/* 8: Pop-up de adicionar/remover datas de agendamento disponíveis */}
+                    {isAddDateModalOpen && (
+                        <div className="modal-overlay" onClick={() => setIsAddDateModalOpen(false)}>
+                            <Card className='add-remove-date-card' onClick={(e) => e.stopPropagation()}>
+                                <button className='x-btn' onClick={() => setIsAddDateModalOpen(false)}>
+                                    <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                </button>
+
+                                <h3>Datas disponíveis</h3>
+
+                                <form className='add-date-form' onSubmit={handleSaveAvailableDate}>
+                                    <div className='input-group'>
+                                        <label>Escolha o dia e o horário:</label>
+                                        <input
+                                            type='datetime-local'
+                                            value={dateTimeInput}
+                                            onChange={(e) => setDateTimeInput(e.target.value)}
+                                            max='9999-12-31T23:59'
+                                            required
+                                        />
+
+                                        {/* 9: Botão de adicionar data disponível */}
+                                        <Button type='submit' className='btn-confirm-date'>+</Button>
+                                    </div>
+                                </form>
+
+                                {/* 10: Scroll area das datas adicionadas */}
+                                <div className='add-remove-date-scroll-area'>
+                                    {availableDates.length === 0 ? (
+                                        <p className='empty-dates-text'>Nenhuma data cadastrada.</p>
+                                    ) : (
+                                        availableDates.map((data, index) => (
+                                            <List_Item key={index} actions={
+                                                <button
+                                                    className='icon-btn x-btn'
+                                                    onClick={() => handleDeleteAvailableDate(data)}
+                                                >
+                                                    <img src={XIcon} className='action-icon' alt='Remover'></img>
+                                                </button>
+                                            }>
+                                                <div className='list-row-data date-only-row'>
+                                                    <span>{formatBrazilianDate(data)}</span>
+                                                </div>
+                                            </List_Item>
+                                        ))
+                                    )}
+                                </div>
+                            </Card>
+                        </div>
+                    )}
                 </Container>
 
-                {/* 8: Pop-up de adicionar/remover datas de agendamento disponíveis */}
-                {isAddDateModalOpen && (
-                    <div className="modal-overlay" onClick={() => setIsAddDateModalOpen(false)}>
-                        <Card className='add-remove-date-card' onClick={(e) => e.stopPropagation()}>
-                            <button className='x-btn' onClick={() => setIsAddDateModalOpen(false)}>
-                                <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
-                            </button>
-
-                            <h3>Datas disponíveis</h3>
-
-                            <form className='add-date-form' onSubmit={handleSaveAvailableDate}>
-                                <div className='input-group'>
-                                    <label>Escolha o dia e o horário:</label>
-                                    <input
-                                        type='datetime-local'
-                                        value={dateTimeInput}
-                                        onChange={(e) => setDateTimeInput(e.target.value)}
-                                        max='9999-12-31T23:59'
-                                        required
-                                    />
-
-                                    {/* 9: Botão de adicionar data disponível */}
-                                    <Button type='submit' className='btn-confirm-date'>+</Button>
-                                </div>
-                            </form>
-
-                            {/* 10: Scroll area das datas adicionadas */}
-                            <div className='add-remove-date-scroll-area'>
-                                {availableDates.length === 0 ? (
-                                    <p className='empty-dates-text'>Nenhuma data cadastrada.</p>
-                                ) : (
-                                    availableDates.map((data, index) => (
-                                        <List_Item key={index} actions={
-                                            <button
-                                                className='icon-btn x-btn'
-                                                onClick={() => handleDeleteAvailableDate(data)}
-                                            >
-                                                <img src={XIcon} className='action-icon' alt='Remover'></img>
-                                            </button>
-                                        }>
-                                            <div className='list-row-data date-only-row'>
-                                                <span>{formatBrazilianDate(data)}</span>
-                                            </div>
-                                        </List_Item>
-                                    ))
-                                )}
-                            </div>
-                        </Card>
-                    </div>
-                )}
             </div>
         </Layout>
     )

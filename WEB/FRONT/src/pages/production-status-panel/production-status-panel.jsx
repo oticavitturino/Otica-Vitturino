@@ -82,7 +82,7 @@ function Production_Status_Panel() {
                 const data = await response.json();
                 setOrders(data);
             } else {
-                alert('Falha ao buscar produtos.');
+                console.error('Falha ao buscar produtos.');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
