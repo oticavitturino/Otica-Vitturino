@@ -5,3 +5,30 @@
     border-radius: 15px;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .card {
+        padding: 33px 42px;
+        border-radius: 13px;
+    }
+}
+
+/* 1366 * 768 */
+
+@media (max-width: 1366px) {
+    .card {
+        padding: 28px 36px;
+        border-radius: 11px;
+    }
+}
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .card {
+        padding: 27px 33px;
+        border-radius: 10px;
+    }
+}
+

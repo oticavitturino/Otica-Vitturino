@@ -8,6 +8,7 @@
     position: absolute;
     top: 10%;
     left: 0;
+    z-index: 5;
     animation: menuSlide 1.5s ease-out forwards;
 }
 
@@ -32,6 +33,7 @@
 
 .btn-item {
     height: 70px;
+    font-size: 1.02rem;
     background-color: transparent;
     color: #FFFFFF;
     transition: background-color 0.2s ease;
@@ -45,7 +47,7 @@
     background-color: #AAAAAA;
     color: #FFFFFF;
     height: 60px;
-    width: 330px;    
+    width: min(330px, 90%);
     font-size: 1.3rem;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -73,14 +75,14 @@
 
 @media (max-width: 1600px) {
     .btn-item {
-        height: 60px;
+        height: 58px;
         font-size: 0.85rem;
     }
 
     .btn-exit {
         height: 50px;
-        width: 300px;
-        font-size: 1.1rem;
+        width: min(275px, 90%);
+        font-size: 1.083rem;
     }
 }
 
@@ -89,13 +91,29 @@
 @media (max-width: 1366px) {
     .btn-item {
         height: 50px;
-        font-size: 0.75rem;
+        font-size: 0.726rem;
+    }
+
+    .btn-exit {
+        height: 43px;
+        width: min(235px, 90%);
+        font-size: 0.925rem;
+    }
+}
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .btn-item {
+        height: 47px;
+        font-size: 0.68rem;
     }
 
     .btn-exit {
         height: 40px;
-        width: 250px;
-        font-size: 0.9rem;
+        width: min(220px, 90%);
+        font-size: 0.867rem;
     }
 }
 

@@ -1,0 +1,307 @@
+/* Layout principal — sem scroll na página (100vh) */
+
+.layout-container {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
+.main-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.main-content > .user-management-wrapper,
+.main-content > .scheduling-page-wrapper,
+.main-content > .production-page-wrapper,
+.main-content > .message-page-wrapper,
+.main-content > .incident-page-wrapper,
+.main-content > .homepage-wrapper {
+    pointer-events: none;
+}
+
+.main-content .main-container-user-management,
+.main-content .main-container-scheduling-panel,
+.main-content .main-container-production-status-panel,
+.main-content .main-container-message-editor,
+.main-content .main-container-incident-history,
+.main-content .welcome-container {
+    pointer-events: auto;
+}
+
+.main-content .modal-overlay {
+    pointer-events: auto;
+}
+
+/* Wrappers das páginas dentro do layout */
+.main-content > .user-management-wrapper,
+.main-content > .scheduling-page-wrapper,
+.main-content > .production-page-wrapper,
+.main-content > .message-page-wrapper,
+.main-content > .incident-page-wrapper {
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+/* Homepage — preenche a tela e centraliza título + ilustração */
+.main-content > .homepage-wrapper {
+    flex: 1;
+    align-self: stretch;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Containers principais dos painéis */
+.main-content .main-container-user-management,
+.main-content .main-container-scheduling-panel,
+.main-content .main-container-production-status-panel,
+.main-content .main-container-message-editor,
+.main-content .main-container-incident-history {
+    margin-left: 26%;
+    margin-top: 17.5vh;
+    margin-bottom: 20px;
+    width: min(1308px, calc(100vw - 26% - 40px));
+    height: 75vh;
+    max-height: 75vh;
+    min-height: 0;
+    flex: 0 1 auto;
+    box-sizing: border-box;
+    justify-content: flex-start;
+}
+
+.main-content .welcome-container {
+    margin-left: 26%;
+    max-width: calc(100vw - 26% - 20px);
+}
+
+/* User-management — colunas flexíveis, scroll só nas listas */
+.main-content .content-wrapper {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+.main-content .container.user-registration-container,
+.main-content .container.registered-users-container {
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.main-content .user-registration-form {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+}
+
+.main-content .user-registration-form .btn-register {
+    flex-shrink: 0;
+}
+
+.main-content .user-registration-form input,
+.main-content .user-registration-form .btn-show-referral,
+.main-content .input-row-inline > * {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+    width: 100%;
+}
+
+.main-content .input-row-inline {
+    grid-template-columns: 1.35fr 0.65fr;
+    min-width: 0;
+}
+
+.main-content .user-management-scroll-area,
+.main-content .scheduling-scroll-area,
+.main-content .production-scroll-area,
+.main-content .incident-scroll-area,
+.main-content .messages-scroll-area {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .main-content .main-container-user-management,
+    .main-content .main-container-scheduling-panel,
+    .main-content .main-container-production-status-panel,
+    .main-content .main-container-message-editor,
+    .main-content .main-container-incident-history {
+        width: min(1090px, calc(100vw - 26% - 40px));
+    }
+
+    .main-content .container.user-registration-container,
+    .main-content .container.registered-users-container {
+        padding: 17px;
+    }
+}
+
+/* 1366 * 768 */
+
+@media (max-width: 1366px) {
+    .main-content .main-container-user-management,
+    .main-content .main-container-scheduling-panel,
+    .main-content .main-container-production-status-panel,
+    .main-content .main-container-message-editor,
+    .main-content .main-container-incident-history {
+        width: min(931px, calc(100vw - 26% - 40px));
+    }
+
+    .main-content .container.user-registration-container {
+        padding: 10px 14px;
+    }
+
+    .main-content .container.registered-users-container {
+        padding: 14px;
+    }
+}
+
+@media (max-width: 1366px) and (max-resolution: 1.19dppx) {
+    .main-content .user-registration-form {
+        justify-content: space-evenly;
+        gap: 8px;
+    }
+
+    .main-content .container.user-registration-container h3 {
+        margin-bottom: 18px;
+    }
+
+    .main-content .user-registration-form .btn-register {
+        margin-top: 0;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .main-content .main-container-user-management,
+    .main-content .main-container-scheduling-panel,
+    .main-content .main-container-production-status-panel,
+    .main-content .main-container-message-editor,
+    .main-content .main-container-incident-history {
+        width: min(872px, calc(100vw - 26% - 27px));
+    }
+
+    .main-content .container.user-registration-container {
+        padding: 10px 13px 14px;
+    }
+}
+
+/* Zoom 125% Windows — compacta verticalmente, sem scroll na página */
+
+@media (min-width: 769px) and (min-resolution: 1.19dppx) {
+    .main-content .main-container-user-management h2,
+    .main-content .main-container-scheduling-panel h2,
+    .main-content .main-container-production-status-panel h2,
+    .main-content .main-container-message-editor h2,
+    .main-content .main-container-incident-history h2 {
+        margin-bottom: clamp(10px, 2vh, 32px);
+    }
+
+    .main-content .container.user-registration-container h3,
+    .main-content .container.registered-users-container h3 {
+        margin-bottom: clamp(6px, 1.2vh, 12px);
+    }
+
+    .main-content .user-registration-form {
+        justify-content: flex-start;
+        gap: 4px;
+    }
+
+    .main-content .user-registration-form .btn-register {
+        margin-top: 6px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .layout-container {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    .main-content {
+        position: static;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+        display: block;
+    }
+
+    .main-content > .user-management-wrapper,
+    .main-content > .scheduling-page-wrapper,
+    .main-content > .production-page-wrapper,
+    .main-content > .message-page-wrapper,
+    .main-content > .incident-page-wrapper {
+        height: auto;
+        overflow: visible;
+    }
+
+    .main-content > .homepage-wrapper {
+        min-height: auto;
+        height: auto;
+        overflow: visible;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .main-content .main-container-user-management,
+    .main-content .main-container-scheduling-panel,
+    .main-content .main-container-production-status-panel,
+    .main-content .main-container-message-editor,
+    .main-content .main-container-incident-history {
+        margin-left: 0;
+        width: 100%;
+        height: auto;
+        max-height: none;
+    }
+
+    .main-content .welcome-container {
+        margin-left: 0;
+    }
+}

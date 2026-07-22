@@ -7,6 +7,8 @@
     align-items: center;
     min-height: 100vh;
     width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
 /* 1: Imagem da logo */
@@ -52,6 +54,7 @@
 .login-form input {
     font-size: 0.9rem;
     width: 350px;
+    height: 54px;
 }
 
 .btn-enter {
@@ -113,30 +116,30 @@
 
 @media (max-width: 1600px) {
     .login-container {
-        height: 400px;
-        max-width: 650px;
+        height: 375px;
+        max-width: 583px;
     }
 
     .login-container h2 {
-        font-size: 1.7rem;
+        font-size: 1.833rem;
         margin-bottom: 8%;
     }
 
     .login-form {
-        gap: 12px;
-        margin-top: 10px;
+        gap: 13px;
+        margin-top: 17px;
     }
 
     .login-form input {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         height: 45px;
-        width: 300px;
+        width: 292px;
     }
 
     .btn-enter {
         height: 50px;
-        width: 300px;
-        font-size: 1.1rem;
+        width: 292px;
+        font-size: 1.083rem;
     }
 
     .error-card {
@@ -145,16 +148,16 @@
     }
 
     .error-card h3 {
-        font-size: 1.5rem;
+        font-size: 1.417rem;
     }
 
     .error-card p {
-        font-size: 0.9rem;
+        font-size: 0.833rem;
     }
 
     .btn-ok {
-        height: 35px;
-        font-size: 0.9rem;
+        height: 33px;
+        font-size: 0.75rem;
     }
 }
 
@@ -162,47 +165,96 @@
 
 @media (max-width: 1366px) {
     .login-container {
-        height: 350px;
-        max-width: 550px;
+        height: 320px;
+        max-width: 498px;
     }
 
     .login-container h2 {
-        font-size: 1.4rem;
+        font-size: 1.565rem;
     }
 
     .login-form {
-        gap: 12px;
-        margin-top: 5px;
+        gap: 11px;
+        margin-top: 14px;
     }
 
     .login-form input {
-        font-size: 0.6rem;
-        height: 40px;
-        width: 260px;
+        font-size: 0.64rem;
+        height: 38px;
+        width: 249px;
     }
 
     .btn-enter {
-        height: 45px;
-        width: 260px;
-        font-size: 1rem;
+        height: 43px;
+        width: 249px;
+        font-size: 0.925rem;
     }
 
     .error-card {
-        max-width: 284px;
+        max-width: 285px;
         gap: 14px;
     }
 
     .error-card h3 {
-        font-size: 1.1rem;
+        font-size: 1.209rem;
     }
 
     .error-card p {
-        font-size: 0.8rem;
+        font-size: 0.711rem;
     }
 
     .btn-ok {
-        height: 30px;
-        font-size: 0.8rem;
+        height: 28px;
+        font-size: 0.64rem;
+    }
+}
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .login-container {
+        height: 300px;
+        max-width: 467px;
+    }
+
+    .login-container h2 {
+        font-size: 1.467rem;
+    }
+
+    .login-form {
+        gap: 11px;
+        margin-top: 13px;
+    }
+
+    .login-form input {
+        font-size: 0.6rem;
+        height: 36px;
+        width: 233px;
+    }
+
+    .btn-enter {
+        height: 40px;
+        width: 233px;
+        font-size: 0.867rem;
+    }
+
+    .error-card {
+        max-width: 267px;
+        gap: 13px;
+    }
+
+    .error-card h3 {
+        font-size: 1.133rem;
+    }
+
+    .error-card p {
+        font-size: 0.667rem;
+    }
+
+    .btn-ok {
+        height: 27px;
+        font-size: 0.6rem;
     }
 }
 

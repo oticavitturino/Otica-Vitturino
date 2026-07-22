@@ -13,9 +13,15 @@
     box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     margin: 0;
-    min-height: 100vh;
     width: 100%;
     background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(190, 190, 190, 0.1)), url('/img/pexels-steve-29506613.jpg');
     background-size: cover;
@@ -131,7 +137,7 @@ body::before {
 
 @media (max-width: 1600px) {
     .empty-state-text {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 }
 
@@ -139,13 +145,30 @@ body::before {
 
 @media (max-width: 1366px) {
     .empty-state-text {
-        font-size: 1rem;
+        font-size: 0.854rem;
+    }
+}
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .empty-state-text {
+        font-size: 0.8rem;
     }
 }
 
 /* Mobile */
 
 @media (max-width: 768px) {
+    html,
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
     .icon-btn {
         width: 25px;
         height: 25px;

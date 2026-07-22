@@ -1,3 +1,4 @@
+import './style.css';
 import { useState } from 'react';
 import Header from '../header';
 import SideMenu from '../side-menu';

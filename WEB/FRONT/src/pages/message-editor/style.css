@@ -3,10 +3,11 @@
 .message-page-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* 1: Container externo */
@@ -15,10 +16,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 75vh;
-    margin-top: 17.5vh;
-    margin-bottom: 20px;
-    margin-left: 26%;
+    width: min(1308px, 100%);
+    box-sizing: border-box;
     background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
@@ -26,6 +25,7 @@
 /* 2: Título */
 .main-container-message-editor h2 {
     font-family: Poppins, sans-serif;
+    font-size: 2.04rem;
     color: #3C7975;
     margin-bottom: 45px;
 }
@@ -172,45 +172,45 @@
 
 @media (max-width: 1600px) {
     .main-container-message-editor {
-        width: 1090px;
+        width: min(1090px, calc(100vw - 26% - 40px));
         padding: 30px;
     }
 
     .main-container-message-editor h2 {
         font-size: 1.7rem;
-        margin-bottom: 30px;
+        margin-bottom: 38px;
     }
 
     .main-container-message-editor .message-title {
-        font-size: 0.9rem;
+        font-size: 0.833rem;
     }
 
     .main-container-message-editor .message-body {
-        font-size: 0.85rem;
+        font-size: 0.792rem;
     }
 
     .edit-message-card h3 {
-        font-size: 1.3rem;
+        font-size: 1.417rem;
     }
 
     .edit-message-form {
-        gap: 12px;
+        gap: 13px;
     }
 
     .edit-message-form .input-group label {
-        font-size: 1rem;
+        font-size: 0.917rem;
     }
 
     .edit-message-form .input-group textarea {
-        padding: 8px 10px;
-        font-size: 0.85rem;
+        padding: 8px;
+        font-size: 0.792rem;
     }
 
     .btn-save-message {
-        font-size: 1rem;
-        height: 50px;
+        font-size: 0.917rem;
+        height: 46px;
         width: 35%;
-        margin: 12px auto;
+        margin: 13px auto 13px auto;
     }
 }
 
@@ -218,31 +218,67 @@
 
 @media (max-width: 1366px) {
     .main-container-message-editor {
-        width: 930px;
-        padding: 30px;
+        width: min(931px, calc(100vw - 26% - 40px));
+        padding: 26px;
     }
 
     .main-container-message-editor h2 {
-        font-size: 1.3rem;
-        margin-bottom: 27px;
+        font-size: 1.451rem;
+        margin-bottom: 32px;
     }
 
     .main-container-message-editor .message-title {
-        font-size: 0.8rem;
+        font-size: 0.711rem;
     }
-
 
     .main-container-message-editor .message-body {
-        font-size: 0.75rem;
-    }
-
-    .edit-message-card {
-        width: 40%;
-        gap: 15px;
+        font-size: 0.676rem;
     }
 
     .edit-message-card h3 {
-        font-size: 1rem;
+        font-size: 1.209rem;
+    }
+
+    .edit-message-form {
+        gap: 11px;
+    }
+
+    .edit-message-form .input-group label {
+        font-size: 0.783rem;
+    }
+
+    .edit-message-form .input-group textarea {
+        padding: 7px;
+        font-size: 0.676rem;
+    }
+
+    .btn-save-message {
+        font-size: 0.783rem;
+        height: 39px;
+        width: 35%;
+        margin: 11px auto 11px auto;
+    }
+}
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .main-container-message-editor h2 {
+        font-size: 1.36rem;
+        margin-bottom: 22px;
+    }
+
+    .main-container-message-editor .message-title {
+        font-size: 0.667rem;
+    }
+
+    .main-container-message-editor .message-body {
+        font-size: 0.633rem;
+    }
+
+    .edit-message-card h3 {
+        font-size: 1.133rem;
     }
 
     .edit-message-form {
@@ -250,22 +286,22 @@
     }
 
     .edit-message-form .input-group label {
-        font-size: 0.9rem;
-        margin-bottom: 6px;
+        font-size: 0.733rem;
     }
 
     .edit-message-form .input-group textarea {
-        padding: 6px 8px;
-        font-size: 0.8rem;
+        padding: 7px;
+        font-size: 0.633rem;
     }
 
     .btn-save-message {
-        font-size: 0.95rem;
-        height: 45px;
+        font-size: 0.733rem;
+        height: 37px;
         width: 35%;
-        margin: 10px auto;
+        margin: 11px auto 11px auto;
     }
 }
+
 
 /* Mobile */
 

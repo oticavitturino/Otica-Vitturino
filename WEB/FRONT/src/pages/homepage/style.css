@@ -7,6 +7,8 @@
     align-items: center;
     min-height: 100vh;
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* 1: Container externo (invisível) */
@@ -15,6 +17,8 @@
     justify-content: center;
     align-items: center;
     margin-left: 26%;
+    max-width: calc(100vw - 26% - 20px);
+    box-sizing: border-box;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -35,11 +39,15 @@
     width: 22%;
 }
 
+/* 1600 * 900 */
+
 @media (max-width: 1600px) {
     .welcome-container h2 {
         font-size: 58px;
     }
 }
+
+/* 1366 * 768 */
 
 @media (max-width: 1366px) {
     .welcome-container h2 {
@@ -47,9 +55,21 @@
     }
 }
 
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .welcome-container h2 {
+        font-size: 47px;
+    }
+}
+
+/* Mobile */
+
 @media (max-width: 768px) {
     .homepage-wrapper {
         justify-content: flex-start;
+        min-height: auto;
     }
 
     .welcome-container {

@@ -3,10 +3,11 @@
 .production-page-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* 1: Container externo */
@@ -15,10 +16,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 75vh;
-    margin-top: 17.5vh;
-    margin-bottom: 20px;
-    margin-left: 26%;
+    width: min(1308px, 100%);
+    box-sizing: border-box;
     background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
@@ -26,6 +25,7 @@
 /* 2: Título */
 .main-container-production-status-panel h2 {
     font-family: Poppins, sans-serif;
+    font-size: 2.04rem;
     color: #3C7975;
     margin-bottom: 45px;
 }
@@ -273,67 +273,59 @@
 
 @media (max-width: 1600px) {
     .main-container-production-status-panel {
-        width: 1090px;
+        width: min(1090px, calc(100vw - 26% - 40px));
         padding: 30px;
     }
 
     .main-container-production-status-panel h2 {
         font-size: 1.7rem;
-        margin-bottom: 30px;
+        margin-bottom: 38px;
     }
 
     .production-scroll-area {
         max-height: 74%;
     }
 
-    .production-scroll-area .list-legend span,
-    .production-scroll-area .list-row-data span {
+    .production-scroll-area .list-legend span, .production-scroll-area .list-row-data span {
         font-size: 0.85rem;
     }
 
     .btn-add-product {
-        font-size: 0.85rem;
+        font-size: 0.833rem;
         height: 50px;
         width: 225px;
-        margin-bottom: 12px;
+        margin-bottom: 4px;
     }
 
     .add-product-card h3 {
         font-size: 1.3rem;
     }
 
-    .add-product-form,
-    .update-status-form {
+    .add-product-form, .update-status-form {
+        gap: 13px;
+    }
+
+    .add-product-form .input-group, .update-status-form .input-group {
         gap: 12px;
     }
 
-    .add-product-form .input-group,
-    .update-status-form .input-group {
-        gap: 12px;
+    .add-product-form .input-group label, .update-status-form .input-group label {
+        font-size: 0.917rem;
     }
 
-    .add-product-form .input-group label,
-    .update-status-form .input-group label {
-        font-size: 1rem;
-    }
-
-    .add-product-form .input-group input,
-    .add-product-form .input-group select,
-    .update-status-form .input-group input,
-    .update-status-form .input-group select {
-        max-width: 220px;
-        padding: 6px 10px;
-        font-size: 0.85rem;
+    .add-product-form .input-group input, .add-product-form .input-group select, .update-status-form .input-group input, .update-status-form .input-group select {
+        max-width: 208px;
+        padding: 7px 10px;
+        font-size: 0.792rem;
     }
 
     .update-status-form .input-group select {
-        width: 220px;
+        width: 208px;
     }
 
-    .btn-confirm-product,
-    .btn-update-status {
-        font-size: 1rem;
-        height: 50px;
+    .btn-confirm-product, .btn-update-status {
+        font-size: 0.917rem;
+        height: 46px;
         width: 35%;
         margin: 12px auto;
     }
@@ -347,13 +339,12 @@
     }
 
     .delete-btn-group {
-        gap: 15px;
+        gap: 17px;
     }
 
-    .btn-cancel-delete,
-    .btn-confirm-delete {
-        font-size: 1rem;
-        height: 45px;
+    .btn-cancel-delete, .btn-confirm-delete {
+        font-size: 0.917rem;
+        height: 42px;
         width: 40%;
     }
 }
@@ -362,12 +353,12 @@
 
 @media (max-width: 1366px) {
     .main-container-production-status-panel {
-        width: 930px;
-        padding: 25px;
+        width: min(931px, calc(100vw - 26% - 40px));
+        padding: 26px;
     }
 
     .main-container-production-status-panel h2 {
-        font-size: 1.3rem;
+        font-size: 1.451rem;
         margin-bottom: 32px;
     }
 
@@ -375,72 +366,52 @@
         max-height: 72%;
     }
 
-
-    .main-container-production-status-panel .list-item {
-        font-size: 0.75rem;
-        height: 35px;
-    }
-
-    .production-scroll-area .list-legend span,
-    .production-scroll-area .list-row-data span {
-        font-size: 0.75rem;
+    .production-scroll-area .list-legend span, .production-scroll-area .list-row-data span {
+        font-size: 0.726rem;
     }
 
     .btn-add-product {
-        font-size: 0.75rem;
+        font-size: 0.711rem;
         height: 43px;
         width: 192px;
-        margin-bottom: 14px;
-    }
-
-    .add-product-card {
-        width: 40%;
-        gap: 15px;
+        margin-bottom: 4px;
     }
 
     .add-product-card h3 {
-        font-size: 1rem;
+        font-size: 1.11rem;
     }
 
-    .add-product-form,
-    .update-status-form {
+    .add-product-form, .update-status-form {
+        gap: 11px;
+    }
+
+    .add-product-form .input-group, .update-status-form .input-group {
         gap: 10px;
     }
 
-    .add-product-form .input-group,
-    .update-status-form .input-group {
-        gap: 10px;
+    .add-product-form .input-group label, .update-status-form .input-group label {
+        font-size: 0.783rem;
     }
 
-    .add-product-form .input-group label,
-    .update-status-form .input-group label {
-        font-size: 0.9rem;
-    }
-
-    .add-product-form .input-group input,
-    .add-product-form .input-group select,
-    .update-status-form .input-group input,
-    .update-status-form .input-group select {
-        max-width: 190px;
-        padding: 5px 8px;
-        font-size: 0.8rem;
+    .add-product-form .input-group input, .add-product-form .input-group select, .update-status-form .input-group input, .update-status-form .input-group select {
+        max-width: 178px;
+        padding: 6px 9px;
+        font-size: 0.676rem;
     }
 
     .update-status-form .input-group select {
-        width: 190px;
+        width: 178px;
     }
 
-    .btn-confirm-product,
-    .btn-update-status {
-        font-size: 0.95rem;
-        height: 45px;
+    .btn-confirm-product, .btn-update-status {
+        font-size: 0.783rem;
+        height: 39px;
         width: 35%;
         margin: 10px auto;
     }
 
     .delete-product-card p {
         font-size: 0.85rem !important;
-        margin: 10px 0 !important;
     }
 
     .delete-product-card p span {
@@ -448,16 +419,92 @@
     }
 
     .delete-btn-group {
-        gap: 12px;
+        gap: 14px;
     }
 
-    .btn-cancel-delete,
-    .btn-confirm-delete {
-        font-size: 0.9rem;
-        height: 40px;
+    .btn-cancel-delete, .btn-confirm-delete {
+        font-size: 0.783rem;
+        height: 36px;
         width: 45%;
     }
 }
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .main-container-production-status-panel h2 {
+        font-size: 1.36rem;
+        margin-bottom: 22px;
+    }
+
+    .production-scroll-area {
+        max-height: 72%;
+    }
+
+    .production-scroll-area .list-legend span, .production-scroll-area .list-row-data span {
+        font-size: 0.68rem;
+    }
+
+    .btn-add-product {
+        font-size: 0.667rem;
+        height: 40px;
+        width: 180px;
+        margin-bottom: 3px;
+    }
+
+    .add-product-card h3 {
+        font-size: 1.04rem;
+    }
+
+    .add-product-form, .update-status-form {
+        gap: 10px;
+    }
+
+    .add-product-form .input-group, .update-status-form .input-group {
+        gap: 9px;
+    }
+
+    .add-product-form .input-group label, .update-status-form .input-group label {
+        font-size: 0.733rem;
+    }
+
+    .add-product-form .input-group input, .add-product-form .input-group select, .update-status-form .input-group input, .update-status-form .input-group select {
+        max-width: 167px;
+        padding: 5px 8px;
+        font-size: 0.633rem;
+    }
+
+    .update-status-form .input-group select {
+        width: 167px;
+    }
+
+    .btn-confirm-product, .btn-update-status {
+        font-size: 0.733rem;
+        height: 37px;
+        width: 35%;
+        margin: 10px auto;
+    }
+
+    .delete-product-card p {
+        font-size: 0.85rem !important;
+    }
+
+    .delete-product-card p span {
+        font-size: 0.75rem !important;
+    }
+
+    .delete-btn-group {
+        gap: 13px;
+    }
+
+    .btn-cancel-delete, .btn-confirm-delete {
+        font-size: 0.733rem;
+        height: 33px;
+        width: 45%;
+    }
+}
+
 
 /* Mobile */
 

@@ -3,10 +3,11 @@
 .incident-page-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    min-height: 100vh;
     width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* 1: Container externo */
@@ -15,10 +16,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 75vh;
-    margin-top: 17.5vh;
-    margin-bottom: 20px;
-    margin-left: 26%;
+    width: min(1308px, 100%);
+    box-sizing: border-box;
     background-color: rgba(217, 217, 217, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
@@ -26,6 +25,7 @@
 /* 2: Título */
 .main-container-incident-history h2 {
     font-family: Poppins, sans-serif;
+    font-size: 2.04rem;
     color: #3C7975;
     margin-bottom: 45px;
 }
@@ -156,34 +156,32 @@
 
 @media (max-width: 1600px) {
     .main-container-incident-history {
-        width: 1090px;
+        width: min(1090px, calc(100vw - 26% - 40px));
         padding: 30px;
     }
 
     .main-container-incident-history h2 {
         font-size: 1.7rem;
-        margin-bottom: 30px;
+        margin-bottom: 38px;
     }
 
     .incident-scroll-area {
         max-height: 74%;
     }
 
-    .incident-scroll-area .list-legend span,
-    .incident-scroll-area .list-row-data span {
+    .incident-scroll-area .list-legend span, .incident-scroll-area .list-row-data span {
         font-size: 0.85rem;
     }
 
     .exclude-occurrence-card {
-        gap: 12px;
+        gap: 13px;
     }
 
     .exclude-occurrence-card h3 {
-        font-size: 1.4rem;
+        font-size: 1.417rem;
     }
 
-    .yes-btn,
-    .no-btn {
+    .yes-btn, .no-btn {
         height: 45px;
         width: 110px;
         font-size: 0.95rem;
@@ -200,51 +198,82 @@
 
 @media (max-width: 1366px) {
     .main-container-incident-history {
-        width: 930px;
-        padding: 30px;
+        width: min(931px, calc(100vw - 26% - 40px));
+        padding: 26px;
     }
 
     .main-container-incident-history h2 {
-        font-size: 1.3rem;
-        margin-bottom: 27px;
+        font-size: 1.451rem;
+        margin-bottom: 32px;
     }
 
     .incident-scroll-area {
         max-height: 72%;
     }
 
-    .main-container-incident-history .list-item {
-        font-size: 0.75rem;
-        height: 35px;
-    }
-
-    .incident-scroll-area .list-legend span,
-    .incident-scroll-area .list-row-data span {
-        font-size: 0.75rem;
+    .incident-scroll-area .list-legend span, .incident-scroll-area .list-row-data span {
+        font-size: 0.726rem;
     }
 
     .exclude-occurrence-card {
-        padding: 10px 12px;
+        gap: 11px;
+    }
+
+    .exclude-occurrence-card h3 {
+        font-size: 1.209rem;
+    }
+
+    .yes-btn, .no-btn {
+        height: 38px;
+        width: 94px;
+        font-size: 0.811rem;
+        margin-bottom: 17px;
+    }
+
+    .occurrence-x-btn-img {
+        width: 21px;
+        height: 21px;
+    }
+}
+
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .main-container-incident-history h2 {
+        font-size: 1.36rem;
+        margin-bottom: 22px;
+    }
+
+    .incident-scroll-area {
+        max-height: 72%;
+    }
+
+    .incident-scroll-area .list-legend span, .incident-scroll-area .list-row-data span {
+        font-size: 0.68rem;
+    }
+
+    .exclude-occurrence-card {
         gap: 10px;
     }
 
     .exclude-occurrence-card h3 {
-        font-size: 1.2rem;
+        font-size: 1.133rem;
     }
 
-    .yes-btn,
-    .no-btn {
-        height: 40px;
-        width: 100px;
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+    .yes-btn, .no-btn {
+        height: 36px;
+        width: 88px;
+        font-size: 0.76rem;
+        margin-bottom: 16px;
     }
 
     .occurrence-x-btn-img {
-        width: 20px;
-        height: 20px;
+        width: 19px;
+        height: 19px;
     }
 }
+
 
 /* Mobile */
 

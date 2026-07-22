@@ -4,4 +4,33 @@ input {
     padding: 15px;
     border: none;
     border-radius: 4px;
+    box-sizing: border-box;
+    max-width: 100%;
 }
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    input {
+        padding: 13px;
+        border-radius: 3px;
+    }
+}
+
+/* 1366 * 768 */
+
+@media (max-width: 1366px) {
+    input {
+        padding: 4px 8px;
+        border-radius: 3px;
+    }
+}
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    input {
+        padding: 4px 8px;
+        border-radius: 3px;
+    }
+}
+
