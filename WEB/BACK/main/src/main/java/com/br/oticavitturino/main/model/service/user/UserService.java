@@ -1,5 +1,7 @@
 package com.br.oticavitturino.main.model.service.user;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -31,17 +33,25 @@ public class UserService implements UserDetailsService {
     private SecurityConfigurations securityConfigurations;
     
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return repository.findByEmail(email);
+        User user = findByPlainEmail(normalizeEmail(email));
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user;
     }
 
     @Transactional
     public User register (RegisterUserDTO data) {
+        String normalizedEmail = normalizeEmail(data.email());
 
-        if (this.repository.findByEmail(data.email()) != null) throw new EmailWasRegistredException("Email was registred!");
+        if (findByPlainEmail(normalizedEmail) != null) {
+            throw new EmailWasRegistredException("Email was registred!");
+        }
 
         String encryptedName = encryptionService.encrypt(data.name());
-        String encryptedEmail = encryptionService.encrypt(data.email());
+        String encryptedEmail = encryptionService.encrypt(normalizedEmail);
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         String encryptedPhone = data.phone() != null ? encryptionService.encrypt(data.phone()) : null;
         String encryptedAddress = data.address() != null ? encryptionService.encrypt(data.address()) : null;
@@ -62,6 +72,7 @@ public class UserService implements UserDetailsService {
         }
 
         newUser.setEmail(encryptedEmail);
+        newUser.setEmailLookupHash(encryptionService.generateLookupHash(normalizedEmail));
         newUser.setPassword(encryptedPassword);
         newUser.setActive(true);
         newUser.setProfile(data.profile());
@@ -78,5 +89,41 @@ public class UserService implements UserDetailsService {
         newUser.setMyReferralCode(generatedCode);
 
         return repository.save(newUser);
+    }
+
+    private User findByPlainEmail(String normalizedEmail) {
+        String lookupHash = encryptionService.generateLookupHash(normalizedEmail);
+        User user = repository.findByEmailLookupHash(lookupHash);
+        if (user != null) {
+            return user;
+        }
+
+        // Compatibilidade com registros criados antes da inclusão do índice.
+        for (User existingUser : repository.findAll()) {
+            if (emailMatches(existingUser.getEmail(), normalizedEmail)) {
+                existingUser.setEmailLookupHash(lookupHash);
+                return repository.save(existingUser);
+            }
+        }
+        return null;
+    }
+
+    private boolean emailMatches(String storedEmail, String normalizedEmail) {
+        if (normalizedEmail.equalsIgnoreCase(storedEmail)) {
+            return true;
+        }
+
+        try {
+            return normalizedEmail.equalsIgnoreCase(encryptionService.decrypt(storedEmail));
+        } catch (RuntimeException exception) {
+            return false;
+        }
+    }
+
+    private String normalizeEmail(String email) {
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email must be informed");
+        }
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }
