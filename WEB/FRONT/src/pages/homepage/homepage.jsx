@@ -10,7 +10,7 @@ function Homepage() {
         <div className='welcome-container'>
 
           {/* 2: Título */}
-          <h2>Olá, <span>admin</span>!</h2>
+          <h2>Olá!</h2>
 
           {/* 3: Ilustração */}
           <img className='illustration' src="/img/JEMA-GER-1740-05.png" alt="Ilustração de boas-vindas" />
