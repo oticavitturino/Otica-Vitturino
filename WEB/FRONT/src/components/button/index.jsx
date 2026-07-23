@@ -1,6 +1,6 @@
 import './style.css'
 
-function Button({ children, ...props }) {
+function Button({ children, disabled, ...props }) {
 
     return (
         <button {...props}>
