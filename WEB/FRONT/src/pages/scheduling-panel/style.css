@@ -594,18 +594,18 @@
         gap: 15px;
     }
 
-    .input-group {
+    .add-date-form .input-group {
         flex-direction: column;
         width: 100%;
         gap: 8px;
     }
 
-    .input-group label {
+    .add-date-form .input-group label {
         font-size: 1rem;
         white-space: normal;
     }
 
-    .input-group input[type="datetime-local"] {
+    .add-date-form .input-group input[type="datetime-local"] {
         width: 100%;
         padding: 8px;
         font-size: 0.9rem;

@@ -38,15 +38,15 @@
     min-width: 0;
 }
 
-.container.user-registration-container,
-.container.registered-users-container {
+.container .user-registration-container,
+.container .registered-users-container {
     box-sizing: border-box;
     overflow: hidden;
     min-width: 0;
 }
 
 /* 4: Container de cadastro de usuários */
-.container.user-registration-container {
+.container .user-registration-container {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -128,7 +128,7 @@
 }
 
 /* 7: Container de usuários registrados */
-.container.registered-users-container {
+.container .registered-users-container {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -277,7 +277,7 @@
         gap: 15px;
     }
 
-    .container.user-registration-container {
+    .container .user-registration-container {
         flex: 1;
         max-width: 333px;
         padding: 17px;
@@ -307,7 +307,7 @@
         font-size: 0.917rem;
     }
 
-    .container.registered-users-container {
+    .container .registered-users-container {
         flex: 1.8;
         max-width: 625px;
         padding: 17px;
@@ -368,7 +368,7 @@
         gap: 13px;
     }
 
-    .container.user-registration-container {
+    .container .user-registration-container {
         flex: 1;
         max-width: 285px;
         padding: 14px;
@@ -378,7 +378,7 @@
         font-size: 1.11rem;
     }
 
-    .container.registered-users-container {
+    .container .registered-users-container {
         flex: 1.8;
         max-width: 534px;
         padding: 14px;
@@ -506,7 +506,7 @@
         gap: 12px;
     }
 
-    .container.user-registration-container {
+    .container .user-registration-container {
         flex: 1;
         max-width: 267px;
         padding: 13px;
@@ -545,7 +545,7 @@
         font-size: 0.733rem;
     }
 
-    .container.registered-users-container {
+    .container .registered-users-container {
         flex: 1.8;
         max-width: 500px;
         padding: 13px;
@@ -588,9 +588,6 @@
     }
 }
 
-
-
-
 /* Mobile */
 
 @media (max-width: 768px) {
@@ -605,7 +602,7 @@
 
     .main-container-user-management h2 {
         font-size: 1.3rem;
-        margin-bottom: 50px;
+        margin-top: 25px;
     }
 
     .content-wrapper {
@@ -613,8 +610,8 @@
         gap: 30px;
     }
 
-    .user-registration-container,
-    .container.registered-users-container {
+    .container .user-registration-container,
+    .container .registered-users-container {
         flex: none;
         max-width: 100%;
         height: auto;
@@ -636,6 +633,10 @@
         font-size: 0.9rem;
     }
 
+    .btn-show-referral {
+        height: 100%;
+    }
+
     .btn-register {
         height: 50px;
         font-size: 1.1rem;
@@ -651,7 +652,7 @@
         align-items: stretch !important;
     }
 
-    .container.registered-users-container {
+    .container .registered-users-container {
         margin-bottom: 20px;
     }
 
