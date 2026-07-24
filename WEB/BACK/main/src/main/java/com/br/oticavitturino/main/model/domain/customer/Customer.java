@@ -27,13 +27,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "customer")
 public class Customer extends User {
-    @Column(name = "name", length = 255 , nullable = false)
+    @Column(name = "name", length = 512, nullable = false)
     private String name;
 
-    @Column(name = "phone", length = 20, nullable = false)
+    @Column(name = "phone", length = 512, nullable = false)
     private String phone;
 
-    @Column(name = "address", length = 255, nullable = false)
+    @Column(name = "address", length = 512, nullable = false)
     private String address;
 
     @Column(name = "birth_date", nullable = false)

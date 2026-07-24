@@ -18,6 +18,7 @@ import com.br.oticavitturino.main.model.domain.user.User;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
 import com.br.oticavitturino.main.infra.security.SecurityConfigurations;
 import com.br.oticavitturino.main.infra.security.EncryptionService;
+import com.br.oticavitturino.main.infra.security.UserLookupService;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -30,12 +31,15 @@ public class UserService implements UserDetailsService {
     private EncryptionService encryptionService;
 
     @Autowired
+    private UserLookupService userLookupService;
+
+    @Autowired
     private SecurityConfigurations securityConfigurations;
     
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = findByPlainEmail(normalizeEmail(email));
+        User user = userLookupService.findByPlainEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
@@ -46,7 +50,7 @@ public class UserService implements UserDetailsService {
     public User register (RegisterUserDTO data) {
         String normalizedEmail = normalizeEmail(data.email());
 
-        if (findByPlainEmail(normalizedEmail) != null) {
+        if (userLookupService.findByPlainEmail(normalizedEmail) != null) {
             throw new EmailWasRegistredException("Email was registred!");
         }
 
@@ -89,35 +93,6 @@ public class UserService implements UserDetailsService {
         newUser.setMyReferralCode(generatedCode);
 
         return repository.save(newUser);
-    }
-
-    private User findByPlainEmail(String normalizedEmail) {
-        String lookupHash = encryptionService.generateLookupHash(normalizedEmail);
-        User user = repository.findByEmailLookupHash(lookupHash);
-        if (user != null) {
-            return user;
-        }
-
-        // Compatibilidade com registros criados antes da inclusão do índice.
-        for (User existingUser : repository.findAll()) {
-            if (emailMatches(existingUser.getEmail(), normalizedEmail)) {
-                existingUser.setEmailLookupHash(lookupHash);
-                return repository.save(existingUser);
-            }
-        }
-        return null;
-    }
-
-    private boolean emailMatches(String storedEmail, String normalizedEmail) {
-        if (normalizedEmail.equalsIgnoreCase(storedEmail)) {
-            return true;
-        }
-
-        try {
-            return normalizedEmail.equalsIgnoreCase(encryptionService.decrypt(storedEmail));
-        } catch (RuntimeException exception) {
-            return false;
-        }
     }
 
     private String normalizeEmail(String email) {

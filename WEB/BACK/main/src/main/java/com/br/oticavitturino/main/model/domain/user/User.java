@@ -34,7 +34,7 @@ public abstract class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 512)
     private String email;
 
     @Column(name = "email_lookup_hash", unique = true, length = 64)

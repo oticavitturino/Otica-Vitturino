@@ -7,6 +7,17 @@ import Card from '../../components/card'
 import ReloadIcon from '../../assets/rotate-ccw.png'
 import XIcon from '../../assets/x.png'
 import { useState, useEffect } from 'react'
+import { apiFetch } from '../../services/api'
+
+const ORDER_STATUS_LABELS = {
+    REALIZADO: 'Pedido Realizado',
+    EM_ANDAMENTO: 'Em Andamento',
+    CONCLUIDO: 'Finalizado',
+};
+
+function formatOrderStatus(status) {
+    return ORDER_STATUS_LABELS[status] ?? status;
+}
 
 function Production_Status_Panel() {
 
@@ -62,7 +73,7 @@ function Production_Status_Panel() {
     useEffect(() => {
         async function fetchCustomers() {
             try {
-                const response = await fetch('http://localhost:8080/users');
+                const response = await apiFetch('/customer/all');
                 if (response.ok) {
                     const data = await response.json();
                     setCustomers(data);
@@ -77,7 +88,7 @@ function Production_Status_Panel() {
     // Função para buscar todos os produtos em produção
     async function fetchAllProducts() {
         try {
-            const response = await fetch('http://localhost:8080/orders/getAllOrders');
+            const response = await apiFetch('/orders/getAllOrders');
             if (response.ok) {
                 const data = await response.json();
                 setOrders(data);
@@ -98,11 +109,8 @@ function Production_Status_Panel() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/orders/createOrder', {
+            const response = await apiFetch('/orders/createOrder', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     name: formData.name,
                     orderStatus: formData.orderStatus,
@@ -127,14 +135,11 @@ function Production_Status_Panel() {
     async function updateProductStatus(event) {
         event.preventDefault();
 
-        const url = `http://localhost:8080/orders/modifyOrderStatus?orderId=${updateData.orderId}&newStatus=${updateData.newStatus}`;
+        const url = `/orders/modifyOrderStatus?orderId=${updateData.orderId}&newStatus=${updateData.newStatus}`;
 
         try {
-            const response = await fetch(url, {
+            const response = await apiFetch(url, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             });
 
             if (response.ok) {
@@ -155,14 +160,11 @@ function Production_Status_Panel() {
 
         if (!itemToDelete) return;
 
-        const url = `http://localhost:8080/orders/deleteOrder?orderId=${itemToDelete.id}`;
+        const url = `/orders/deleteOrder?orderId=${itemToDelete.id}`;
 
         try {
-            const response = await fetch(url, {
+            const response = await apiFetch(url, {
                 method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             });
 
             if (response.ok) {
@@ -222,7 +224,7 @@ function Production_Status_Panel() {
                                             <div className='list-row-data'>
                                                 <span>{clientName}</span>
                                                 <span>{item.name}</span>
-                                                <span>{item.orderStatus}</span>
+                                                <span>{formatOrderStatus(item.orderStatus)}</span>
                                                 <span></span>
                                             </div>
                                         </List_Item>

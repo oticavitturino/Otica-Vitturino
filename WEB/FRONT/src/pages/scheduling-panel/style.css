@@ -250,6 +250,10 @@
     color: #FFFFFF;
 }
 
+.date-only-row span {
+    white-space: nowrap;
+}
+
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {

@@ -1,3 +1,3 @@
 package com.br.oticavitturino.main.model.domain.order;
 
-public record OrderDTO(String name, OrderStatusEnum orderStatus, Long customerId) {}
+public record OrderDTO(Long id, String name, OrderStatusEnum orderStatus, Long customerId) {}

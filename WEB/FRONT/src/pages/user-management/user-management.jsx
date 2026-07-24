@@ -8,9 +8,12 @@ import Card from '../../components/card'
 import PenIcon from '../../assets/pen.png'
 import XIcon from '../../assets/x.png'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { apiFetch, getToken, hasToken } from '../../services/api'
 
 function User_Management() {
 
+    const navigate = useNavigate();
     const [dateInputType, setDateInputType] = useState('text');
     const [formData, setFormData] = useState({
         name: '',
@@ -58,13 +61,14 @@ function User_Management() {
 
     // Função para buscar todos os clientes
     async function fetchAllUsers() {
+        if (!hasToken()) {
+            return;
+        }
+
         try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:8080/customer/all', {
-                method: 'GET',
+            const response = await apiFetch('/customer/all', {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    Authorization: `Bearer ${getToken()}`
                 }
             });
             if (response.ok) {
@@ -86,11 +90,17 @@ function User_Management() {
     async function handleUserRegistration(event) {
         event.preventDefault();
 
+        if (!hasToken()) {
+            alert('Sessão expirada. Faça login novamente.');
+            navigate('/');
+            return;
+        }
+
         try {
-            const response = await fetch('http://localhost:8080/auth/register', {
+            const response = await apiFetch('/customer/register', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${getToken()}`
                 },
                 body: JSON.stringify({
                     name: formData.name,
@@ -112,7 +122,7 @@ function User_Management() {
                 setShowReferralInput(false);
                 fetchAllUsers();
             } else {
-                alert('Erro ao cadastrar usuário. Verifique os dados.');
+                alert(`Erro ao cadastrar usuário (${response.status}). Verifique os dados ou faça login novamente.`);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -123,16 +133,11 @@ function User_Management() {
     async function handleUpdateUser(event) {
         event.preventDefault();
 
-        const token = localStorage.getItem('token');
-        const url = `http://localhost:8080/customer/update?id=${updateData.id}`;
+        const url = `/customer/update?id=${updateData.id}`;
 
         try {
-            const response = await fetch(url, {
+            const response = await apiFetch(url, {
                 method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     name: updateData.name,
                     phone: updateData.phone,

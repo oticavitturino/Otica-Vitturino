@@ -5,9 +5,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.br.oticavitturino.main.infra.email.SendEmailMessage;
+import com.br.oticavitturino.main.infra.security.EncryptionService;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.scheduling.AvailableSlot;
 import com.br.oticavitturino.main.model.domain.scheduling.DateAvailableDTO;
@@ -35,6 +37,9 @@ public class SchedulingService {
 
     @Autowired
     private SendEmailMessage sendMailMessage;
+
+    @Autowired
+    private EncryptionService encryptionService;
 
     // Administrador pode adicionar datas disponíveis para agendamento;
     @Transactional
@@ -77,7 +82,8 @@ public class SchedulingService {
         return repository.findAll().stream()
                 .filter(scheduling -> scheduling.getCustomer() != null)
                 .map(s -> new SchedulingDTO(
-                        s.getCustomer().getName(),
+                        s.getId(),
+                        decryptField(s.getCustomer().getName()),
                         s.getSchedulingType(),
                         s.getSchedulingDate(),
                         s.getStatus()))
@@ -98,8 +104,7 @@ public class SchedulingService {
         AvailableSlot slot = Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.schedulingDate()))
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling date not available!"));
 
-        Customer customer = Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
+        Customer customer = resolveCustomerForScheduling(schedulingDTO);
 
         // Pontuação para Consulta
         if (schedulingDTO.scheduling_type() == SchedulingEnum.CONSULTA) {
@@ -156,5 +161,27 @@ public class SchedulingService {
 
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
+    }
+
+    private Customer resolveCustomerForScheduling(SchedulingDTO schedulingDTO) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Customer customer) {
+            return customer;
+        }
+
+        return Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
+                .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
+    }
+
+    private String decryptField(String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+
+        try {
+            return encryptionService.decrypt(value);
+        } catch (RuntimeException exception) {
+            return value;
+        }
     }
 }

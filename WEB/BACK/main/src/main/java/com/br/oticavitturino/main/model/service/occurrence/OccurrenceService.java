@@ -1,7 +1,10 @@
 package com.br.oticavitturino.main.model.service.occurrence;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import com.br.oticavitturino.main.infra.security.EncryptionService;
 
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
@@ -24,13 +27,13 @@ public class OccurrenceService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private EncryptionService encryptionService;
+
     // Cliente pode registrar ocorrêncas ou reclamações;
     @Transactional
     public OccurrenceDTO createOccurrence(OccurrenceDTO dto) {
-        Customer customer = customerRepository.findByName(dto.customerName());
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer not found with name: " + dto.customerName());
-        }
+        Customer customer = resolveCustomer(dto);
         Occurrence occurrence = new Occurrence();
         occurrence.setDescription(dto.description());
         occurrence.setSentAt(dto.sentAt());
@@ -44,7 +47,7 @@ public class OccurrenceService {
                 savedOccurrence.getSentAt(),
                 savedOccurrence.getCategory(),
                 customer.getId(),
-                customer.getName()
+                decryptField(customer.getName())
         );
     }
 
@@ -80,7 +83,42 @@ public class OccurrenceService {
                         occurrence.getSentAt(),
                         occurrence.getCategory(),
                         occurrence.getCustomer() != null ? occurrence.getCustomer().getId() : null,
-                        occurrence.getCustomer() != null ? occurrence.getCustomer().getName() : null
+                        occurrence.getCustomer() != null
+                                ? decryptField(occurrence.getCustomer().getName())
+                                : null
                  )).collect(Collectors.toList());
+    }
+
+    private Customer resolveCustomer(OccurrenceDTO dto) {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Customer customer) {
+            return customer;
+        }
+
+        if (dto.customerName() != null && !dto.customerName().isBlank()) {
+            Customer customer = customerRepository.findByName(dto.customerName());
+            if (customer != null) {
+                return customer;
+            }
+        }
+
+        if (dto.customerId() != null) {
+            return customerRepository.findById(dto.customerId())
+                    .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + dto.customerId()));
+        }
+
+        throw new IllegalArgumentException("Customer not found for occurrence registration");
+    }
+
+    private String decryptField(String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+
+        try {
+            return encryptionService.decrypt(value);
+        } catch (RuntimeException exception) {
+            return value;
+        }
     }
 }

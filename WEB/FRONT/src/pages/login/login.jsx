@@ -5,7 +5,8 @@ import Container from '../../components/container'
 import Card from '../../components/card'
 import LogoVitturino from '../../assets/logovitturino-full.png'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { apiFetch, setToken, hasToken } from '../../services/api'
 
 function Login() {
 
@@ -16,17 +17,21 @@ function Login() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (hasToken()) {
+            navigate('/home', { replace: true });
+        }
+    }, [navigate]);
+
     // Função de checkagem de login
     async function handleLogin(event) {
         event.preventDefault();
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const response = await apiFetch('/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                auth: false,
                 body: JSON.stringify({
                     email: emailInput,
                     password: passwordInput
@@ -35,7 +40,22 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
-                localStorage.setItem('token', data.token);
+                const token = data?.token;
+
+                if (!token) {
+                    console.error('Login sem token na resposta:', data);
+                    setShowError(true);
+                    return;
+                }
+
+                setToken(token);
+
+                if (!hasToken()) {
+                    console.error('Token não foi salvo no navegador.');
+                    setShowError(true);
+                    return;
+                }
+
                 navigate('/home');
             } else {
                 setShowError(true);
@@ -75,7 +95,7 @@ function Login() {
                 <div className="modal-overlay">
                     <Card className="error-card">
                         <h3>Acesso Negado</h3>
-                        <p>E-mail ou senha incorretos. Tente novamente.</p>
+                        <p>E-mail ou senha incorretos, ou o token de acesso não foi recebido. Tente novamente.</p>
                         <Button onClick={() => setShowError(false)} className="btn-ok">
                             OK
                         </Button>

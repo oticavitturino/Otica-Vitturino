@@ -162,7 +162,7 @@ public class SchedulingServiceTest {
     @Test
     @DisplayName("Teste de agendar um atendimento")
     void testScheduleAppointment() {
-        SchedulingDTO dto = new SchedulingDTO("John Doe", SchedulingEnum.CONSULTA, testDate, StatusEnum.PENDENTE);
+        SchedulingDTO dto = new SchedulingDTO(null, "John Doe", SchedulingEnum.CONSULTA, testDate, StatusEnum.PENDENTE);
         AvailableSlot slot = new AvailableSlot(testDate);
         Customer customer = new Customer();
         customer.setName("John Doe");

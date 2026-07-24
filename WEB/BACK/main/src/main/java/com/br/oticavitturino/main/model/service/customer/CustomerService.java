@@ -25,10 +25,17 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public List<CustomerDTO> getAllCustomers() {
         return repository.findAll().stream().map(customer -> {
-            String decryptedName = encryptionService.decrypt(customer.getName());
-            String decryptedPhone = encryptionService.decrypt(customer.getPhone());
-            String decryptedAddress = encryptionService.decrypt(customer.getAddress());
-            return new CustomerDTO(decryptedName, decryptedPhone, decryptedAddress, customer.getBirthDate());
+            String decryptedName = decryptField(customer.getName());
+            String decryptedEmail = decryptField(customer.getEmail());
+            String decryptedPhone = decryptField(customer.getPhone());
+            String decryptedAddress = decryptField(customer.getAddress());
+            return new CustomerDTO(
+                    customer.getId(),
+                    decryptedName,
+                    decryptedEmail,
+                    decryptedPhone,
+                    decryptedAddress,
+                    customer.getBirthDate());
         }).collect(Collectors.toList());
     }
 
@@ -54,9 +61,24 @@ public class CustomerService {
         customer.setBirthDate(customerDTO.birthDate());
 
         Customer updatedCustomer = repository.save(customer);
-        return new CustomerDTO(encryptionService.decrypt(updatedCustomer.getName()),
-                encryptionService.decrypt(updatedCustomer.getPhone()),
-                encryptionService.decrypt(updatedCustomer.getAddress()),
+        return new CustomerDTO(
+                updatedCustomer.getId(),
+                decryptField(updatedCustomer.getName()),
+                decryptField(updatedCustomer.getEmail()),
+                decryptField(updatedCustomer.getPhone()),
+                decryptField(updatedCustomer.getAddress()),
                 updatedCustomer.getBirthDate());
+    }
+
+    private String decryptField(String value) {
+        if (value == null || value.isBlank()) {
+            return value;
+        }
+
+        try {
+            return encryptionService.decrypt(value);
+        } catch (RuntimeException exception) {
+            return value;
+        }
     }
 }

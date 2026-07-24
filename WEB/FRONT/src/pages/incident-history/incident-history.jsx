@@ -8,7 +8,20 @@ import ReplyIcon from '../../assets/message-square-reply.png'
 import TrashIcon from '../../assets/trash-2.png'
 import XIcon from '../../assets/x.png'
 import { useState, useEffect } from 'react'
+import { apiFetch } from '../../services/api'
 
+function formatOccurrenceCategory(category) {
+    if (!category) return '';
+
+    const normalized = category.trim().toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    if (normalized === 'ocorrencia') return 'Ocorrência';
+    if (normalized === 'reclamacao') return 'Reclamação';
+
+    return category;
+}
 
 function Incident_History() {
 
@@ -18,7 +31,7 @@ function Incident_History() {
     // Função para buscar todas as ocorrências
     async function fetchAllOccurences() {
         try {
-            const response = await fetch('http://localhost:8080/occurrences/listAll');
+            const response = await apiFetch('/occurrences/listAll');
             if (response.ok) {
                 const data = await response.json();
                 setOccurrences(data);
@@ -37,7 +50,7 @@ function Incident_History() {
     // Função de deletar ocorrência
     async function deleteOccurrence(id) {
         try {
-            const response = await fetch(`http://localhost:8080/occurrences/delete/${id}`, {
+            const response = await apiFetch(`/occurrences/delete?id=${id}`, {
                 method: 'DELETE',
             });
 
@@ -103,7 +116,7 @@ function Incident_History() {
                                         }>
                                             <div className='list-row-data'>
                                                 <span>{item.customerName}</span>
-                                                <span>{item.category}</span>
+                                                <span>{formatOccurrenceCategory(item.category)}</span>
                                                 <span>{item.description}</span>
                                                 <span>{formattedDate} {formattedTime}</span>
                                                 <span></span>

@@ -2,6 +2,7 @@ import './style.css'
 import Button from '../button'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useEffect } from 'react'
+import { clearToken } from '../../services/api'
 
 function Side_Menu({ isOpen, onClose }) {
 
@@ -40,7 +41,7 @@ function Side_Menu({ isOpen, onClose }) {
                 <Button className='btn-item' onClick={() => navigate('/editor-de-mensagens')}>Editar Mensagens Pré-Programadas</Button>
             </div>
 
-            <Button className='btn-exit' onClick={() => navigate('/')}>Sair</Button>
+            <Button className='btn-exit' onClick={() => { clearToken(); navigate('/'); }}>Sair</Button>
 
         </aside>
     )

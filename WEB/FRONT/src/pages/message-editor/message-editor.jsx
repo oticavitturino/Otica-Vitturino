@@ -7,6 +7,7 @@ import PenIcon from '../../assets/pen.png'
 import PlusIcon from '../../assets/circle-plus.png'
 import XIcon from '../../assets/x.png'
 import { useState } from 'react'
+import { apiFetch } from '../../services/api'
 
 function Message_Editor() {
 
@@ -84,14 +85,11 @@ function Message_Editor() {
         // Verificações se é POST ou PUT
         const endpoint = currentEditing.isNew ? '/create' : '/update';
         const method = currentEditing.isNew ? 'POST' : 'PUT';
-        const url = `http://localhost:8080/message-template${endpoint}`;
+        const url = `/message-template${endpoint}`;
 
         try {
-            const response = await fetch(url, {
+            const response = await apiFetch(url, {
                 method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     type: currentEditing.type,
                     templateText: currentEditing.content

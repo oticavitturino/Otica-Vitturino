@@ -11,7 +11,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.br.oticavitturino.main.model.domain.user.User;
 
 @Service
 public class TokenService {
@@ -21,12 +20,12 @@ public class TokenService {
     private String secret;
 
     // Método para gerar o token
-    public String generateToken(Object user) {
+    public String generateToken(String plainEmail) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
                 .withIssuer("auth-api")
-                .withSubject(((User) user).getUsername())
+                .withSubject(plainEmail.trim().toLowerCase())
                 .withExpiresAt(generateExpirationDate())
                 .sign(algorithm);
             return token;

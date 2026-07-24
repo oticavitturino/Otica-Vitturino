@@ -34,7 +34,7 @@ public class UserController {
         var useremailPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(useremailPassword);
 
-        var token = tokenService.generateToken(auth.getPrincipal());
+        var token = tokenService.generateToken(data.email());
 
         var user = (User) auth.getPrincipal();
 

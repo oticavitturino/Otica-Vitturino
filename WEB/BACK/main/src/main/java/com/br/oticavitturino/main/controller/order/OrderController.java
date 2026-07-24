@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 import com.br.oticavitturino.main.model.domain.order.OrderStatusEnum;
 import com.br.oticavitturino.main.model.domain.order.OrderModifyStatusDTO;
 
@@ -32,9 +34,9 @@ public class OrderController {
     }
 
     @GetMapping("/getAllOrders")
-    public ResponseEntity<OrderDTO> getAllOrders() {
-        OrderDTO order = service.getAllOrders();
-        return ResponseEntity.ok(order);
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        List<OrderDTO> orders = service.getAllOrders();
+        return ResponseEntity.ok(orders);
     }
 
     @PutMapping("/modifyOrderStatus")

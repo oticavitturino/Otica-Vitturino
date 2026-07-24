@@ -1,6 +1,5 @@
 package com.br.oticavitturino.main.controller.customer;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.oticavitturino.main.model.domain.customer.CustomerDTO;
@@ -9,16 +8,24 @@ import com.br.oticavitturino.main.model.service.customer.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import com.br.oticavitturino.main.model.domain.user.RegisterUserDTO;
+import com.br.oticavitturino.main.model.service.user.UserService;
+
+@RestController
 @RequestMapping("/customer")
 public class CustomerController {
     
     @Autowired
     private CustomerService service;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllCustomers() {
@@ -28,6 +35,12 @@ public class CustomerController {
     @GetMapping("/score")
     public ResponseEntity<?> getCustomerScore(@RequestParam Long id) {
         return ResponseEntity.ok(service.getCustomerScore(id));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> registerCustomer(@RequestBody RegisterUserDTO data) {
+        userService.register(data);
+        return ResponseEntity.ok().build();
     }
     
     @PutMapping("/update")

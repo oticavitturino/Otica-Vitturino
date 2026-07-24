@@ -18,6 +18,6 @@ import lombok.Setter;
 @Table(name = "admin")
 public class Admin extends User {
 
-   @Column(name = "name", length = 255, nullable = false)
+   @Column(name = "name", length = 512, nullable = false)
    private String name;
 }

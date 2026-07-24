@@ -49,6 +49,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/customer/register").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/customer/all").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/customer/update").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/addDateAvailable").hasRole("ADMIN")

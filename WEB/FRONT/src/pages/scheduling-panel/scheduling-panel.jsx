@@ -7,6 +7,27 @@ import Card from '../../components/card'
 import XIcon from '../../assets/x.png'
 import CheckIcon from '../../assets/check.png'
 import { useState, useEffect } from 'react'
+import { apiFetch } from '../../services/api'
+
+const SCHEDULING_TYPE_LABELS = {
+    CONSULTA: 'Consulta',
+    MANUTENCAO: 'Manutenção',
+    LIMPEZA: 'Limpeza',
+};
+
+const SCHEDULING_STATUS_LABELS = {
+    PENDENTE: 'Pendente',
+    CONCLUIDO: 'Concluído',
+    CANCELADO: 'Cancelado',
+};
+
+function formatSchedulingType(type) {
+    return SCHEDULING_TYPE_LABELS[type] ?? type;
+}
+
+function formatSchedulingStatus(status) {
+    return SCHEDULING_STATUS_LABELS[status] ?? status;
+}
 
 function Scheduling_Panel() {
 
@@ -23,7 +44,7 @@ function Scheduling_Panel() {
     // Função para buscar todos os agendamentos
     async function fetchAllSchedulings() {
         try {
-            const response = await fetch('http://localhost:8080/scheduling/getAllSchedulings');
+            const response = await apiFetch('/scheduling/getAllSchedulings');
             if (response.ok) {
                 const data = await response.json();
                 setAppointments(data);
@@ -38,7 +59,7 @@ function Scheduling_Panel() {
     // Função para buscar as datas disponíveis
     async function fetchAvailableDates() {
         try {
-            const response = await fetch('http://localhost:8080/scheduling/getAllDatesAvailable');
+            const response = await apiFetch('/scheduling/getAllDatesAvailable');
             if (response.ok) {
                 const data = await response.json();
                 const datesOnly = data.map(item => item.date_available);
@@ -61,14 +82,11 @@ function Scheduling_Panel() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/scheduling/addDateAvailable', {
+            const response = await apiFetch('/scheduling/addDateAvailable', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
+                body: JSON.stringify([{
                     date_available: dateTimeInput
-                })
+                }])
             });
 
             if (response.ok) {
@@ -86,11 +104,8 @@ function Scheduling_Panel() {
     // Função para remover data disponível
     async function handleDeleteAvailableDate(dateToDelete) {
         try {
-            const response = await fetch('http://localhost:8080/scheduling/deleteDateAvailable', {
+            const response = await apiFetch('/scheduling/deleteDateAvailable', {
                 method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
                     date_available: dateToDelete
                 })
@@ -108,13 +123,11 @@ function Scheduling_Panel() {
     }
 
     // Função para confirmar ou cancelar agendamento
-    async function handleUpdateAppointmentStatus(userId, newStatus) {
+    async function handleUpdateAppointmentStatus(schedulingId, newStatus) {
         try {
-            const url = new URL('http://localhost:8080/scheduling/confirmOrCancelAppointment');
-            url.searchParams.append('userId', userId);
-            url.searchParams.append('status', newStatus);
+            const url = `/scheduling/confirmOrCancelAppointment?schedulingId=${schedulingId}&status=${newStatus}`;
 
-            const response = await fetch(url, {
+            const response = await apiFetch(url, {
                 method: 'POST',
             });
 
@@ -129,15 +142,14 @@ function Scheduling_Panel() {
         }
     }
 
-    // Função de formatação de data
-    function formatBrazilianDate(isoDate) {
+    function formatAvailableDate(isoDate) {
         if (!isoDate) return '';
 
-        const [datePart, timePart] = isoDate.split('T');
-
+        const [datePart, timePart = ''] = isoDate.split('T');
         const [year, month, day] = datePart.split('-');
+        const formattedTime = timePart.substring(0, 5);
 
-        return `${day}/${month}/${year} - ${timePart}`;
+        return `${day}/${month}/${year} - ${formattedTime}`;
     }
 
     return (
@@ -173,18 +185,18 @@ function Scheduling_Panel() {
                                     const formattedTime = timePart.substring(0, 5);
 
                                     return (
-                                        <List_Item key={appointment.userId} actions={
+                                        <List_Item key={appointment.id} actions={
                                             <>
                                                 <button
                                                     className='icon-btn'
-                                                    onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CONFIRMADO')}
+                                                    onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CONCLUIDO')}
                                                 >
                                                     <img src={CheckIcon} className='action-icon' alt='Confirmar'></img>
                                                 </button>
 
                                                 <button
                                                     className='icon-btn'
-                                                    onClick={() => handleUpdateAppointmentStatus(appointment.userId, 'CANCELADO')}
+                                                    onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CANCELADO')}
                                                 >
                                                     <img src={XIcon} className="action-icon" alt="Cancelar"></img>
                                                 </button>
@@ -192,10 +204,10 @@ function Scheduling_Panel() {
                                         }>
                                             <div className='list-row-data'>
                                                 <span>{appointment.name}</span>
-                                                <span>{appointment.scheduling_type}</span>
+                                                <span>{formatSchedulingType(appointment.scheduling_type)}</span>
                                                 <span>{formattedDate}</span>
                                                 <span>{formattedTime}</span>
-                                                <span>{appointment.status}</span>
+                                                <span>{formatSchedulingStatus(appointment.status)}</span>
                                             </div>
                                         </List_Item>
                                     );
@@ -248,7 +260,7 @@ function Scheduling_Panel() {
                                                 </button>
                                             }>
                                                 <div className='list-row-data date-only-row'>
-                                                    <span>{formatBrazilianDate(data)}</span>
+                                                    <span>{formatAvailableDate(data)}</span>
                                                 </div>
                                             </List_Item>
                                         ))
