@@ -6,83 +6,75 @@ import Card from '../../components/card'
 import PenIcon from '../../assets/pen.png'
 import PlusIcon from '../../assets/circle-plus.png'
 import XIcon from '../../assets/x.png'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { apiFetch } from '../../services/api'
+
+const MESSAGE_DEFINITIONS = [
+    { id: 1, type: 'LEMBRETE_15_DIAS', title: '15 dias - Mensagem de Adaptação' },
+    { id: 2, type: 'LEMBRETE_30_DIAS', title: '30 dias - Mensagem de Suporte' },
+    { id: 3, type: 'LEMBRETE_90_DIAS', title: '3 meses - Mensagem de Check-up' },
+    { id: 4, type: 'LEMBRETE_180_DIAS', title: '6 meses - Mensagem de Revisão' },
+    { id: 5, type: 'LEMBRETE_365_DIAS', title: '1 ano - Mensagem de Renovação de Grau' },
+    { id: 6, type: 'COMPRA', title: 'Mensagem de Confirmação de Pedido' },
+    { id: 7, type: 'ANIVERSARIO', title: 'Mensagem de Aniversário' },
+];
+
+function buildMessagesFromTemplates(templates = []) {
+    const templatesByType = Object.fromEntries(
+        templates.map((template) => [template.type, template.templateText ?? ''])
+    );
+
+    return MESSAGE_DEFINITIONS.map((definition) => ({
+        ...definition,
+        content: templatesByType[definition.type] ?? '',
+        existsInDb: Object.prototype.hasOwnProperty.call(templatesByType, definition.type),
+    }));
+}
 
 function Message_Editor() {
 
-    // Mensagens pré-programadas
-    const [messages, setMessages] = useState([
-        {
-            id: 1,
-            type: 'LEMBRETE_15_DIAS',
-            title: '15 dias - Mensagem de Adaptação',
-            content: ''
-        },
-        {
-            id: 2,
-            type: 'LEMBRETE_30_DIAS',
-            title: '30 dias - Mensagem de Suporte',
-            content: ''
-        },
-        {
-            id: 3,
-            type: 'LEMBRETE_90_DIAS',
-            title: '3 meses - Mensagem de Check-up',
-            content: ''
-        },
-        {
-            id: 4,
-            type: 'LEMBRETE_180_DIAS',
-            title: '6 meses - Mensagem de Revisão',
-            content: ''
-        },
-        {
-            id: 5,
-            type: 'LEMBRETE_365_DIAS',
-            title: '1 ano - Mensagem de Renovação de Grau',
-            content: ''
-        },
-        {
-            id: 6,
-            type: 'COMPRA',
-            title: 'Mensagem de Confirmação de Pedido',
-            content: ''
-        },
-        {
-            id: 7,
-            type: 'ANIVERSARIO',
-            title: 'Mensagem de Aniversário',
-            content: ''
-        }
-    ])
-
+    const [messages, setMessages] = useState(() => buildMessagesFromTemplates());
     const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
     const [currentEditing, setCurrentEditing] = useState({
         id: null,
         type: '',
         title: '',
         content: '',
-        isNew: true // Identificar se é um POST ou PUT
+        isNew: true,
     });
 
-    // Função para abrir o pop-up com a mensagem selecionada
+    async function fetchAllTemplates() {
+        try {
+            const response = await apiFetch('/message-template/getAllTemplates');
+            if (response.ok) {
+                const data = await response.json();
+                setMessages(buildMessagesFromTemplates(data));
+            } else {
+                console.error('Falha ao buscar mensagens.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchAllTemplates();
+    }, []);
+
     const handleOpenModal = (msg) => {
         setCurrentEditing({
             id: msg.id,
             type: msg.type,
             title: msg.title,
             content: msg.content,
-            isNew: msg.content === "" // Se estiver vazio, é novo (POST). Se já tiver texto, é edição (PUT).
+            isNew: !msg.existsInDb,
         });
         setIsMessageModalOpen(true);
     };
 
-    // Função para criar ou atualizar mensagem (dependendo do contexto)
     async function handleSaveMessage(event) {
         event.preventDefault();
 
-        // Verificações se é POST ou PUT
         const endpoint = currentEditing.isNew ? '/create' : '/update';
         const method = currentEditing.isNew ? 'POST' : 'PUT';
         const url = `/message-template${endpoint}`;
@@ -92,18 +84,25 @@ function Message_Editor() {
                 method: method,
                 body: JSON.stringify({
                     type: currentEditing.type,
-                    templateText: currentEditing.content
-                })
+                    templateText: currentEditing.content,
+                }),
             });
 
             if (response.ok) {
                 alert('Mensagem salva com sucesso!');
-                setMessages(messages.map(m =>
-                    m.id === currentEditing.id ? { ...m, content: currentEditing.content } : m
-                ));
                 setIsMessageModalOpen(false);
+                fetchAllTemplates();
             } else {
-                alert('Erro ao salvar a mensagem.');
+                let errorMessage = 'Erro ao salvar a mensagem.';
+                try {
+                    const errorData = await response.json();
+                    if (errorData?.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch {
+                    // ignore parse errors
+                }
+                alert(errorMessage);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -126,7 +125,7 @@ function Message_Editor() {
                         {messages.map((msg) => (
                             <List_Item key={msg.id} actions={
                                 <button className='icon-btn' onClick={() => handleOpenModal(msg)}>
-                                    {msg.content === "" ? (
+                                    {!msg.existsInDb ? (
                                         <img src={PlusIcon} className='action-icon' alt='Adicionar'></img>
                                     ) : (
                                         <img src={PenIcon} className='action-icon' alt='Editar'></img>

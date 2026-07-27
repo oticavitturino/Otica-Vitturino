@@ -33,6 +33,7 @@ public class SendEmailMessage {
             Context context = new Context();
             context.setVariable("username", username);
             context.setVariable("message", message);
+            context.setVariable("subject", subject);
 
             String emailContent = templateEngine.process("confirmation-email-template.html", context);
 

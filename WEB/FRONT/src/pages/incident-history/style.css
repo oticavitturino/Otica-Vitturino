@@ -152,6 +152,99 @@
     background-color: #c73d1a;
 }
 
+/* 7: Pop-up de resposta à ocorrência/reclamação */
+.respond-occurrence-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.respond-occurrence-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.respond-occurrence-subtitle {
+    font-family: 'Poppins', sans-serif;
+    color: #666;
+    margin: 0;
+}
+
+.respond-occurrence-description {
+    font-family: 'Poppins', sans-serif;
+    color: #888;
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 100%;
+    word-break: break-word;
+}
+
+.respond-occurrence-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+}
+
+.respond-occurrence-form .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+
+.respond-occurrence-form .input-group label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    color: #666666;
+    margin: 0 0 8px 0;
+    text-align: left;
+}
+
+.respond-occurrence-form .input-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #CCCCCC !important;
+    border-radius: 8px !important;
+    background-color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #333333;
+    outline: none;
+    resize: vertical;
+}
+
+.respond-occurrence-form .input-group textarea:focus {
+    border-color: #1DA299 !important;
+}
+
+.btn-send-response {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    height: 55px;
+    width: 35%;
+    margin: 15px auto 15px auto;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-send-response:hover {
+    background-color: #187E77;
+}
+
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
@@ -186,6 +279,29 @@
         width: 110px;
         font-size: 0.95rem;
         margin-bottom: 20px;
+    }
+
+    .respond-occurrence-card {
+        width: 40%;
+        gap: 13px;
+    }
+
+    .respond-occurrence-card h3 {
+        font-size: 1.417rem;
+    }
+
+    .respond-occurrence-form .input-group label {
+        font-size: 1rem;
+    }
+
+    .respond-occurrence-form .input-group textarea {
+        font-size: 0.9rem;
+    }
+
+    .btn-send-response {
+        height: 50px;
+        width: 40%;
+        font-size: 1rem;
     }
 
     .occurrence-x-btn-img {
@@ -230,6 +346,29 @@
         margin-bottom: 17px;
     }
 
+    .respond-occurrence-card {
+        width: 45%;
+        gap: 11px;
+    }
+
+    .respond-occurrence-card h3 {
+        font-size: 1.209rem;
+    }
+
+    .respond-occurrence-form .input-group label {
+        font-size: 0.854rem;
+    }
+
+    .respond-occurrence-form .input-group textarea {
+        font-size: 0.811rem;
+    }
+
+    .btn-send-response {
+        height: 42px;
+        width: 45%;
+        font-size: 0.854rem;
+    }
+
     .occurrence-x-btn-img {
         width: 21px;
         height: 21px;
@@ -266,6 +405,28 @@
         width: 88px;
         font-size: 0.76rem;
         margin-bottom: 16px;
+    }
+
+    .respond-occurrence-card {
+        gap: 10px;
+    }
+
+    .respond-occurrence-card h3 {
+        font-size: 1.133rem;
+    }
+
+    .respond-occurrence-form .input-group label {
+        font-size: 0.8rem;
+    }
+
+    .respond-occurrence-form .input-group textarea {
+        font-size: 0.76rem;
+    }
+
+    .btn-send-response {
+        height: 40px;
+        width: 45%;
+        font-size: 0.8rem;
     }
 
     .occurrence-x-btn-img {
@@ -349,6 +510,30 @@
         width: 45%;
         font-size: 1rem;
         margin-bottom: 10px;
+    }
+
+    .respond-occurrence-card {
+        width: 85%;
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .respond-occurrence-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .respond-occurrence-form .input-group label {
+        font-size: 1rem;
+    }
+
+    .respond-occurrence-form .input-group textarea {
+        font-size: 0.95rem;
+    }
+
+    .btn-send-response {
+        width: 100%;
+        height: 50px;
+        font-size: 1rem;
     }
 
     .occurrence-x-btn-img {

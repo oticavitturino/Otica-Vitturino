@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.br.oticavitturino.main.infra.email.SendEmailMessage;
 import com.br.oticavitturino.main.infra.security.EncryptionService;
 
 import com.br.oticavitturino.main.model.domain.customer.Customer;
@@ -29,6 +30,9 @@ public class OccurrenceService {
 
     @Autowired
     private EncryptionService encryptionService;
+
+    @Autowired
+    private SendEmailMessage sendMailMessage;
 
     // Cliente pode registrar ocorrêncas ou reclamações;
     @Transactional
@@ -71,6 +75,28 @@ public class OccurrenceService {
                         occurrence.getSentAt(),
                         occurrence.getCategory()
                 )).collect(Collectors.toList());
+    }
+
+    // Administrador pode responder ocorrências ou reclamações por e-mail;
+    @Transactional
+    public void respondToOccurrence(Long id, String message) {
+        if (message == null || message.isBlank()) {
+            throw new IllegalArgumentException("Response message must not be empty");
+        }
+
+        Occurrence occurrence = occurrenceRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Occurrence not found with id: " + id));
+
+        Customer customer = occurrence.getCustomer();
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer not found for occurrence");
+        }
+
+        String customerEmail = decryptField(customer.getEmail());
+        String customerName = decryptField(customer.getName());
+        String subject = buildResponseSubject(occurrence.getCategory());
+
+        sendMailMessage.sendEmailNotification(customerEmail, subject, customerName, message.trim());
     }
 
     // Administrador pode visualizar todas as ocorrências;
@@ -120,5 +146,18 @@ public class OccurrenceService {
         } catch (RuntimeException exception) {
             return value;
         }
+    }
+
+    private String buildResponseSubject(String category) {
+        if (category == null || category.isBlank()) {
+            return "Resposta à sua ocorrência";
+        }
+
+        String normalized = category.trim().toLowerCase();
+        if (normalized.contains("reclam")) {
+            return "Resposta à sua reclamação";
+        }
+
+        return "Resposta à sua ocorrência";
     }
 }

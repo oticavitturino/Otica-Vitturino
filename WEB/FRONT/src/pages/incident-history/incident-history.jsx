@@ -26,6 +26,8 @@ function formatOccurrenceCategory(category) {
 function Incident_History() {
 
     const [occurrenceToDelete, setOccurrenceToDelete] = useState(null);
+    const [occurrenceToRespond, setOccurrenceToRespond] = useState(null);
+    const [responseMessage, setResponseMessage] = useState('');
     const [occurrences, setOccurrences] = useState([]);
 
     // Função para buscar todas as ocorrências
@@ -47,6 +49,16 @@ function Incident_History() {
         fetchAllOccurences();
     }, []);
 
+    function openRespondModal(occurrence) {
+        setOccurrenceToRespond(occurrence);
+        setResponseMessage('');
+    }
+
+    function closeRespondModal() {
+        setOccurrenceToRespond(null);
+        setResponseMessage('');
+    }
+
     // Função de deletar ocorrência
     async function deleteOccurrence(id) {
         try {
@@ -59,6 +71,43 @@ function Incident_History() {
                 fetchAllOccurences();
             } else {
                 alert('Erro ao excluir. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    // Função de responder ocorrência por e-mail
+    async function handleSendResponse(event) {
+        event.preventDefault();
+
+        if (!occurrenceToRespond) {
+            return;
+        }
+
+        try {
+            const response = await apiFetch('/occurrences/respond', {
+                method: 'POST',
+                body: JSON.stringify({
+                    occurrenceId: occurrenceToRespond.id,
+                    message: responseMessage,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Resposta enviada com sucesso!');
+                closeRespondModal();
+            } else {
+                let errorMessage = 'Erro ao enviar resposta. Tente novamente.';
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch {
+                    // ignore parse errors
+                }
+                alert(errorMessage);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -105,7 +154,10 @@ function Incident_History() {
                                     return (
                                         <List_Item key={item.id} actions={
                                             <>
-                                                <button className='icon-btn'>
+                                                <button
+                                                    className='icon-btn'
+                                                    onClick={() => openRespondModal(item)}
+                                                >
                                                     <img src={ReplyIcon} className='action-icon' alt='Responder' />
                                                 </button>
 
@@ -139,6 +191,42 @@ function Incident_History() {
                                                 <Button className='yes-btn' onClick={() => deleteOccurrence(occurrenceToDelete.id)}>Sim</Button>
                                                 <Button className='no-btn' onClick={() => setOccurrenceToDelete(null)}>Não</Button>
                                             </div>
+                                        </Card>
+                                    </div>
+                                )}
+
+                                {/* 7: Pop-up de resposta à ocorrência/reclamação */}
+                                {occurrenceToRespond && (
+                                    <div className='modal-overlay' onClick={closeRespondModal}>
+                                        <Card className='respond-occurrence-card' onClick={(e) => e.stopPropagation()}>
+                                            <button className='x-btn' onClick={closeRespondModal}>
+                                                <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                            </button>
+
+                                            <h3>Responder {formatOccurrenceCategory(occurrenceToRespond.category)}</h3>
+                                            <p className='respond-occurrence-subtitle'>
+                                                {occurrenceToRespond.customerName}
+                                            </p>
+                                            <p className='respond-occurrence-description'>
+                                                {occurrenceToRespond.description}
+                                            </p>
+
+                                            <form className='respond-occurrence-form' onSubmit={handleSendResponse}>
+                                                <div className='input-group'>
+                                                    <label>Sua resposta:</label>
+                                                    <textarea
+                                                        value={responseMessage}
+                                                        onChange={(e) => setResponseMessage(e.target.value)}
+                                                        required
+                                                        rows="5"
+                                                        placeholder='Digite a resposta que será enviada por e-mail...'
+                                                    />
+                                                </div>
+
+                                                <button type='submit' className='btn-send-response'>
+                                                    Enviar
+                                                </button>
+                                            </form>
                                         </Card>
                                     </div>
                                 )}

@@ -66,12 +66,16 @@ public class SchedulingService {
         Scheduling scheduling = repository.findById(SchedulingId)
                 .orElseThrow(() -> new IllegalArgumentException("Scheduling not found in the database!"));
 
+        Customer customer = scheduling.getCustomer();
+        String customerEmail = decryptField(customer.getEmail());
+        String customerName = decryptField(customer.getName());
+
         if (status == StatusEnum.CONCLUIDO) {
             scheduling.setStatus(StatusEnum.CONCLUIDO);
-            sendMailMessage.sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Confirmada", scheduling.getCustomer().getName(), "Seu agendamento foi confirmado com sucesso!");
+            sendMailMessage.sendEmailNotification(customerEmail, "Consulta Confirmada", customerName, "Seu agendamento foi confirmado com sucesso!");
         } else if (status == StatusEnum.CANCELADO) {
             scheduling.setStatus(StatusEnum.CANCELADO);
-            sendMailMessage.sendEmailNotification(scheduling.getCustomer().getEmail(), "Consulta Cancelada", scheduling.getCustomer().getName(), "Seu agendamento foi cancelado.");
+            sendMailMessage.sendEmailNotification(customerEmail, "Consulta Cancelada", customerName, "Seu agendamento foi cancelado.");
         }
         repository.save(scheduling);
     }

@@ -6,7 +6,6 @@ import java.util.List;
 import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
 import com.br.oticavitturino.main.model.domain.scheduling.Scheduling;
 import com.br.oticavitturino.main.model.domain.user.User;
-import com.br.oticavitturino.main.model.domain.message.MessageTemplate;
 import com.br.oticavitturino.main.model.domain.order.Order;
 
 import jakarta.persistence.CascadeType;
@@ -44,9 +43,6 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Occurrence> occurrences;
-
-    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<MessageTemplate> messages;
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Order> orders;

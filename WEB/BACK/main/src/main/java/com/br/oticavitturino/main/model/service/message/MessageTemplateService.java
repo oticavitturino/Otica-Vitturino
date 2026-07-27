@@ -2,6 +2,9 @@ package com.br.oticavitturino.main.model.service.message;
 
 import java.time.MonthDay;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,8 +30,19 @@ public class MessageTemplateService {
     @Autowired
     private SendEmailMessage sendMailMessage;
 
+    @Transactional(readOnly = true)
+    public List<MessageTemplateDTO> getAllTemplates() {
+        return repository.findAll().stream()
+                .map(message -> new MessageTemplateDTO(message.getType(), message.getTemplateText()))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public MessageTemplateDTO createMessageTemplate(MessageTemplateDTO dto) {
+        if (repository.findTemplateByType(dto.type()) != null) {
+            throw new IllegalArgumentException("Template already exists for type: " + dto.type());
+        }
+
         MessageTemplate message = new MessageTemplate(dto.type(), dto.templateText());
         repository.save(message);
         return new MessageTemplateDTO(message.getType(), message.getTemplateText());
@@ -37,6 +51,10 @@ public class MessageTemplateService {
     @Transactional
     public MessageTemplateDTO updateMessageTemplate(MessageTemplateDTO dto) {
         MessageTemplate message = repository.findTemplateByType(dto.type());
+        if (message == null) {
+            throw new IllegalArgumentException("Template not found for type: " + dto.type());
+        }
+
         message.setTemplateText(dto.templateText());
         repository.save(message);
         return new MessageTemplateDTO(message.getType(), message.getTemplateText());

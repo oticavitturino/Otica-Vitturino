@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceDTO;
+import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceRespondDTO;
 import com.br.oticavitturino.main.model.service.occurrence.OccurrenceService;
 
 @RestController
@@ -37,6 +38,12 @@ public class OccurrenceController {
     @GetMapping("/listAll")
     public ResponseEntity<?> listAllOccurrences() {
         return ResponseEntity.ok(service.getAllOccurrences());
+    }
+
+    @PostMapping("/respond")
+    public ResponseEntity<String> respondToOccurrence(@RequestBody OccurrenceRespondDTO dto) {
+        service.respondToOccurrence(dto.occurrenceId(), dto.message());
+        return ResponseEntity.ok("Response sent successfully!");
     }
 
     // Sessão de ambos (cliente e administrador);

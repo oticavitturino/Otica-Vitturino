@@ -12,11 +12,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.br.oticavitturino.main.model.domain.customer.Customer;
 
 @Entity
 @AllArgsConstructor
@@ -30,17 +25,15 @@ public class MessageTemplate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
     private TypeMessageEnum type;
 
     @Column(name = "template_text", nullable = false, length = 1024)
     private String templateText;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", insertable=false, updatable=false, nullable = false)
-    @JsonIgnore
-    private Customer customer;
+    @Column(name = "customer_id", nullable = true)
+    private Long customerId;
 
     public MessageTemplate (TypeMessageEnum type, String templateText) {
         this.type = type;

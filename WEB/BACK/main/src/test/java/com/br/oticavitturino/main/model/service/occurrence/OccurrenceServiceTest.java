@@ -4,11 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.eq;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -22,6 +24,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.br.oticavitturino.main.infra.email.SendEmailMessage;
+import com.br.oticavitturino.main.infra.security.EncryptionService;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.occurrence.Occurrence;
 import com.br.oticavitturino.main.model.domain.occurrence.OccurrenceDTO;
@@ -37,6 +41,12 @@ public class OccurrenceServiceTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private EncryptionService encryptionService;
+
+    @Mock
+    private SendEmailMessage sendMailMessage;
 
     @InjectMocks
     private OccurrenceService service;
@@ -148,5 +158,34 @@ public class OccurrenceServiceTest {
         assertEquals("Óculos", result.get(0).category());
         assertEquals("João Silva", result.get(0).customerName());
         verify(repository, times(1)).findAll();
+    }
+
+    @Test
+    void testRespondToOccurrence() {
+        customer.setEmail("cliente@example.com");
+        occurrence.setCustomer(customer);
+
+        when(repository.findById(1L)).thenReturn(Optional.of(occurrence));
+        when(encryptionService.decrypt("cliente@example.com")).thenReturn("cliente@example.com");
+        when(encryptionService.decrypt("João Silva")).thenReturn("João Silva");
+
+        service.respondToOccurrence(1L, "Estamos analisando seu caso.");
+
+        verify(sendMailMessage, times(1)).sendEmailNotification(
+                eq("cliente@example.com"),
+                eq("Resposta à sua ocorrência"),
+                eq("João Silva"),
+                eq("Estamos analisando seu caso.")
+        );
+    }
+
+    @Test
+    void testRespondToOccurrenceEmptyMessage() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            service.respondToOccurrence(1L, "   ");
+        });
+
+        assertEquals("Response message must not be empty", exception.getMessage());
+        verify(sendMailMessage, never()).sendEmailNotification(any(), any(), any(), any());
     }
 }

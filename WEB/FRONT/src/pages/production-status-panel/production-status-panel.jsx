@@ -349,12 +349,12 @@ function Production_Status_Panel() {
                                 </p>
 
                                 <div className='delete-btn-group'>
-                                    <button className='btn-cancel-delete' onClick={() => setIsDeleteModalOpen(false)}>
-                                        Cancelar
-                                    </button>
                                     <button className='btn-confirm-delete' onClick={confirmDeleteProduct}>
                                         Sim, apagar
                                     </button>
+                                    <button className='btn-cancel-delete' onClick={() => setIsDeleteModalOpen(false)}>
+                                        Cancelar
+                                    </button>                                    
                                 </div>
                             </Card>
                         </div>
