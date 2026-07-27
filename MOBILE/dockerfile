@@ -5,14 +5,19 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install \
+    && sha256sum package-lock.json | awk '{print $1}' > node_modules/.package-lock.sha256
 
 COPY . .
+COPY docker-entrypoint.sh /usr/local/bin/mobile-entrypoint
+RUN sed -i 's/\r$//' /usr/local/bin/mobile-entrypoint \
+    && chmod +x /usr/local/bin/mobile-entrypoint
 
 EXPOSE 8081
 
 ENV EXPO_NO_TELEMETRY=1 \
-    CI=1 \
+    EXPO_OFFLINE=1 \
     EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
 
+ENTRYPOINT ["mobile-entrypoint"]
 CMD ["npx", "expo", "start", "--host", "lan", "--port", "8081"]

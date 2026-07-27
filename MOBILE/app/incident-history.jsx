@@ -28,6 +28,8 @@ export default function Incident_History() {
     }
 
     useEffect(() => {
+        // The state update happens only after the asynchronous request resolves.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchAllOccurrences();
     }, []);
 

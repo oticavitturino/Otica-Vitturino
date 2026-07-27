@@ -93,6 +93,8 @@ export default function BookingPage() {
     }
 
     useEffect(() => {
+        // The state update happens only after the asynchronous request resolves.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchAvailableDates();
     }, []);
 
@@ -100,7 +102,6 @@ export default function BookingPage() {
     async function appointmentScheduling(selectedItem) {
 
         const userName = "Usuário";
-        const schedulingType = "CONSULTA";
 
         try {
             const response = await fetch('http://localhost:8080/scheduling/scheduleAppointment', {
