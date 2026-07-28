@@ -49,6 +49,25 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<OrderDTO> getMyOrders() {
+        var authentication = org.springframework.security.core.context.SecurityContextHolder
+                .getContext()
+                .getAuthentication();
+
+        if (authentication == null || !(authentication.getPrincipal() instanceof Customer customer)) {
+            throw new IllegalArgumentException("Authenticated customer required");
+        }
+
+        return repository.findByCustomerId(customer.getId()).stream()
+                .map(order -> new OrderDTO(
+                        order.getId(),
+                        order.getName(),
+                        order.getOrderStatus(),
+                        order.getCustomer().getId()))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
     public OrderModifyStatusDTO modifyOrderStatus(Long orderId, OrderStatusEnum newStatus) {
         Order order = repository.findById(orderId)

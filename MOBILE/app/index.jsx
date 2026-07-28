@@ -1,15 +1,16 @@
 import { View, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
+import { apiFetch, setSession } from '../services/api'
 
 export default function Login() {
 
   const router = useRouter();
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // Função de checkagem de login
   async function handleLogin() {
@@ -18,12 +19,12 @@ export default function Login() {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await apiFetch('/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        auth: false,
         body: JSON.stringify({
           email: emailInput,
           password: passwordInput
@@ -33,13 +34,26 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
 
-        if (data.token) {
-          await AsyncStorage.setItem('userToken', data.token);
-
-          if (data.referralCode) {
-            await AsyncStorage.setItem('referralCode', data.referralCode);
-          }
+        if (!data.token) {
+          Alert.alert('Erro', 'Login sem token de acesso.');
+          return;
         }
+
+        if (data.profile && data.profile !== 'CUSTOMER') {
+          Alert.alert(
+            'Acesso restrito',
+            'Este aplicativo é exclusivo para clientes. Use o painel web para acesso administrativo.'
+          );
+          return;
+        }
+
+        await setSession({
+          token: data.token,
+          userId: data.userId,
+          name: data.name,
+          referralCode: data.referralCode,
+          profile: data.profile,
+        });
 
         router.replace('/homepage');
       } else {
@@ -47,7 +61,9 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Erro de requisição: ', error);
-      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor. Verifique se o backend está no ar e se o IP está correto.');
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -67,7 +83,7 @@ export default function Login() {
           <View style={styles.formContainer}>
             <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} value={emailInput} onChangeText={setEmailInput} />
             <Input placeholder='Digite sua senha' secureTextEntry={true} value={passwordInput} onChangeText={setPasswordInput} />
-            <Button title='Entrar' onPress={handleLogin} />
+            <Button title={isLoading ? 'Entrando...' : 'Entrar'} onPress={handleLogin} />
           </View>
 
         </View>

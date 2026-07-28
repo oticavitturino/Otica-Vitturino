@@ -18,7 +18,8 @@
       },
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "usesCleartextTraffic": true
     },
     "web": {
       "output": "static",

@@ -30,7 +30,7 @@ public class OccurrenceController {
     }
 
     @GetMapping("/occurrenceCustomer")
-    public ResponseEntity<?> getOccurrencesByCustomerId(@RequestParam Long customerId) {
+    public ResponseEntity<?> getOccurrencesByCustomerId(@RequestParam(required = false) Long customerId) {
         return ResponseEntity.ok(service.getOccurrencesByCustomerId(customerId));
     }
 

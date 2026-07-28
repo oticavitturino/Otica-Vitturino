@@ -39,6 +39,11 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("/myOrders")
+    public ResponseEntity<List<OrderDTO>> getMyOrders() {
+        return ResponseEntity.ok(service.getMyOrders());
+    }
+
     @PutMapping("/modifyOrderStatus")
     public ResponseEntity<OrderModifyStatusDTO> modifyOrderStatus(@RequestParam Long orderId, @RequestParam OrderStatusEnum newStatus) {
         OrderModifyStatusDTO updatedOrder = service.modifyOrderStatus(orderId, newStatus);

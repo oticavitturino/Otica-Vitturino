@@ -1,18 +1,28 @@
 import { View, ScrollView, Text, Image, StyleSheet, Alert, Modal, TouchableOpacity } from 'react-native'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item';
 import { User_Guide_Card } from '../components/User_Guide_Card'
+import { apiFetch } from '../services/api'
+
+const TYPE_LABELS = {
+    CONSULTA: 'Consulta',
+    MANUTENCAO: 'Manutenção',
+    LIMPEZA: 'Limpeza',
+};
 
 const colorsByType = {
-    "CONSULTA": '#33AB5B',
-    "MANUTENCAO": '#4085AF',
-    "LIMPEZA": '#963765'
+    CONSULTA: '#33AB5B',
+    MANUTENCAO: '#4085AF',
+    LIMPEZA: '#963765',
 };
 
 const defaultColor = '#8C8C8C';
+
+const SERVICE_TYPES = ['CONSULTA', 'MANUTENCAO', 'LIMPEZA'];
 
 LocaleConfig.locales['pt-br'] = {
     monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -23,13 +33,29 @@ LocaleConfig.locales['pt-br'] = {
 };
 LocaleConfig.defaultLocale = 'pt-br';
 
+function normalizeDateTime(value) {
+    if (!value) return '';
+    return String(value);
+}
+
+function formatDateTimeLabel(isoDate) {
+    if (!isoDate) return 'Data inválida';
+
+    const [datePart, timePart = ''] = String(isoDate).split('T');
+    const formattedDate = datePart.split('-').reverse().join('/');
+    const formattedTime = timePart.substring(0, 5);
+    return `${formattedDate} às ${formattedTime}`;
+}
+
 export default function BookingPage() {
 
     const [selectedDate, setSelectedDate] = useState('');
     const [isGuideVisible, setIsGuideVisible] = useState(false);
     const [availableDates, setAvailableDates] = useState([]);
+    const [myAppointments, setMyAppointments] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [hoursForSelectedDay, setHoursForSelectedDay] = useState([]);
+    const [selectedServiceType, setSelectedServiceType] = useState('CONSULTA');
 
     // Função de seleção de dia do calendário
     function handlePressedDay(day) {
@@ -37,31 +63,26 @@ export default function BookingPage() {
         setSelectedDate(dateStr);
 
         const filteredHours = availableDates.filter((item) => {
-            if (item.date) {
-                const itemDay = item.date.split('T')[0];
-                return itemDay === dateStr;
-            }
-            return false;
+            const itemDay = normalizeDateTime(item.date_available).split('T')[0];
+            return itemDay === dateStr;
         });
 
         setHoursForSelectedDay(filteredHours);
         setIsModalVisible(true);
     }
 
-    // Função para formatar as datas disponíveis par o calendário
+    // Função para formatar as datas disponíveis para o calendário
     function getMarkedDates() {
         let marks = {};
 
         availableDates.forEach((item) => {
-            if (item.date) {
-                const dayString = item.date.split('T')[0];
-                const dotColor = colorsByType[item.scheduling_type] || defaultColor;
+            const dayString = normalizeDateTime(item.date_available).split('T')[0];
+            if (!dayString) return;
 
-                marks[dayString] = {
-                    marked: true,
-                    dotColor: dotColor
-                };
-            }
+            marks[dayString] = {
+                marked: true,
+                dotColor: defaultColor
+            };
         });
 
         if (selectedDate) {
@@ -80,75 +101,105 @@ export default function BookingPage() {
     // Função para buscar datas disponíveis
     async function fetchAvailableDates() {
         try {
-            const response = await fetch('http://localhost:8080/scheduling/getAllDatesAvailable');
+            const response = await apiFetch('/scheduling/getAllDatesAvailable');
             if (response.ok) {
                 const data = await response.json();
-                setAvailableDates(data);
+                setAvailableDates(Array.isArray(data) ? data : []);
             } else {
-                console.error('Falha ao buscar datas disponíveis')
+                console.error('Falha ao buscar datas disponíveis');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
         }
     }
 
+    // Função para buscar agendamentos do cliente logado
+    async function fetchMyAppointments() {
+        try {
+            const response = await apiFetch('/scheduling/mySchedulings');
+            if (response.ok) {
+                const data = await response.json();
+                setMyAppointments(Array.isArray(data) ? data : []);
+            } else {
+                console.error('Falha ao buscar agendamentos do cliente');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
+    async function refreshBookingData() {
+        await Promise.all([fetchAvailableDates(), fetchMyAppointments()]);
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            refreshBookingData();
+        }, [])
+    );
+
     useEffect(() => {
-        // The state update happens only after the asynchronous request resolves.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        fetchAvailableDates();
+        refreshBookingData();
     }, []);
 
     // Função para agendar consulta
     async function appointmentScheduling(selectedItem) {
-
-        const userName = "Usuário";
+        if (!selectedItem?.date_available) {
+            Alert.alert('Erro', 'Horário inválido.');
+            return;
+        }
 
         try {
-            const response = await fetch('http://localhost:8080/scheduling/scheduleAppointment', {
+            const response = await apiFetch('/scheduling/scheduleAppointment', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
-                    name: userName,
-                    scheduling_type: selectedItem ? selectedItem.scheduling_type : "CONSULTA",
-                    schedulingDate: selectedItem ? selectedItem.schedulingDate : new Date().toISOString(),
-                    status: "PENDENTE"
+                    scheduling_type: selectedServiceType,
+                    schedulingDate: selectedItem.date_available,
+                    status: 'PENDENTE'
                 })
             });
 
             if (response.ok) {
                 Alert.alert('Sucesso', 'Agendamento confirmado!');
-                fetchAvailableDates();
+                setIsModalVisible(false);
+                refreshBookingData();
             } else {
-                Alert.alert('Erro', 'O agendamento não foi confirmado.');
+                let message = 'O agendamento não foi confirmado.';
+                try {
+                    const errorData = await response.json();
+                    if (errorData?.message) message = errorData.message;
+                } catch {
+                    // ignore
+                }
+                Alert.alert('Erro', message);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
+            Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
         }
     }
 
     // Função para cancelar agendamento
     async function cancelAppointment(schedulingID) {
         try {
-            const response = await fetch('http://localhost:8080/scheduling/cancelAppointment', {
+            const response = await apiFetch('/scheduling/cancelAppointment', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify(schedulingID)
             });
 
             if (response.ok) {
                 Alert.alert('Sucesso', 'O agendamento foi cancelado com sucesso!');
-                fetchAvailableDates();
+                refreshBookingData();
             } else {
                 Alert.alert('Erro', 'Falha ao cancelar agendamento.');
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
+            Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
         }
     }
+
+    const activeAppointments = myAppointments.filter((item) => item.status !== 'CANCELADO');
 
     return (
         <>
@@ -194,17 +245,14 @@ export default function BookingPage() {
 
                     {/* 5: Legenda de serviços */}
                     <View style={styles.legendContainer}>
-                        {/* Consulta */}
                         <View style={styles.legend}>
                             <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} />
                             <Text style={styles.legendText}>Consulta</Text>
                         </View>
-                        {/* Manutenção */}
                         <View style={styles.legend}>
                             <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} />
                             <Text style={styles.legendText}>Manutenção</Text>
                         </View>
-                        {/* Limpeza */}
                         <View style={styles.legend}>
                             <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} />
                             <Text style={styles.legendText}>Limpeza</Text>
@@ -212,50 +260,43 @@ export default function BookingPage() {
                     </View>
 
                     {/* 6: Texto */}
-                    <Text style={styles.bookingText}>Agendamentos:</Text>
+                    <Text style={styles.bookingText}>Meus agendamentos:</Text>
 
-                    {/* 7: Renderização dos agendamentos */}
-                    {availableDates.length > 0 ? (
-                        availableDates.map((item) => {
-                            let formattedDate = "Data inválida";
-                            let formattedTime = "";
-
-                            if (item.schedulingDate) {
-                                const dateParts = item.schedulingDate.split('T');
-                                formattedDate = dateParts[0].split('-').reverse().join('/');
-                                formattedTime = dateParts[1] ? dateParts[1].substring(0, 5) : "";
-                            }
-
+                    {/* 7: Renderização dos agendamentos do cliente */}
+                    {activeAppointments.length > 0 ? (
+                        activeAppointments.map((item) => {
                             const itemDotColor = colorsByType[item.scheduling_type] || defaultColor;
+                            const typeLabel = TYPE_LABELS[item.scheduling_type] || item.scheduling_type;
 
                             return (
                                 <List_Item
                                     key={item.id}
-                                    title={`${item.scheduling_type}\n${formattedDate} às ${formattedTime}`}
+                                    title={`${typeLabel}\n${formatDateTimeLabel(item.schedulingDate)}\n${item.status || ''}`}
                                     dotColor={itemDotColor}
-
                                     rightElement={
-                                        <Button
-                                            title="X"
-                                            style={styles.cancelButton}
-                                            textStyle={styles.cancelButtonText}
-                                            onPress={() => {
-                                                Alert.alert(
-                                                    "Confirmar Cancelamento",
-                                                    "Tem certeza que deseja cancelar este agendamento?",
-                                                    [
-                                                        { text: "Não", style: "cancel" },
-                                                        { text: "Sim", onPress: () => cancelAppointment(item.id) }
-                                                    ]
-                                                );
-                                            }}
-                                        />
+                                        item.status === 'PENDENTE' ? (
+                                            <Button
+                                                title="X"
+                                                style={styles.cancelButton}
+                                                textStyle={styles.cancelButtonText}
+                                                onPress={() => {
+                                                    Alert.alert(
+                                                        "Confirmar Cancelamento",
+                                                        "Tem certeza que deseja cancelar este agendamento?",
+                                                        [
+                                                            { text: "Não", style: "cancel" },
+                                                            { text: "Sim", onPress: () => cancelAppointment(item.id) }
+                                                        ]
+                                                    );
+                                                }}
+                                            />
+                                        ) : null
                                     }
                                 />
                             );
                         })
                     ) : (
-                        <Text style={styles.bookingText}>Nenhuma data disponível encontrada.</Text>
+                        <Text style={styles.emptyText}>Você ainda não possui agendamentos.</Text>
                     )}
                 </View>
             </ScrollView>
@@ -276,21 +317,42 @@ export default function BookingPage() {
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Horários para {selectedDate.split('-').reverse().join('/')}</Text>
 
+                        <Text style={styles.typeLabel}>Tipo de serviço:</Text>
+                        <View style={styles.typeRow}>
+                            {SERVICE_TYPES.map((type) => (
+                                <TouchableOpacity
+                                    key={type}
+                                    style={[
+                                        styles.typeChip,
+                                        selectedServiceType === type && styles.typeChipSelected
+                                    ]}
+                                    onPress={() => setSelectedServiceType(type)}
+                                >
+                                    <Text
+                                        style={[
+                                            styles.typeChipText,
+                                            selectedServiceType === type && styles.typeChipTextSelected
+                                        ]}
+                                    >
+                                        {TYPE_LABELS[type]}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+
                         <ScrollView style={styles.hoursList}>
                             {hoursForSelectedDay.length > 0 ? (
-                                hoursForSelectedDay.map((item) => {
-                                    const timeString = item.date ? item.date.split('T')[1].substring(0, 5) : "Horário";
+                                hoursForSelectedDay.map((item, index) => {
+                                    const raw = normalizeDateTime(item.date_available);
+                                    const timeString = raw.includes('T') ? raw.split('T')[1].substring(0, 5) : 'Horário';
 
                                     return (
                                         <TouchableOpacity
-                                            key={item.id}
+                                            key={`${raw}-${index}`}
                                             style={styles.hourCard}
-                                            onPress={() => {
-                                                setIsModalVisible(false);
-                                                appointmentScheduling(item);
-                                            }}
+                                            onPress={() => appointmentScheduling(item)}
                                         >
-                                            <Text style={styles.hourText}>{timeString} - {item.scheduling_type}</Text>
+                                            <Text style={styles.hourText}>{timeString}</Text>
                                         </TouchableOpacity>
                                     );
                                 })
@@ -400,14 +462,12 @@ const styles = StyleSheet.create({
         marginBottom: 18,
         color: '#1DA299'
     },
-    listItemContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
+    emptyText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 14,
+        color: '#8C8C8C',
+        textAlign: 'center',
         marginBottom: 10
-    },
-    listItemWrapper: {
-        flex: 1
     },
     cancelButton: {
         width: 45,
@@ -445,6 +505,38 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#1DA299',
         marginBottom: 16,
+    },
+    typeLabel: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 14,
+        color: '#666',
+        alignSelf: 'flex-start',
+        marginBottom: 8,
+    },
+    typeRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 8,
+        marginBottom: 16,
+        width: '100%',
+        justifyContent: 'center',
+    },
+    typeChip: {
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 20,
+        backgroundColor: '#EEEDED',
+    },
+    typeChipSelected: {
+        backgroundColor: '#1DA299',
+    },
+    typeChipText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 13,
+        color: '#6E6E6E',
+    },
+    typeChipTextSelected: {
+        color: '#FFFFFF',
     },
     hoursList: {
         width: '100%',

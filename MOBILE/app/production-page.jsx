@@ -1,50 +1,70 @@
 import { View, ScrollView, Text, Image, StyleSheet } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { Production_Card } from '../components/Production_Card'
 import { User_Guide_Card } from '../components/User_Guide_Card'
+import { apiFetch } from '../services/api'
+
+const STATUS_STEPS = [
+    {
+        code: 'REALIZADO',
+        texto: 'Pedido realizado',
+        icone: require('../assets/img/check-check.png'),
+    },
+    {
+        code: 'EM_ANDAMENTO',
+        texto: 'Em processo de montagem',
+        icone: require('../assets/img/wrench.png'),
+    },
+    {
+        code: 'CONCLUIDO',
+        texto: 'Produto concluído',
+        icone: require('../assets/img/package-check.png'),
+    },
+];
+
+function buildTimeline(orderStatus) {
+    const currentIndex = STATUS_STEPS.findIndex((step) => step.code === orderStatus);
+    const visibleUntil = currentIndex >= 0 ? currentIndex : 0;
+
+    return STATUS_STEPS.slice(0, visibleUntil + 1).map((step) => ({
+        date: step.code === orderStatus ? 'Atual' : 'Etapa',
+        status: step.texto,
+        icon: step.icone,
+    }));
+}
 
 export default function Production_Page() {
 
     const [openCardId, setOpenCardId] = useState(null);
     const [isGuideVisible, setIsGuideVisible] = useState(false);
+    const [orders, setOrders] = useState([]);
 
-    // Status ENUM
-    const STATUS_DICIONARIO = {
-        'PEDIDO_REALIZADO': {
-            texto: 'Pedido realizado',
-            icone: require('../assets/img/check-check.png') //
-        },
-        'EM_PRODUCAO': {
-            texto: 'Em processo de montagem',
-            icone: require('../assets/img/wrench.png') //
-        },
-        'CONCLUIDO': {
-            texto: 'Produto concluído',
-            icone: require('../assets/img/package-check.png') //
+    async function fetchMyOrders() {
+        try {
+            const response = await apiFetch('/orders/myOrders');
+            if (response.ok) {
+                const data = await response.json();
+                setOrders(Array.isArray(data) ? data : []);
+            } else {
+                console.error('Falha ao buscar pedidos do cliente');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
         }
-    };
+    }
 
-    const produtos = [
-        {
-            id: '1',
-            title: 'RAY-BAN META WAYFARER - GEN 2',
-            timeline: [
-                { date: '8 mar', statusCode: 'PEDIDO_REALIZADO' },
-                { date: '21 mar', statusCode: 'EM_PRODUCAO' }
-            ]
-        },
-        {
-            id: '2',
-            title: 'Óculos de Grau Redondo Duna...',
-            timeline: [
-                { date: '10 abr', statusCode: 'PEDIDO_REALIZADO' },
-                { date: '12 abr', statusCode: 'EM_PRODUCAO' },
-                { date: '15 abr', statusCode: 'CONCLUIDO' }
-            ]
-        }
-    ];
+    useFocusEffect(
+        useCallback(() => {
+            fetchMyOrders();
+        }, [])
+    );
+
+    useEffect(() => {
+        fetchMyOrders();
+    }, []);
 
     function toggleCard(id) {
         if (openCardId === id) {
@@ -52,7 +72,7 @@ export default function Production_Page() {
         } else {
             setOpenCardId(id);
         }
-    }   
+    }
 
     return (
         <>
@@ -79,20 +99,19 @@ export default function Production_Page() {
 
                     {/* 6: Container dos Cards */}
                     <View style={styles.cardsContainer}>
-
-                        {produtos.map((product) => (
-                            <Production_Card
-                                key={product.id}
-                                title={product.title}
-                                isExpanded={openCardId === product.id}
-                                onToggle={() => toggleCard(product.id)}
-                                timeline={product.timeline.map((step) => ({
-                                    date: step.date,
-                                    status: STATUS_DICIONARIO[step.statusCode].texto,
-                                    icon: STATUS_DICIONARIO[step.statusCode].icone
-                                }))}
-                            />
-                        ))}
+                        {orders.length === 0 ? (
+                            <Text style={styles.emptyText}>Nenhum produto em produção no momento.</Text>
+                        ) : (
+                            orders.map((product) => (
+                                <Production_Card
+                                    key={product.id}
+                                    title={product.name}
+                                    isExpanded={openCardId === product.id}
+                                    onToggle={() => toggleCard(product.id)}
+                                    timeline={buildTimeline(product.orderStatus)}
+                                />
+                            ))
+                        )}
                     </View>
                 </View>
             </ScrollView>
@@ -163,5 +182,11 @@ const styles = StyleSheet.create({
     },
     cardsContainer: {
         width: '100%'
+    },
+    emptyText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 14,
+        color: '#8C8C8C',
+        textAlign: 'center'
     }
 })

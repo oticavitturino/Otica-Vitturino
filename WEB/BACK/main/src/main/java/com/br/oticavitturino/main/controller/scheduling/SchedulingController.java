@@ -48,6 +48,11 @@ public class SchedulingController {
         return ResponseEntity.ok(service.getAllSchedulings());
     }
 
+    @GetMapping("/mySchedulings")
+    public ResponseEntity<List<SchedulingDTO>> getMySchedulings() {
+        return ResponseEntity.ok(service.getMySchedulings());
+    }
+
     // Sessão do Cliente;
     @GetMapping("/getAllDatesAvailable")
     public ResponseEntity<List<DateAvailableDTO>> getAllDatesAvailable() {

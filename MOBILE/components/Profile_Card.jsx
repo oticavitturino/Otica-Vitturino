@@ -1,23 +1,31 @@
 import { View, Text, StyleSheet, Modal, Pressable } from 'react-native'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'expo-router'
-// import { useContext } from 'react' - para quando for integrar
-// import { AuthContext } from '../contexts/AuthContext' - para quando for integrar
 import { Button } from './Button'
+import { clearSession, getUserName } from '../services/api'
 
 export function Profile_Card({ isVisible, onClose }) {
 
     const router = useRouter();
+    const [userName, setUserName] = useState('Cliente');
 
-    // const userContext = useContext(AuthContext); - para quando for integrar
-    // const userName = userContext?.name || 'Usuário Indefinido'; - para quando for integrar
-    // const userUsername = userContext?.username || '@indefinido'; - para quando for integrar
+    useEffect(() => {
+        if (!isVisible) return;
 
-    const userName = 'Caio Vasconcelos';
-    const userUsername = '@caiovtech';
+        async function loadProfile() {
+            const name = await getUserName();
+            if (name) {
+                setUserName(name);
+            }
+        }
+
+        loadProfile();
+    }, [isVisible]);
 
     // Função de deslogar
-    function handleLogout() {
+    async function handleLogout() {
         onClose();
+        await clearSession();
         router.replace('/');
     }
 
@@ -28,9 +36,9 @@ export function Profile_Card({ isVisible, onClose }) {
             {/* 1: Container principal */}
             <View style={styles.container}>
 
-                {/* 2: Nome e username do usuário */}
+                {/* 2: Nome do usuário */}
                 <Text style={styles.nameText}>{userName}</Text>
-                <Text style={styles.usernameText}>{userUsername}</Text>
+                <Text style={styles.usernameText}>Cliente Ótica Vitturino</Text>
 
                 {/* 3: Botão de sair */}
                 <Button title='Sair' style={styles.exitButton} textStyle={styles.exitButtonText} onPress={handleLogout} />
@@ -42,7 +50,7 @@ export function Profile_Card({ isVisible, onClose }) {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: 'trasparent'
+        backgroundColor: 'transparent'
     },
     container: {
         justifyContent: 'center',
@@ -65,12 +73,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#333333',
-        marginBottom: 4
+        marginBottom: 4,
+        textAlign: 'center'
     },
     usernameText: {
         fontSize: 14,
         color: '#666666',
-        marginBottom: 10
+        marginBottom: 10,
+        textAlign: 'center'
     },
     exitButton: {
         width: '100%',

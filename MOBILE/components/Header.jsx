@@ -1,8 +1,8 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'expo-router'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter, useFocusEffect } from 'expo-router'
 import { Profile_Card } from './Profile_Card';
+import { apiFetch, getUserId } from '../services/api'
 
 export function Header() {
 
@@ -13,22 +13,20 @@ export function Header() {
     // Função executada ao clicar no botão de usuário
     function handleUserMenuClick() {
         setIsMenuOpen(!isMenuOpen);
-
     }
 
     // Função para buscar a pontuação do cliente
     async function fetchScore() {
         try {
-            const customerId = await AsyncStorage.getItem('userId');
+            const customerId = await getUserId();
 
             if (!customerId) return;
 
-            const url = `http://localhost:8080/customer/score?id=${customerId}`;
-            const response = await fetch(url);
+            const response = await apiFetch(`/customer/score?id=${customerId}`);
 
             if (response.ok) {
                 const data = await response.json();
-                setUserScore(data); //
+                setUserScore(typeof data === 'number' ? data : (data.points ?? 0));
             } else {
                 console.error(`Falha na API ao buscar score: Status ${response.status}`);
             }
@@ -37,9 +35,13 @@ export function Header() {
         }
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            fetchScore();
+        }, [])
+    );
+
     useEffect(() => {
-        // The state update happens only after the asynchronous request resolves.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchScore();
     }, []);
 

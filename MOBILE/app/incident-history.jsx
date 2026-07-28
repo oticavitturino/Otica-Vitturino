@@ -1,10 +1,12 @@
 import { View, ScrollView, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { List_Item } from '../components/List_Item'
 import { Occurrence_Card } from '../components/Occurrence_Card'
 import { User_Guide_Card } from '../components/User_Guide_Card'
+import { apiFetch } from '../services/api'
 
 export default function Incident_History() {
 
@@ -15,7 +17,7 @@ export default function Incident_History() {
     //Função para retornar histórico de ocorrências
     async function fetchAllOccurrences() {
         try {
-            const response = await fetch('http://localhost:8080/occurrences/occurrenceCustomer?customerId=1');
+            const response = await apiFetch('/occurrences/occurrenceCustomer');
             if (response.ok) {
                 const data = await response.json();
                 setOccurrences(data);
@@ -27,26 +29,25 @@ export default function Incident_History() {
         }
     }
 
+    useFocusEffect(
+        useCallback(() => {
+            fetchAllOccurrences();
+        }, [])
+    );
+
     useEffect(() => {
-        // The state update happens only after the asynchronous request resolves.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         fetchAllOccurrences();
     }, []);
 
     // Função para registrar ocorrência
     async function registerOccurrence(categoryType, userDescription) {
         try {
-            const response = await fetch('http://localhost:8080/occurrences/register', {
+            const response = await apiFetch('/occurrences/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     description: userDescription,
                     sentAt: new Date().toISOString(),
                     category: categoryType,
-                    customerId: 1,
-                    customerName: 'Usuário'
                 })
             });
 
@@ -59,6 +60,7 @@ export default function Incident_History() {
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
+            Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
         }
     }
 
@@ -112,9 +114,13 @@ export default function Incident_History() {
                         <Text style={styles.historyText}>Histórico:</Text>
 
                         {/* 7: Itens do histórico */}
-                        {occurrences.map((item) => (
-                            <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.description} />
-                        ))}
+                        {occurrences.length === 0 ? (
+                            <Text style={styles.emptyText}>Nenhuma ocorrência registrada.</Text>
+                        ) : (
+                            occurrences.map((item) => (
+                                <List_Item titleStyle={styles.titleStyle} key={item.id} title={item.description} />
+                            ))
+                        )}
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
@@ -186,6 +192,12 @@ const styles = StyleSheet.create({
         marginTop: 18,
         marginBottom: 18,
         color: '#1DA299'
+    },
+    emptyText: {
+        fontFamily: 'PoppinsRegular',
+        fontSize: 14,
+        color: '#8C8C8C',
+        textAlign: 'center'
     },
     titleStyle: {
         fontSize: 14

@@ -94,6 +94,20 @@ public class SchedulingService {
                 .collect(Collectors.toList());
     }
 
+    // Cliente autenticado visualiza os próprios agendamentos;
+    @Transactional(readOnly = true)
+    public List<SchedulingDTO> getMySchedulings() {
+        Customer customer = requireAuthenticatedCustomer();
+        return repository.findByCustomerId(customer.getId()).stream()
+                .map(s -> new SchedulingDTO(
+                        s.getId(),
+                        decryptField(customer.getName()),
+                        s.getSchedulingType(),
+                        s.getSchedulingDate(),
+                        s.getStatus()))
+                .collect(Collectors.toList());
+    }
+
     // Cliente pode visualizar as datas disponíveis para agendamento;
     @Transactional(readOnly = true)
     public List<DateAvailableDTO> getAllDatesAvailable() {
@@ -106,26 +120,13 @@ public class SchedulingService {
     @Transactional
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
         AvailableSlot slot = Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.schedulingDate()))
-                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not available!"));
+                .orElseThrow(() -> new IllegalArgumentException("Horário não disponível para agendamento."));
 
         Customer customer = resolveCustomerForScheduling(schedulingDTO);
+        Scheduling scheduling = findReusableScheduling(customer);
 
-        // Pontuação para Consulta
-        if (schedulingDTO.scheduling_type() == SchedulingEnum.CONSULTA) {
-            customer.setPoints(customer.getPoints() + 30);
-        } 
-        
-        // Pontuação para Manutenção
-        else if (schedulingDTO.scheduling_type() == SchedulingEnum.MANUTENCAO) {
-            customer.setPoints(customer.getPoints() + 15);
-        }
+        applySchedulingPoints(customer, schedulingDTO.scheduling_type());
 
-        // Pontuação para Limpeza
-        else if (schedulingDTO.scheduling_type() == SchedulingEnum.LIMPEZA) {
-            customer.setPoints(customer.getPoints() + 10);
-        }
-
-        Scheduling scheduling = new Scheduling();
         scheduling.setSchedulingDate(slot.getSlotDate());
         scheduling.setCustomer(customer);
         scheduling.setSchedulingType(schedulingDTO.scheduling_type());
@@ -133,38 +134,75 @@ public class SchedulingService {
         repository.save(scheduling);
         availableSlotRepository.delete(slot);
 
-        // Adiciona pontos ao cliente por agendar uma consulta
-        customer.setPoints(customer.getPoints() + 30);
-
-        return schedulingDTO;
+        return new SchedulingDTO(
+                scheduling.getId(),
+                decryptField(customer.getName()),
+                scheduling.getSchedulingType(),
+                scheduling.getSchedulingDate(),
+                scheduling.getStatus()
+        );
     }
 
     // Cliente pode cancelar um agendamento;
     @Transactional
     public void cancelAppointment(Long schedulingId) {
-        Customer customer = repository.findById(schedulingId)
-                .map(Scheduling::getCustomer)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found for the given scheduling ID!"));
         Scheduling scheduling = repository.findById(schedulingId)
-                .orElseThrow(() -> new IllegalArgumentException("Scheduling date not found in the database!"));
+                .orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado."));
+        Customer customer = scheduling.getCustomer();
+        if (customer == null) {
+            throw new IllegalArgumentException("Cliente não encontrado para este agendamento.");
+        }
+
+        if (scheduling.getStatus() == StatusEnum.CANCELADO) {
+            throw new IllegalArgumentException("Este agendamento já está cancelado.");
+        }
 
         // Remove Pontuação para Consulta
         if (scheduling.getSchedulingType() == SchedulingEnum.CONSULTA) {
-            customer.setPoints(customer.getPoints() - 30);
-        } 
-        
+            customer.setPoints(Math.max(0, customer.getPoints() - 30));
+        }
+
         // Remove Pontuação para Manutenção
         else if (scheduling.getSchedulingType() == SchedulingEnum.MANUTENCAO) {
-            customer.setPoints(customer.getPoints() - 15);
+            customer.setPoints(Math.max(0, customer.getPoints() - 15));
         }
 
         // Remove Pontuação para Limpeza
         else if (scheduling.getSchedulingType() == SchedulingEnum.LIMPEZA) {
-            customer.setPoints(customer.getPoints() - 10);
+            customer.setPoints(Math.max(0, customer.getPoints() - 10));
         }
+
+        // Devolve o horário à lista de datas disponíveis
+        availableSlotRepository.save(new AvailableSlot(scheduling.getSchedulingDate()));
 
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
+    }
+
+    private Scheduling findReusableScheduling(Customer customer) {
+        List<Scheduling> existing = repository.findByCustomerId(customer.getId());
+        if (existing.isEmpty()) {
+            return new Scheduling();
+        }
+
+        Scheduling current = existing.get(0);
+        if (current.getStatus() == StatusEnum.PENDENTE || current.getStatus() == StatusEnum.CONCLUIDO) {
+            throw new IllegalArgumentException(
+                    "Você já possui um agendamento ativo. Cancele o atual antes de criar outro.");
+        }
+
+        // CANCELADO: reutiliza o mesmo registro (customer_id é único)
+        return current;
+    }
+
+    private void applySchedulingPoints(Customer customer, SchedulingEnum type) {
+        if (type == SchedulingEnum.CONSULTA) {
+            customer.setPoints(customer.getPoints() + 30);
+        } else if (type == SchedulingEnum.MANUTENCAO) {
+            customer.setPoints(customer.getPoints() + 15);
+        } else if (type == SchedulingEnum.LIMPEZA) {
+            customer.setPoints(customer.getPoints() + 10);
+        }
     }
 
     private Customer resolveCustomerForScheduling(SchedulingDTO schedulingDTO) {
@@ -175,6 +213,14 @@ public class SchedulingService {
 
         return Optional.ofNullable(customerRepository.findByName(schedulingDTO.name()))
                 .orElseThrow(() -> new IllegalArgumentException("Customer not found in the database!"));
+    }
+
+    private Customer requireAuthenticatedCustomer() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Customer customer) {
+            return customer;
+        }
+        throw new IllegalArgumentException("Authenticated customer required");
     }
 
     private String decryptField(String value) {

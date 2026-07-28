@@ -66,9 +66,20 @@ public class OccurrenceService {
     // Cliente pode visualizar suas próprias ocorrências ou reclamações;
     @Transactional(readOnly = true)
     public List<OccurrenceListDTO> getOccurrencesByCustomerId(Long customerId) {
-        customerRepository.findById(customerId)
-                .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + customerId));
-        return occurrenceRepository.findByCustomerId(customerId).stream()
+        Customer authenticatedCustomer = resolveAuthenticatedCustomer();
+        final Long resolvedCustomerId;
+
+        if (authenticatedCustomer != null) {
+            resolvedCustomerId = authenticatedCustomer.getId();
+        } else if (customerId == null) {
+            throw new IllegalArgumentException("Customer id is required");
+        } else {
+            customerRepository.findById(customerId)
+                    .orElseThrow(() -> new IllegalArgumentException("Customer not found with id: " + customerId));
+            resolvedCustomerId = customerId;
+        }
+
+        return occurrenceRepository.findByCustomerId(resolvedCustomerId).stream()
                 .map(occurrence -> new OccurrenceListDTO(
                         occurrence.getId(),
                         occurrence.getDescription(),
@@ -134,6 +145,14 @@ public class OccurrenceService {
         }
 
         throw new IllegalArgumentException("Customer not found for occurrence registration");
+    }
+
+    private Customer resolveAuthenticatedCustomer() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Customer customer) {
+            return customer;
+        }
+        return null;
     }
 
     private String decryptField(String value) {

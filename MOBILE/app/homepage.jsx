@@ -1,15 +1,28 @@
 import { View, Text, StyleSheet, Image } from 'react-native'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
 import { User_Guide_Card } from '../components/User_Guide_Card'
+import { getUserName } from '../services/api'
 
 export default function Homepage() {
 
     const [isGuideVisible, setIsGuideVisible] = useState(false);
+    const [userName, setUserName] = useState('usuário');
 
     const router = useRouter();
+
+    useEffect(() => {
+        async function loadName() {
+            const name = await getUserName();
+            if (name) {
+                const firstName = name.trim().split(/\s+/)[0];
+                setUserName(firstName);
+            }
+        }
+        loadName();
+    }, []);
 
     return (
         <>
@@ -25,7 +38,7 @@ export default function Homepage() {
 
                     {/* 3: Texto */}
                     <Text style={styles.textContainer}>
-                        <Text style={styles.text}>O que faremos hoje, </Text> <Text style={styles.textSpan}>usuário</Text> <Text style={styles.text}>?</Text>
+                        <Text style={styles.text}>O que faremos hoje, </Text> <Text style={styles.textSpan}>{userName}</Text> <Text style={styles.text}>?</Text>
                     </Text>
 
                     {/* 4: Imagem */}
