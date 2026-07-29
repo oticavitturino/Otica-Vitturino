@@ -1,0 +1,122 @@
+.credits-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    max-width: 480px;
+    padding: 10px 16px 24px;
+    text-align: center;
+    gap: 12px;
+}
+
+.credits-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.credits-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 8px 0;
+}
+
+.credits-scroll-area {
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    padding-right: 4px;
+}
+
+.credit-item strong {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+    display: block;
+}
+
+.credit-item p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    color: #555;
+    margin: 4px 0 0 0;
+}
+
+.credit-item a {
+    color: #1DA299;
+    text-decoration: underline;
+}
+
+/* 1600 * 900 */
+
+@media (max-width: 1600px) {
+    .credits-card {
+        width: 40%;
+    }
+
+    .credits-card h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* 1366 * 768 */
+
+@media (max-width: 1366px) {
+    .credits-card {
+        width: 45%;
+    }
+
+    .credits-card h3 {
+        font-size: 1.15rem;
+    }
+
+    .credits-subtitle,
+    .credit-item strong,
+    .credit-item p {
+        font-size: 0.8rem;
+    }
+}
+
+/* 1280 * 720 */
+
+@media (max-width: 1280px) and (max-resolution: 1.19dppx) {
+    .credits-card {
+        width: 48%;
+        gap: 10px;
+    }
+
+    .credits-card h3 {
+        font-size: 1.05rem;
+    }
+
+    .credits-subtitle,
+    .credit-item strong,
+    .credit-item p {
+        font-size: 0.75rem;
+    }
+
+    .credits-scroll-area {
+        max-height: 200px;
+        gap: 10px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .credits-card {
+        width: 85%;
+        padding: 15px;
+    }
+
+    .credits-card h3 {
+        font-size: 1.2rem;
+    }
+}

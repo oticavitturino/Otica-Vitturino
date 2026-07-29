@@ -49,7 +49,7 @@
     height: 60px;
     width: min(330px, 90%);
     font-size: 1.3rem;
-    margin-top: 30px;
+    margin-top: 12px;
     margin-bottom: 30px;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     transition: background-color 0.2s ease;
@@ -57,6 +57,22 @@
 
 .btn-exit:hover {
     background-color: #888888;
+}
+
+.btn-credits {
+    background-color: transparent;
+    color: #FFFFFF;
+    height: 48px;
+    width: min(330px, 90%);
+    font-size: 1rem;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    box-shadow: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-credits:hover {
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 @keyframes menuSlide {
@@ -84,6 +100,12 @@
         width: min(275px, 90%);
         font-size: 1.083rem;
     }
+
+    .btn-credits {
+        height: 42px;
+        width: min(275px, 90%);
+        font-size: 0.9rem;
+    }
 }
 
 /* 1366 * 768 */
@@ -98,6 +120,12 @@
         height: 43px;
         width: min(235px, 90%);
         font-size: 0.925rem;
+    }
+
+    .btn-credits {
+        height: 38px;
+        width: min(235px, 90%);
+        font-size: 0.8rem;
     }
 }
 
@@ -114,6 +142,12 @@
         height: 40px;
         width: min(220px, 90%);
         font-size: 0.867rem;
+    }
+
+    .btn-credits {
+        height: 36px;
+        width: min(220px, 90%);
+        font-size: 0.75rem;
     }
 }
 
@@ -153,5 +187,10 @@
     .btn-exit {
         height: 50px;
         font-size: 1rem;
+    }
+
+    .btn-credits {
+        height: 44px;
+        font-size: 0.9rem;
     }
 }
