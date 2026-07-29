@@ -350,7 +350,16 @@ export default function BookingPage() {
                                         <TouchableOpacity
                                             key={`${raw}-${index}`}
                                             style={styles.hourCard}
-                                            onPress={() => appointmentScheduling(item)}
+                                            onPress={() => {
+                                                Alert.alert(
+                                                    'Confirmar Agendamento',
+                                                    'Você deseja agendar nesse horário?',
+                                                    [
+                                                        { text: 'Não', style: 'cancel' },
+                                                        { text: 'Sim', onPress: () => appointmentScheduling(item) }
+                                                    ]
+                                                );
+                                            }}
                                         >
                                             <Text style={styles.hourText}>{timeString}</Text>
                                         </TouchableOpacity>
