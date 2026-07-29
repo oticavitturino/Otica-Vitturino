@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, ScrollView, Text, StyleSheet, Image } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'expo-router'
 import { Header } from '../components/Header'
@@ -26,7 +26,7 @@ export default function Homepage() {
 
     return (
         <>
-            <View style={styles.container}>
+            <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 60 }}>
                 {/* 1: Header */}
                 <Header />
 
@@ -38,7 +38,9 @@ export default function Homepage() {
 
                     {/* 3: Texto */}
                     <Text style={styles.textContainer}>
-                        <Text style={styles.text}>O que faremos hoje, </Text> <Text style={styles.textSpan}>{userName}</Text> <Text style={styles.text}>?</Text>
+                        <Text style={styles.text}>O que faremos hoje,{'\n'}</Text>
+                        <Text style={styles.textSpan}>{userName}</Text>
+                        <Text style={styles.text}>?</Text>
                     </Text>
 
                     {/* 4: Imagem */}
@@ -52,7 +54,7 @@ export default function Homepage() {
                         <Button style={styles.pageButton} textStyle={styles.pageButtonText} title='Indicar Aplicativo' onPress={() => router.navigate('/refer-a-friend')} />
                     </View>
                 </View>
-            </View>
+            </ScrollView>
 
             {/* 6: Card do guia de uso */}
             {isGuideVisible && (
@@ -90,20 +92,21 @@ const styles = StyleSheet.create({
         color: '#1DA299'
     },
     textContainer: {
-        flexDirection: 'row',
         width: '100%',
-        justifyContent: 'center',
-        marginTop: 16
+        marginTop: 16,
+        textAlign: 'center',
     },
     text: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#6E6E6E'
+        color: '#6E6E6E',
+        textAlign: 'center',
     },
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#1DA299'
+        color: '#1DA299',
+        textAlign: 'center',
     },
     illustration: {
         width: 250,
