@@ -1,5 +1,3 @@
-/* Layout principal — sem scroll na página (100vh) */
-
 .layout-container {
     position: relative;
     height: 100vh;

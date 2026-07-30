@@ -213,5 +213,5 @@ const styles = StyleSheet.create({
     closeCreditsButtonText: {
         fontSize: 16,
         color: '#1DA299',
-    },
+    }
 })
