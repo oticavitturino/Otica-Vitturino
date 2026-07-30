@@ -47,7 +47,13 @@ function Scheduling_Panel() {
             const response = await apiFetch('/scheduling/getAllSchedulings');
             if (response.ok) {
                 const data = await response.json();
-                setAppointments(data);
+                const sorted = [...data].sort((a, b) => {
+                    const dateA = new Date(a.schedulingDate || 0).getTime();
+                    const dateB = new Date(b.schedulingDate || 0).getTime();
+                    if (dateB !== dateA) return dateB - dateA;
+                    return (b.id ?? 0) - (a.id ?? 0);
+                });
+                setAppointments(sorted);
             } else {
                 console.error('Falha ao buscar agendamentos');
             }
@@ -62,7 +68,9 @@ function Scheduling_Panel() {
             const response = await apiFetch('/scheduling/getAllDatesAvailable');
             if (response.ok) {
                 const data = await response.json();
-                const datesOnly = data.map(item => item.date_available);
+                const datesOnly = data
+                    .map(item => item.date_available)
+                    .sort((a, b) => new Date(b || 0).getTime() - new Date(a || 0).getTime());
                 setAvailableDates(datesOnly);
             } else {
                 console.error('Falha ao buscar datas disponíveis');

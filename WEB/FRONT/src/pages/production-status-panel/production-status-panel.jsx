@@ -91,7 +91,8 @@ function Production_Status_Panel() {
             const response = await apiFetch('/orders/getAllOrders');
             if (response.ok) {
                 const data = await response.json();
-                setOrders(data);
+                const sorted = [...data].sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+                setOrders(sorted);
             } else {
                 console.error('Falha ao buscar produtos.');
             }

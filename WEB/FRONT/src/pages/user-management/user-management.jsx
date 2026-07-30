@@ -73,7 +73,8 @@ function User_Management() {
             });
             if (response.ok) {
                 const data = await response.json();
-                setUsers(data);
+                const sorted = [...data].sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+                setUsers(sorted);
             } else {
                 console.error('Erro ao buscar clientes.');
             }

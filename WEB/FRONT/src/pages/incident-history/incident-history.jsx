@@ -27,6 +27,7 @@ function Incident_History() {
 
     const [occurrenceToDelete, setOccurrenceToDelete] = useState(null);
     const [occurrenceToRespond, setOccurrenceToRespond] = useState(null);
+    const [occurrenceDescriptionToView, setOccurrenceDescriptionToView] = useState(null);
     const [responseMessage, setResponseMessage] = useState('');
     const [occurrences, setOccurrences] = useState([]);
 
@@ -36,7 +37,13 @@ function Incident_History() {
             const response = await apiFetch('/occurrences/listAll');
             if (response.ok) {
                 const data = await response.json();
-                setOccurrences(data);
+                const sorted = [...data].sort((a, b) => {
+                    const dateA = new Date(a.sentAt || 0).getTime();
+                    const dateB = new Date(b.sentAt || 0).getTime();
+                    if (dateB !== dateA) return dateB - dateA;
+                    return (b.id ?? 0) - (a.id ?? 0);
+                });
+                setOccurrences(sorted);
             } else {
                 console.error('Falha ao buscar ocorrências.');
             }
@@ -169,7 +176,13 @@ function Incident_History() {
                                             <div className='list-row-data'>
                                                 <span>{item.customerName}</span>
                                                 <span>{formatOccurrenceCategory(item.category)}</span>
-                                                <span>{item.description}</span>
+                                                <span
+                                                    className='occurrence-description-preview'
+                                                    title='Clique para ver a descrição completa'
+                                                    onClick={() => setOccurrenceDescriptionToView(item)}
+                                                >
+                                                    {item.description}
+                                                </span>
                                                 <span>{formattedDate} {formattedTime}</span>
                                                 <span></span>
                                             </div>
@@ -227,6 +240,21 @@ function Incident_History() {
                                                     Enviar
                                                 </button>
                                             </form>
+                                        </Card>
+                                    </div>
+                                )}
+
+                                {/* 8: Pop-up de descrição completa */}
+                                {occurrenceDescriptionToView && (
+                                    <div className='modal-overlay' onClick={() => setOccurrenceDescriptionToView(null)}>
+                                        <Card className='view-description-card' onClick={(e) => e.stopPropagation()}>
+                                            <button className='x-btn' onClick={() => setOccurrenceDescriptionToView(null)}>
+                                                <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                            </button>
+
+                                            <p className='view-description-text'>
+                                                {occurrenceDescriptionToView.description}
+                                            </p>
                                         </Card>
                                     </div>
                                 )}

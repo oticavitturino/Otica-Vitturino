@@ -94,6 +94,19 @@
     padding-left: 10px;
 }
 
+.main-container-incident-history .occurrence-description-preview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.main-container-incident-history .occurrence-description-preview:hover {
+    text-decoration: underline;
+}
+
 /* 6: Pop-up de exclusão de ocorrência/reclamação */
 .exclude-occurrence-card {
     display: flex;
@@ -245,6 +258,31 @@
     background-color: #187E77;
 }
 
+/* 8: Pop-up de descrição completa */
+.view-description-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 35%;
+    max-width: 520px;
+    padding: 10px 16px 24px;
+    text-align: center;
+    gap: 12px;
+}
+
+.view-description-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #333333;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
 /* 1600 * 900 */
 
 @media (max-width: 1600px) {
@@ -302,6 +340,15 @@
         height: 50px;
         width: 40%;
         font-size: 1rem;
+    }
+
+    .view-description-card {
+        width: 40%;
+        gap: 10px;
+    }
+
+    .view-description-text {
+        font-size: 0.9rem;
     }
 
     .occurrence-x-btn-img {
@@ -369,6 +416,15 @@
         font-size: 0.854rem;
     }
 
+    .view-description-card {
+        width: 45%;
+        gap: 10px;
+    }
+
+    .view-description-text {
+        font-size: 0.811rem;
+    }
+
     .occurrence-x-btn-img {
         width: 21px;
         height: 21px;
@@ -427,6 +483,15 @@
         height: 40px;
         width: 45%;
         font-size: 0.8rem;
+    }
+
+    .view-description-card {
+        width: 48%;
+        gap: 10px;
+    }
+
+    .view-description-text {
+        font-size: 0.76rem;
     }
 
     .occurrence-x-btn-img {
@@ -534,6 +599,16 @@
         width: 100%;
         height: 50px;
         font-size: 1rem;
+    }
+
+    .view-description-card {
+        width: 85%;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .view-description-text {
+        font-size: 0.95rem;
     }
 
     .occurrence-x-btn-img {
