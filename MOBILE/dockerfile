@@ -5,7 +5,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install \
+RUN npm ci --no-fund \
     && sha256sum package-lock.json | awk '{print $1}' > node_modules/.package-lock.sha256
 
 COPY . .
@@ -16,7 +16,6 @@ RUN sed -i 's/\r$//' /usr/local/bin/mobile-entrypoint \
 EXPOSE 8081
 
 ENV EXPO_NO_TELEMETRY=1 \
-    EXPO_OFFLINE=1 \
     EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
 
 ENTRYPOINT ["mobile-entrypoint"]

@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +31,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "profile", discriminatorType = DiscriminatorType.STRING)
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +49,7 @@ public abstract class User implements UserDetails {
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    @Column(name = "profile", nullable = false)
+    @Column(name = "profile", nullable = false, insertable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private TypeProfile profile;
 

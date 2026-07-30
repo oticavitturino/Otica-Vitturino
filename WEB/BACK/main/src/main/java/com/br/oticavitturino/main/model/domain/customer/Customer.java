@@ -10,6 +10,7 @@ import com.br.oticavitturino.main.model.domain.order.Order;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.OneToMany;
@@ -25,6 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
+@DiscriminatorValue("CUSTOMER")
 public class Customer extends User {
     @Column(name = "name", length = 512, nullable = false)
     private String name;
