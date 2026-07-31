@@ -84,15 +84,25 @@ public class UserService implements UserDetailsService {
         if (data.referralCode() != null && !data.referralCode().trim().isEmpty()) {
             User referrer = repository.findByMyReferralCode(data.referralCode().trim().toUpperCase());
 
-            if (referrer != null) {
-                referrer.setPoints(referrer.getPoints() + 50);
+            if (referrer == null) {
+                throw new IllegalArgumentException("Código de indicação inválido.");
             }
+
+            referrer.setPoints(referrer.getPoints() + 50);
         }
 
         String generatedCode = securityConfigurations.generateUniqueReferralCode(data.name());
         newUser.setMyReferralCode(generatedCode);
 
         return repository.save(newUser);
+    }
+
+    public boolean referralCodeExists(String referralCode) {
+        if (referralCode == null || referralCode.trim().isEmpty()) {
+            return false;
+        }
+
+        return repository.findByMyReferralCode(referralCode.trim().toUpperCase()) != null;
     }
 
     private String normalizeEmail(String email) {

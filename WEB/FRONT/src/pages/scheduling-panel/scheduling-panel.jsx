@@ -35,6 +35,8 @@ function Scheduling_Panel() {
     const [dateTimeInput, setDateTimeInput] = useState('');
     const [appointments, setAppointments] = useState([]);
     const [availableDates, setAvailableDates] = useState([]);
+    const [updatingAppointmentId, setUpdatingAppointmentId] = useState(null);
+    const [updatingAppointmentStatus, setUpdatingAppointmentStatus] = useState(null);
 
     // Função para abrir pop-up ao clicar no botão "Adicionar datas disponíveis"
     function addSchedulingDate() {
@@ -132,6 +134,13 @@ function Scheduling_Panel() {
 
     // Função para confirmar ou cancelar agendamento
     async function handleUpdateAppointmentStatus(schedulingId, newStatus) {
+        if (updatingAppointmentId !== null) {
+            return;
+        }
+
+        setUpdatingAppointmentId(schedulingId);
+        setUpdatingAppointmentStatus(newStatus);
+
         try {
             const url = `/scheduling/confirmOrCancelAppointment?schedulingId=${schedulingId}&status=${newStatus}`;
 
@@ -147,6 +156,9 @@ function Scheduling_Panel() {
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
+        } finally {
+            setUpdatingAppointmentId(null);
+            setUpdatingAppointmentStatus(null);
         }
     }
 
@@ -191,22 +203,35 @@ function Scheduling_Panel() {
                                     const [year, month, day] = datePart.split('-');
                                     const formattedDate = `${day}/${month}/${year}`;
                                     const formattedTime = timePart.substring(0, 5);
+                                    const isUpdating = updatingAppointmentId === appointment.id;
+                                    const isConfirming = isUpdating && updatingAppointmentStatus === 'CONCLUIDO';
+                                    const isCancelling = isUpdating && updatingAppointmentStatus === 'CANCELADO';
 
                                     return (
                                         <List_Item key={appointment.id} actions={
                                             <>
                                                 <button
                                                     className='icon-btn'
+                                                    disabled={isUpdating}
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CONCLUIDO')}
                                                 >
-                                                    <img src={CheckIcon} className='action-icon' alt='Confirmar'></img>
+                                                    {isConfirming ? (
+                                                        <span className="spinner"></span>
+                                                    ) : (
+                                                        <img src={CheckIcon} className='action-icon' alt='Confirmar'></img>
+                                                    )}
                                                 </button>
 
                                                 <button
                                                     className='icon-btn'
+                                                    disabled={isUpdating}
                                                     onClick={() => handleUpdateAppointmentStatus(appointment.id, 'CANCELADO')}
                                                 >
-                                                    <img src={XIcon} className="action-icon" alt="Cancelar"></img>
+                                                    {isCancelling ? (
+                                                        <span className="spinner"></span>
+                                                    ) : (
+                                                        <img src={XIcon} className="action-icon" alt="Cancelar"></img>
+                                                    )}
                                                 </button>
                                             </>
                                         }>

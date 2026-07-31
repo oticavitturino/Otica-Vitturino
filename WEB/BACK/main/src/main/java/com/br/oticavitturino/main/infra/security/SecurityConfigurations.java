@@ -51,6 +51,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                     .requestMatchers(HttpMethod.POST, "/customer/register").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/customer/all").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/customer/validateReferralCode").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/customer/update").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/addDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/scheduling/deleteDateAvailable").hasRole("ADMIN")

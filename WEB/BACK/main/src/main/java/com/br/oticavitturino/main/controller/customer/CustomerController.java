@@ -1,5 +1,7 @@
 package com.br.oticavitturino.main.controller.customer;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.br.oticavitturino.main.model.domain.customer.CustomerDTO;
@@ -35,6 +37,12 @@ public class CustomerController {
     @GetMapping("/score")
     public ResponseEntity<?> getCustomerScore(@RequestParam Long id) {
         return ResponseEntity.ok(service.getCustomerScore(id));
+    }
+
+    @GetMapping("/validateReferralCode")
+    public ResponseEntity<Map<String, Boolean>> validateReferralCode(@RequestParam String code) {
+        boolean valid = userService.referralCodeExists(code);
+        return ResponseEntity.ok(Map.of("valid", valid));
     }
 
     @PostMapping("/register")

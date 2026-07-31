@@ -38,12 +38,26 @@ function User_Management() {
     // Função para atualizar os dados do formulário a cada digitação
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+
+        if (name === 'phone') {
+            const digitsOnly = value.replace(/\D/g, '').slice(0, 15);
+            setFormData({ ...formData, phone: digitsOnly });
+            return;
+        }
+
         setFormData({ ...formData, [name]: value });
     };
 
     // Função para atualizar os dados do formulário de edição a cada digitação
     const handleUpdateInputChange = (event) => {
         const { name, value } = event.target;
+
+        if (name === 'phone') {
+            const digitsOnly = value.replace(/\D/g, '').slice(0, 15);
+            setUpdateData({ ...updateData, phone: digitsOnly });
+            return;
+        }
+
         setUpdateData({ ...updateData, [name]: value });
     };
 
@@ -52,7 +66,7 @@ function User_Management() {
         setUpdateData({
             id: user.id || '',
             name: user.name || '',
-            phone: user.phone || '',
+            phone: (user.phone || '').replace(/\D/g, '').slice(0, 15),
             address: user.address || '',
             birthDate: user.birthDate || ''
         });
@@ -97,7 +111,31 @@ function User_Management() {
             return;
         }
 
+        const referralCode = formData.referralCode.trim();
+
         try {
+            if (referralCode) {
+                const validationResponse = await apiFetch(
+                    `/customer/validateReferralCode?code=${encodeURIComponent(referralCode)}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${getToken()}`
+                        }
+                    }
+                );
+
+                if (!validationResponse.ok) {
+                    alert('Não foi possível validar o código de indicação. Tente novamente.');
+                    return;
+                }
+
+                const validationData = await validationResponse.json();
+                if (!validationData.valid) {
+                    alert('Código de indicação inválido. Informe um código existente ou deixe o campo vazio.');
+                    return;
+                }
+            }
+
             const response = await apiFetch('/customer/register', {
                 method: 'POST',
                 headers: {
@@ -112,7 +150,7 @@ function User_Management() {
                     birthDate: formData.birthDate,
                     active: true,
                     profile: 'CUSTOMER',
-                    referralCode: formData.referralCode
+                    referralCode: referralCode
                 })
             });
 
@@ -123,7 +161,16 @@ function User_Management() {
                 setShowReferralInput(false);
                 fetchAllUsers();
             } else {
-                alert(`Erro ao cadastrar usuário (${response.status}). Verifique os dados ou faça login novamente.`);
+                let errorMessage = `Erro ao cadastrar usuário (${response.status}). Verifique os dados ou faça login novamente.`;
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+                } catch {
+                    // ignore parse errors
+                }
+                alert(errorMessage);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
@@ -179,7 +226,18 @@ function User_Management() {
                                 <Input placeholder='Nome' type='text' name='name' value={formData.name} onChange={handleInputChange} required />
                                 <Input placeholder='E-mail' type='email' name='email' value={formData.email} onChange={handleInputChange} required />
                                 <Input placeholder='Senha' type='password' name='password' value={formData.password} onChange={handleInputChange} required />
-                                <Input placeholder='Telefone' type='tel' name='phone' value={formData.phone} onChange={handleInputChange} required />
+                                <Input
+                                    placeholder='Telefone'
+                                    type='tel'
+                                    name='phone'
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
+                                    inputMode='numeric'
+                                    maxLength={15}
+                                    pattern='[0-9]{1,15}'
+                                    title='Somente números, no máximo 15 dígitos'
+                                    required
+                                />
                                 <Input placeholder='Endereço' type='text' name='address' value={formData.address} onChange={handleInputChange} required />
 
                                 <div className='input-row-inline'>
@@ -282,6 +340,10 @@ function User_Management() {
                                                     name='phone'
                                                     value={updateData.phone}
                                                     onChange={handleUpdateInputChange}
+                                                    inputMode='numeric'
+                                                    maxLength={15}
+                                                    pattern='[0-9]{1,15}'
+                                                    title='Somente números, no máximo 15 dígitos'
                                                     required
                                                 />
                                             </div>

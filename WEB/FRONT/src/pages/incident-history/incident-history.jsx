@@ -30,6 +30,7 @@ function Incident_History() {
     const [occurrenceDescriptionToView, setOccurrenceDescriptionToView] = useState(null);
     const [responseMessage, setResponseMessage] = useState('');
     const [occurrences, setOccurrences] = useState([]);
+    const [isSendingResponse, setIsSendingResponse] = useState(false);
 
     // Função para buscar todas as ocorrências
     async function fetchAllOccurences() {
@@ -64,6 +65,7 @@ function Incident_History() {
     function closeRespondModal() {
         setOccurrenceToRespond(null);
         setResponseMessage('');
+        setIsSendingResponse(false);
     }
 
     // Função de deletar ocorrência
@@ -88,9 +90,11 @@ function Incident_History() {
     async function handleSendResponse(event) {
         event.preventDefault();
 
-        if (!occurrenceToRespond) {
+        if (!occurrenceToRespond || isSendingResponse) {
             return;
         }
+
+        setIsSendingResponse(true);
 
         try {
             const response = await apiFetch('/occurrences/respond', {
@@ -115,9 +119,11 @@ function Incident_History() {
                     // ignore parse errors
                 }
                 alert(errorMessage);
+                setIsSendingResponse(false);
             }
         } catch (error) {
             console.error('Erro de requisição: ', error);
+            setIsSendingResponse(false);
         }
     }
 
@@ -236,8 +242,8 @@ function Incident_History() {
                                                     />
                                                 </div>
 
-                                                <button type='submit' className='btn-send-response'>
-                                                    Enviar
+                                                <button type='submit' className='btn-send-response' disabled={isSendingResponse}>
+                                                    {isSendingResponse ? <span className="spinner"></span> : 'Enviar'}
                                                 </button>
                                             </form>
                                         </Card>
