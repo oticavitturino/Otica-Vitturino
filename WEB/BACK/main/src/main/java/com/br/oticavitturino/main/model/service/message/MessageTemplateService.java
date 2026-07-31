@@ -89,7 +89,7 @@ public class MessageTemplateService {
 
             // Mesagem de Lembrete
             // 15 dias;
-            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(15).isBefore(LocalDateTime.now()))) {
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUIDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(15).isBefore(LocalDateTime.now()))) {
                 TypeMessageEnum type = TypeMessageEnum.LEMBRETE_15_DIAS;
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
@@ -99,7 +99,7 @@ public class MessageTemplateService {
             }
 
             // 30 dias;
-            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(30).isBefore(LocalDateTime.now()))) {
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUIDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(30).isBefore(LocalDateTime.now()))) {
                 TypeMessageEnum type = TypeMessageEnum.LEMBRETE_30_DIAS;
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
@@ -109,7 +109,7 @@ public class MessageTemplateService {
             }
 
             // 3 meses;
-            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(90).isBefore(LocalDateTime.now()))) {
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUIDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(90).isBefore(LocalDateTime.now()))) {
                 TypeMessageEnum type = TypeMessageEnum.LEMBRETE_90_DIAS;
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
@@ -119,7 +119,7 @@ public class MessageTemplateService {
             }
 
             // 6 meses;
-            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(180).isBefore(LocalDateTime.now()))) {
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUIDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(180).isBefore(LocalDateTime.now()))) {
                 TypeMessageEnum type = TypeMessageEnum.LEMBRETE_180_DIAS;
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
@@ -129,7 +129,7 @@ public class MessageTemplateService {
             }
 
             // 1 ano;
-            if (customer.getOrders().stream().anyMatch(order -> "CONCLUÍDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(365).isBefore(LocalDateTime.now()))) {
+            if (customer.getOrders().stream().anyMatch(order -> "CONCLUIDO".equals(String.valueOf(order.getOrderStatus()))) && customer.getOrders().stream().anyMatch(order -> order.getOrderDate().plusDays(365).isBefore(LocalDateTime.now()))) {
                 TypeMessageEnum type = TypeMessageEnum.LEMBRETE_365_DIAS;
                 String templateText = repository.findTemplateTextByType(type);
                 if (templateText != null && !templateText.isEmpty()) {
