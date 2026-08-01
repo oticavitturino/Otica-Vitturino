@@ -9,7 +9,9 @@ import com.br.oticavitturino.main.model.service.customer.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,7 +60,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteCustomer(@RequestParam Long id) {
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         service.deleteCustomer(id);
         return ResponseEntity.ok().build();
     }

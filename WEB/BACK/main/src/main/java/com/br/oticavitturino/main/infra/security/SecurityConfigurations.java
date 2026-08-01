@@ -53,6 +53,7 @@ public class SecurityConfigurations {
                     .requestMatchers(HttpMethod.GET, "/customer/all").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.GET, "/customer/validateReferralCode").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/customer/update").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/customer/delete/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/addDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/scheduling/deleteDateAvailable").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/scheduling/confirmOrCancelAppointment").hasRole("ADMIN")

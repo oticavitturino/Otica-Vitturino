@@ -187,7 +187,7 @@
     padding: 0 20px !important;
 }
 
-/* 11: Pop-up de edição de usuário */
+/* 10: Pop-up de edição de usuário */
 .edit-user-card {
     display: flex;
     flex-direction: column;
@@ -249,6 +249,72 @@
 
 .btn-save-user:hover {
     background-color: #187E77;
+}
+
+/* 11: Pop-up de exclusão de usuário */
+.delete-user-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+    padding: 10px 16px;
+    text-align: center;
+    gap: 15px;
+}
+
+.delete-user-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: #3C7975;
+    margin: 0;
+}
+
+.delete-user-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #666666;
+    margin: 0;
+    word-break: break-word;
+}
+
+.delete-user-card .btn-container {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-user-card .yes-btn {
+    background-color: #1DA299;
+    color: #FFFFFF;
+    font-size: 1rem;
+    height: 50px;
+    width: 120px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.delete-user-card .yes-btn:hover {
+    background-color: #187E77;
+}
+
+.delete-user-card .no-btn {
+    background-color: #CC5031;
+    color: #FFFFFF;
+    font-size: 1rem;
+    height: 50px;
+    width: 120px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 30px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease;
+}
+
+.delete-user-card .no-btn:hover {
+    background-color: #c73d1a;
 }
 
 /* Aplica o transform apenas na página de Usuários e apenas em telas acima de 1600px */
@@ -347,6 +413,26 @@
         height: 46px;
         font-size: 0.917rem;
     }
+
+    .delete-user-card {
+        gap: 13px;
+    }
+
+    .delete-user-card h3 {
+        font-size: 1.417rem;
+    }
+
+    .delete-user-name {
+        font-size: 0.9rem;
+    }
+
+    .delete-user-card .yes-btn,
+    .delete-user-card .no-btn {
+        height: 45px;
+        width: 110px;
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+    }
 }
 
 /* 1366 * 768 */
@@ -418,6 +504,26 @@
     .btn-save-user {
         height: 39px;
         font-size: 0.783rem;
+    }
+
+    .delete-user-card {
+        gap: 11px;
+    }
+
+    .delete-user-card h3 {
+        font-size: 1.209rem;
+    }
+
+    .delete-user-name {
+        font-size: 0.811rem;
+    }
+
+    .delete-user-card .yes-btn,
+    .delete-user-card .no-btn {
+        height: 38px;
+        width: 94px;
+        font-size: 0.811rem;
+        margin-bottom: 17px;
     }
 }
 
@@ -586,6 +692,26 @@
         height: 37px;
         font-size: 0.733rem;
     }
+
+    .delete-user-card {
+        gap: 10px;
+    }
+
+    .delete-user-card h3 {
+        font-size: 1.133rem;
+    }
+
+    .delete-user-name {
+        font-size: 0.76rem;
+    }
+
+    .delete-user-card .yes-btn,
+    .delete-user-card .no-btn {
+        height: 36px;
+        width: 88px;
+        font-size: 0.76rem;
+        margin-bottom: 16px;
+    }
 }
 
 /* Mobile */
@@ -698,5 +824,32 @@
         width: 100%;
         height: 50px;
         margin-top: 15px;
+    }
+
+    .delete-user-card {
+        width: 85%;
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .delete-user-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .delete-user-name {
+        font-size: 0.95rem;
+    }
+
+    .delete-user-card .btn-container {
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .delete-user-card .yes-btn,
+    .delete-user-card .no-btn {
+        height: 50px;
+        width: 45%;
+        font-size: 1rem;
+        margin-bottom: 10px;
     }
 }

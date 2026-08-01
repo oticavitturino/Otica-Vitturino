@@ -6,6 +6,7 @@ import Button from '../../components/button'
 import List_item from '../../components/list-item'
 import Card from '../../components/card'
 import PenIcon from '../../assets/pen.png'
+import TrashIcon from '../../assets/trash-2.png'
 import XIcon from '../../assets/x.png'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -27,6 +28,7 @@ function User_Management() {
     const [users, setUsers] = useState([]);
     const [showReferralInput, setShowReferralInput] = useState(false);
     const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const [userToDelete, setUserToDelete] = useState(null);
     const [updateData, setUpdateData] = useState({
         id: '',
         name: '',
@@ -206,6 +208,24 @@ function User_Management() {
         }
     }
 
+    // Função de deletar usuário
+    async function deleteUser(id) {
+        try {
+            const response = await apiFetch(`/customer/delete/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                setUserToDelete(null);
+                fetchAllUsers();
+            } else {
+                alert('Erro ao excluir usuário. Tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro de requisição: ', error);
+        }
+    }
+
     return (
         <Layout>
             <div className='user-management-wrapper'>
@@ -299,6 +319,10 @@ function User_Management() {
                                                 <button className='icon-btn' onClick={() => openUpdateModal(user)}>
                                                     <img src={PenIcon} className='action-icon' alt='Editar usuário' />
                                                 </button>
+
+                                                <button className='icon-btn' onClick={() => setUserToDelete(user)}>
+                                                    <img src={TrashIcon} className='action-icon' alt='Deletar usuário' />
+                                                </button>
                                             </>
                                         }>
                                             <span>{user.name} | {user.email}</span>
@@ -307,7 +331,7 @@ function User_Management() {
                                 )}
                             </div>
 
-                            {/* 11: Pop-up de edição de usuário */}
+                            {/* 10: Pop-up de edição de usuário */}
                             {isUpdateModalOpen && (
                                 <div className='modal-overlay' onClick={() => setIsUpdateModalOpen(false)}>
                                     <Card className='edit-user-card' onClick={(e) => e.stopPropagation()}>
@@ -377,6 +401,25 @@ function User_Management() {
                                                 Salvar Alterações
                                             </Button>
                                         </form>
+                                    </Card>
+                                </div>
+                            )}
+
+                            {/* 11: Pop-up de exclusão de usuário */}
+                            {userToDelete && (
+                                <div className='modal-overlay' onClick={() => setUserToDelete(null)}>
+                                    <Card className='delete-user-card' onClick={(e) => e.stopPropagation()}>
+                                        <button className='x-btn' onClick={() => setUserToDelete(null)}>
+                                            <img src={XIcon} className='x-btn-img' alt='Fechar'></img>
+                                        </button>
+
+                                        <h3>Deseja excluir esse <br />usuário?</h3>
+                                        <p className='delete-user-name'>{userToDelete.name}</p>
+
+                                        <div className='btn-container'>
+                                            <Button className='yes-btn' onClick={() => deleteUser(userToDelete.id)}>Sim</Button>
+                                            <Button className='no-btn' onClick={() => setUserToDelete(null)}>Não</Button>
+                                        </div>
                                     </Card>
                                 </div>
                             )}
