@@ -70,6 +70,13 @@ public class CustomerService {
                 updatedCustomer.getBirthDate());
     }
 
+    @Transactional
+    public void deleteCustomer(Long id) {
+        Customer customer = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
+        repository.delete(customer);
+    }
+
     private String decryptField(String value) {
         if (value == null || value.isBlank()) {
             return value;

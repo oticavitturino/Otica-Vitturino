@@ -56,4 +56,10 @@ public class CustomerController {
         CustomerDTO updatedCustomer = service.updateCustomer(id, customerDTO);
         return ResponseEntity.ok(updatedCustomer);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteCustomer(@RequestParam Long id) {
+        service.deleteCustomer(id);
+        return ResponseEntity.ok().build();
+    }
 }
