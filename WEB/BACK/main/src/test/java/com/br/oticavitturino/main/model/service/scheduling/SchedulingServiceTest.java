@@ -166,6 +166,7 @@ public class SchedulingServiceTest {
         AvailableSlot slot = new AvailableSlot(testDate);
         Customer customer = new Customer();
         customer.setName("John Doe");
+        customer.setPoints(0);
 
         when(availableSlotRepository.findBySlotDate(testDate)).thenReturn(slot);
         when(customerRepository.findByName("John Doe")).thenReturn(customer);
@@ -173,6 +174,8 @@ public class SchedulingServiceTest {
         SchedulingDTO result = schedulingService.scheduleAppointment(dto);
 
         assertNotNull(result);
+        assertEquals(30, customer.getPoints());
+        verify(customerRepository, times(1)).save(customer);
         verify(repository, times(1)).save(any(Scheduling.class));
         verify(availableSlotRepository, times(1)).delete(slot);
     }
@@ -181,14 +184,19 @@ public class SchedulingServiceTest {
     @DisplayName("Teste de cancelar um agendamento")
     void testCancelAppointment() {
         Long id = 1L;
+        Customer customer = new Customer();
+        customer.setPoints(30);
         Scheduling scheduling = new Scheduling(testDate);
-        scheduling.setCustomer(new Customer());
+        scheduling.setSchedulingType(SchedulingEnum.CONSULTA);
+        scheduling.setCustomer(customer);
 
         when(repository.findById(id)).thenReturn(Optional.of(scheduling));
 
         schedulingService.cancelAppointment(id);
 
         assertEquals(StatusEnum.CANCELADO, scheduling.getStatus());
+        assertEquals(0, customer.getPoints());
+        verify(customerRepository, times(1)).save(customer);
         verify(repository, times(1)).save(scheduling);
     }
 }
