@@ -126,7 +126,6 @@ public class SchedulingService {
         Scheduling scheduling = findReusableScheduling(customer);
 
         applySchedulingPoints(customer, schedulingDTO.scheduling_type());
-        customerRepository.save(customer);
 
         scheduling.setSchedulingDate(slot.getSlotDate());
         scheduling.setCustomer(customer);
@@ -172,8 +171,6 @@ public class SchedulingService {
         else if (scheduling.getSchedulingType() == SchedulingEnum.LIMPEZA) {
             customer.setPoints(Math.max(0, customer.getPoints() - 10));
         }
-
-        customerRepository.save(customer);
 
         // Devolve o horário à lista de datas disponíveis
         availableSlotRepository.save(new AvailableSlot(scheduling.getSchedulingDate()));
