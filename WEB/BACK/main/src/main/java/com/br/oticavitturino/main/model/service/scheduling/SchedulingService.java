@@ -73,6 +73,8 @@ public class SchedulingService {
         if (status == StatusEnum.CONCLUIDO) {
             scheduling.setStatus(StatusEnum.CONCLUIDO);
             sendMailMessage.sendEmailNotification(customerEmail, "Consulta Confirmada", customerName, "Seu agendamento foi confirmado com sucesso!");
+            customer.setPoints(customer.getPoints() + 30);
+            customerRepository.save(customer);
         } else if (status == StatusEnum.CANCELADO) {
             scheduling.setStatus(StatusEnum.CANCELADO);
             sendMailMessage.sendEmailNotification(customerEmail, "Consulta Cancelada", customerName, "Seu agendamento foi cancelado.");
