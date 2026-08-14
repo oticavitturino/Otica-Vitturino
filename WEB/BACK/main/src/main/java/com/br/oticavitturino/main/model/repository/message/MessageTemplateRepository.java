@@ -8,8 +8,7 @@ import com.br.oticavitturino.main.model.domain.message.MessageTemplate;
 import com.br.oticavitturino.main.model.domain.message.TypeMessageEnum;
 
 public interface MessageTemplateRepository extends JpaRepository<MessageTemplate, Long>{
-    @Query
-    (nativeQuery = true, value = "SELECT TEMPLATE_TEXT FROM MESSAGE_TEMPLATE WHERE TYPE = :type")
+    @Query("SELECT m.templateText FROM MessageTemplate m WHERE m.type = :type")
     String findTemplateTextByType(@Param("type") TypeMessageEnum type);
 
     MessageTemplate findTemplateByType(TypeMessageEnum type);

@@ -16,6 +16,7 @@ import com.br.oticavitturino.main.model.domain.order.OrderModifyStatusDTO;
 import com.br.oticavitturino.main.model.domain.order.OrderStatusEnum;
 import com.br.oticavitturino.main.model.repository.customer.CustomerRepository;
 import com.br.oticavitturino.main.model.repository.order.OrderRepository;
+import com.br.oticavitturino.main.model.service.message.MessageTemplateService;
 
 @Service
 public class OrderService {
@@ -25,6 +26,9 @@ public class OrderService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private MessageTemplateService messageTemplateService;
 
     @Transactional
     public OrderDTO createOrder(OrderDTO dto) {
@@ -36,6 +40,9 @@ public class OrderService {
         order.setOrderDate(LocalDateTime.now());
         order.setCustomer(customer);
         Order savedOrder = repository.save(order);
+        if (savedOrder.getOrderStatus() == OrderStatusEnum.REALIZADO) {
+            messageTemplateService.sendRealizedOrderNotification(customer);
+        }
         return new OrderDTO(savedOrder.getId(), savedOrder.getName(), savedOrder.getOrderStatus(), savedOrder.getCustomer().getId());
     }
 

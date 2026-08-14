@@ -1,6 +1,7 @@
 package com.br.oticavitturino.main.model.service.message;
 
 import com.br.oticavitturino.main.infra.email.SendEmailMessage;
+import com.br.oticavitturino.main.infra.security.EncryptionService;
 import com.br.oticavitturino.main.model.domain.customer.Customer;
 import com.br.oticavitturino.main.model.domain.message.MessageTemplate;
 import com.br.oticavitturino.main.model.domain.message.MessageTemplateDTO;
@@ -37,6 +38,9 @@ public class MessageTemplateServiceTest {
 
     @Mock
     private SendEmailMessage sendMailMessage;
+
+    @Mock
+    private EncryptionService encryptionService;
 
     @InjectMocks
     private MessageTemplateService service;
@@ -76,6 +80,10 @@ public class MessageTemplateServiceTest {
         regularCustomer.setOrders(Collections.emptyList());
     }
 
+    private void stubDecrypt() {
+        when(encryptionService.decrypt(anyString())).thenAnswer(invocation -> invocation.getArgument(0));
+    }
+
     @Test
     void testCreateMessageTemplate() {
         when(repository.save(any(MessageTemplate.class))).thenReturn(messageTemplate);
@@ -89,17 +97,14 @@ public class MessageTemplateServiceTest {
 
     @Test
     void testSendMessage() {
+        stubDecrypt();
         List<Customer> customers = Arrays.asList(birthdayCustomer, purchaseCustomer, regularCustomer);
         when(customerRepository.findAll()).thenReturn(customers);
 
-        // Mock aniversário template
         when(repository.findTemplateTextByType(TypeMessageEnum.ANIVERSARIO)).thenReturn("Feliz aniversário, {name}!");
-        // Mock compra template
-        when(repository.findTemplateTextByType(TypeMessageEnum.COMPRA)).thenReturn("Sua compra foi um sucesso, {name}!");
 
         service.sendMessage();
 
-        // Verificar que a mensagem de aniversário foi enviada para o cliente com aniversário hoje
         verify(sendMailMessage, times(1)).sendEmailNotification(
                 eq("joao@example.com"),
                 eq("Feliz aniversário"),
@@ -107,23 +112,55 @@ public class MessageTemplateServiceTest {
                 eq("Feliz aniversário, {name}!")
         );
 
-        // Verificar que a mensagem de compra foi enviada para o cliente com pedido realizado
-        verify(sendMailMessage, times(1)).sendEmailNotification(
-                eq("maria@example.com"),
-                eq("Compra realizada com sucesso!"),
-                eq("Maria"),
-                eq("Sua compra foi um sucesso, {name}!")
+        verify(sendMailMessage, never()).sendEmailNotification(
+                eq("maria@example.com"), anyString(), anyString(), anyString()
         );
 
-        // Verificar que nenhum e-mail foi enviado para o cliente regular
         verify(sendMailMessage, never()).sendEmailNotification(
                 eq("pedro@example.com"), anyString(), anyString(), anyString()
         );
 
-        // Verificar as chamadas aos métodos do repositório
         verify(repository, times(1)).findTemplateTextByType(TypeMessageEnum.ANIVERSARIO);
-        verify(repository, times(1)).findTemplateTextByType(TypeMessageEnum.COMPRA);
+        verify(repository, never()).findTemplateTextByType(TypeMessageEnum.COMPRA);
         verify(customerRepository, times(1)).findAll();
+    }
+
+    @Test
+    void testSendRealizedOrderNotification() {
+        stubDecrypt();
+        when(repository.findTemplateTextByType(TypeMessageEnum.COMPRA)).thenReturn("Seu pedido foi realizado com sucesso, {name}!");
+
+        service.sendRealizedOrderNotification(purchaseCustomer);
+
+        verify(sendMailMessage, times(1)).sendEmailNotification(
+                eq("maria@example.com"),
+                eq("Pedido realizado com sucesso!"),
+                eq("Maria"),
+                eq("Seu pedido foi realizado com sucesso, {name}!")
+        );
+        verify(repository, times(1)).findTemplateTextByType(TypeMessageEnum.COMPRA);
+    }
+
+    @Test
+    void testSendMessage_decryptsEncryptedEmailAndName() {
+        birthdayCustomer.setEmail("encrypted-email");
+        birthdayCustomer.setName("encrypted-name");
+        when(customerRepository.findAll()).thenReturn(Collections.singletonList(birthdayCustomer));
+        when(repository.findTemplateTextByType(TypeMessageEnum.ANIVERSARIO)).thenReturn("Feliz aniversário, {name}!");
+        when(encryptionService.decrypt("encrypted-email")).thenReturn("joao@example.com");
+        when(encryptionService.decrypt("encrypted-name")).thenReturn("João");
+
+        service.sendMessage();
+
+        verify(sendMailMessage, times(1)).sendEmailNotification(
+                eq("joao@example.com"),
+                eq("Feliz aniversário"),
+                eq("João"),
+                eq("Feliz aniversário, {name}!")
+        );
+        verify(sendMailMessage, never()).sendEmailNotification(
+                eq("encrypted-email"), anyString(), anyString(), anyString()
+        );
     }
 
     @Test
@@ -138,13 +175,10 @@ public class MessageTemplateServiceTest {
     }
 
     @Test
-    void testSendMessage_noPurchaseTemplate() {
-        List<Customer> customers = Collections.singletonList(purchaseCustomer);
-        when(customerRepository.findAll()).thenReturn(customers);
-        // A busca por template de aniversário não ocorre, pois não é o aniversário do cliente.
+    void testSendRealizedOrderNotification_noTemplate() {
         when(repository.findTemplateTextByType(TypeMessageEnum.COMPRA)).thenReturn("");
 
-        service.sendMessage();
+        service.sendRealizedOrderNotification(purchaseCustomer);
 
         verify(sendMailMessage, never()).sendEmailNotification(anyString(), anyString(), anyString(), anyString());
     }

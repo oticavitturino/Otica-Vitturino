@@ -3,8 +3,13 @@ package com.br.oticavitturino.main.model.service.scheduling;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SchedulingService {
+
+    private static final ZoneId ZONE = ZoneId.of("America/Sao_Paulo");
 
     @Autowired
     private SchedulingRepository repository;
@@ -71,15 +78,18 @@ public class SchedulingService {
         String customerName = decryptField(customer.getName());
 
         if (status == StatusEnum.CONCLUIDO) {
+            applySchedulingPoints(customer, scheduling.getSchedulingType());
             scheduling.setStatus(StatusEnum.CONCLUIDO);
+            if (!removeSchedulingAutomatically(customer, scheduling)) {
+                customerRepository.save(customer);
+                repository.save(scheduling);
+            }
             sendMailMessage.sendEmailNotification(customerEmail, "Consulta Confirmada", customerName, "Seu agendamento foi confirmado com sucesso!");
-            customer.setPoints(customer.getPoints() + 30);
-            customerRepository.save(customer);
         } else if (status == StatusEnum.CANCELADO) {
             scheduling.setStatus(StatusEnum.CANCELADO);
+            removeSchedulingAutomatically(customer, scheduling);
             sendMailMessage.sendEmailNotification(customerEmail, "Consulta Cancelada", customerName, "Seu agendamento foi cancelado.");
         }
-        repository.save(scheduling);
     }
 
     // Administrador pode visualizar todos os agendamentos;
@@ -121,13 +131,13 @@ public class SchedulingService {
     // Cliente pode agendar uma consulta;
     @Transactional
     public SchedulingDTO scheduleAppointment(SchedulingDTO schedulingDTO) {
+        removeExpiredCompletedSchedulings();
+
         AvailableSlot slot = Optional.ofNullable(availableSlotRepository.findBySlotDate(schedulingDTO.schedulingDate()))
                 .orElseThrow(() -> new IllegalArgumentException("Horário não disponível para agendamento."));
 
         Customer customer = resolveCustomerForScheduling(schedulingDTO);
         Scheduling scheduling = findReusableScheduling(customer);
-
-        applySchedulingPoints(customer, schedulingDTO.scheduling_type());
 
         scheduling.setSchedulingDate(slot.getSlotDate());
         scheduling.setCustomer(customer);
@@ -159,23 +169,7 @@ public class SchedulingService {
             throw new IllegalArgumentException("Este agendamento já está cancelado.");
         }
 
-        // Remove Pontuação para Consulta
-        if (scheduling.getSchedulingType() == SchedulingEnum.CONSULTA) {
-            customer.setPoints(Math.max(0, customer.getPoints() - 30));
-        }
-
-        // Remove Pontuação para Manutenção
-        else if (scheduling.getSchedulingType() == SchedulingEnum.MANUTENCAO) {
-            customer.setPoints(Math.max(0, customer.getPoints() - 15));
-        }
-
-        // Remove Pontuação para Limpeza
-        else if (scheduling.getSchedulingType() == SchedulingEnum.LIMPEZA) {
-            customer.setPoints(Math.max(0, customer.getPoints() - 10));
-        }
-
-        // Devolve o horário à lista de datas disponíveis
-        availableSlotRepository.save(new AvailableSlot(scheduling.getSchedulingDate()));
+        restoreAvailableSlot(scheduling.getSchedulingDate());
 
         scheduling.setStatus(StatusEnum.CANCELADO);
         repository.save(scheduling);
@@ -196,6 +190,47 @@ public class SchedulingService {
         // CANCELADO: reutiliza o mesmo registro (customer_id é único)
         return current;
     }
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Scheduled(cron = "0 * * * * ?", zone = "America/Sao_Paulo")
+    @Transactional
+    public void removeExpiredCompletedSchedulings() {
+        repository.findByStatusAndSchedulingDateLessThanEqual(StatusEnum.CONCLUIDO, now())
+                .forEach(scheduling -> removeSchedulingAutomatically(scheduling.getCustomer(), scheduling));
+    }
+
+    private boolean removeSchedulingAutomatically(Customer customer, Scheduling scheduling) {
+        StatusEnum status = scheduling.getStatus();
+        boolean shouldRemove = status == StatusEnum.CANCELADO
+                || (status == StatusEnum.CONCLUIDO && !scheduling.getSchedulingDate().isAfter(now()));
+
+        if (!shouldRemove) {
+            return false;
+        }
+
+        if (status == StatusEnum.CANCELADO) {
+            restoreAvailableSlot(scheduling.getSchedulingDate());
+        }
+
+        scheduling.setCustomer(null);
+        if (customer != null) {
+            customer.setScheduling(null);
+            customerRepository.save(customer);
+        }
+
+        repository.delete(scheduling);
+        return true;
+    }
+
+    private void restoreAvailableSlot(LocalDateTime slotDate) {
+        if (availableSlotRepository.findBySlotDate(slotDate) == null) {
+            availableSlotRepository.save(new AvailableSlot(slotDate));
+        }
+    }
+
+    private LocalDateTime now() {
+        return LocalDateTime.now(ZONE);
+    } 
 
     private void applySchedulingPoints(Customer customer, SchedulingEnum type) {
         if (type == SchedulingEnum.CONSULTA) {

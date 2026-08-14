@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 @Service
@@ -42,7 +41,7 @@ public class SendEmailMessage {
             helper.setSubject(subject);
             helper.setText(emailContent, true);
             mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             System.err.println("Erro ao tentar enviar e-mail para: " + to + " - Erro: " + e.getMessage());
             e.printStackTrace();
         }
