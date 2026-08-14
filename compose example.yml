@@ -1,0 +1,78 @@
+services:
+  backend:
+    build:
+      context:
+      dockerfile:
+    ports:
+    restart:
+    depends_on:
+      db:
+        condition:
+    environment:
+      TZ:
+      JAVA_TOOL_OPTIONS:
+      SPRING_PROFILES_ACTIVE:
+      DB_URL:
+      DB_USER:
+      DB_PASSWORD:
+      JWT_SECRET:
+      ENCRYPTION_SECRET:
+      ENCRYPTION_SALT:
+      URL_FRONT:
+      EMAIL_USERNAME:
+      EMAIL_PASSWORD:
+    networks:
+
+  frontend:
+    build:
+      context:
+      dockerfile:
+    ports:
+    depends_on:
+      backend:
+        condition:
+    restart:
+    networks:
+
+  mobile:
+    build:
+      context:
+      dockerfile:
+    ports:
+    volumes:
+    environment:
+      EXPO_NO_TELEMETRY:
+      EXPO_DEVTOOLS_LISTEN_ADDRESS:
+      REACT_NATIVE_PACKAGER_HOSTNAME:
+      EXPO_PUBLIC_API_URL:
+    stdin_open:
+    tty:
+    restart:
+    networks:
+
+  db:
+    image:
+    container_name:
+    ports:
+    restart:
+    environment:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+      MYSQL_DATABASE:
+    volumes:
+    healthcheck:
+      test:
+      interval:
+      timeout:
+      retries:
+      start_period:
+    networks:
+
+networks:
+  app-network:
+    driver:
+
+volumes:
+  db_data:
+  mobile_node_modules:
