@@ -12,7 +12,7 @@ FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-RUN apk add --no-cache tzdata \
+RUN apk add --no-cache tzdata curl \
     && addgroup -S spring && adduser -S spring -G spring
 
 COPY --from=builder /app/app.jar app.jar
@@ -21,7 +21,7 @@ USER spring:spring
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=5 \
-  CMD busybox nc -z 127.0.0.1 8080 || exit 1
+HEALTHCHECK --interval=15s --timeout=5s --start-period=90s --retries=10 \
+  CMD curl -s --max-time 3 -o /dev/null http://127.0.0.1:8080/ || exit 1
 
 ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
