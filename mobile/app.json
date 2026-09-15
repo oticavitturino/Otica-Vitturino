@@ -19,7 +19,8 @@
       "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "pan",
-      "usesCleartextTraffic": true
+      "usesCleartextTraffic": true,
+      "package": "com.danielprogram08.OticaVitturino"
     },
     "web": {
       "output": "static",
@@ -47,6 +48,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ca9d8ae1-26a2-484e-aecd-4ca5ef74ab1e"
+      }
+    },
+    "owner": "danielprogram08"
   }
 }

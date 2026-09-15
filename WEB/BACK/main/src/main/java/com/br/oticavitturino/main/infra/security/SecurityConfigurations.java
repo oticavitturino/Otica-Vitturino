@@ -131,7 +131,9 @@ public class SecurityConfigurations {
                 "http://localhost:5173",
                 "http://localhost",
                 "http://127.0.0.1:5173",
-                "http://127.0.0.1"
+                "http://127.0.0.1",
+                "http://192.168.0.110:5173",
+                "http://192.168.0.110"
         );
 
         if (urlFront == null || urlFront.isBlank()) {
