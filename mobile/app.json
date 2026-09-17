@@ -2,7 +2,7 @@
   "expo": {
     "name": "OticaVitturino",
     "slug": "OticaVitturino",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/img/logovitturino.png",
     "scheme": "oticavitturino",
@@ -20,10 +20,11 @@
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "pan",
       "usesCleartextTraffic": true,
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
       "package": "com.danielprogram08.OticaVitturino"
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/img/logovitturino.png"
     },
     "plugins": [
@@ -40,20 +41,31 @@
           }
         }
       ],
-      "expo-font",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Poppins_400Regular.ttf",
+            "./assets/fonts/Poppins_500Medium.ttf",
+            "./assets/fonts/Poppins_600SemiBold.ttf",
+            "./assets/fonts/Poppins_700Bold.ttf"
+          ]
+        }
+      ],
+      "./plugins/withCleartextTraffic.js",
       "expo-image",
       "expo-status-bar",
       "expo-web-browser"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
     },
     "extra": {
       "router": {},
       "eas": {
         "projectId": "ca9d8ae1-26a2-484e-aecd-4ca5ef74ab1e"
-      }
+      },
+      "apiUrl": "http://192.168.0.110"
     },
     "owner": "danielprogram08"
   }

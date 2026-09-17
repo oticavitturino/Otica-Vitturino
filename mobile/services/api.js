@@ -1,8 +1,29 @@
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 
-export const API_BASE = (
-  process.env.EXPO_PUBLIC_API_URL || 'http://localhost:8080'
-).replace(/\/$/, '');
+const LAN_API_URL = 'http://192.168.0.110';
+
+function resolveApiBase() {
+  const candidates = [
+    process.env.EXPO_PUBLIC_API_URL,
+    Constants.expoConfig?.extra?.apiUrl,
+  ];
+
+  for (const value of candidates) {
+    if (typeof value === 'string' && value.trim()) {
+      return value.trim().replace(/\/$/, '');
+    }
+  }
+
+  if (Platform.OS === 'android' && Constants.isDevice === false) {
+    return 'http://10.0.2.2';
+  }
+
+  return LAN_API_URL;
+}
+
+export const API_BASE = resolveApiBase();
 
 const TOKEN_KEY = 'userToken';
 const USER_ID_KEY = 'userId';
@@ -59,8 +80,9 @@ export async function getUserName() {
 }
 
 export async function apiFetch(path, options = {}) {
-  const { auth = true, headers: customHeaders = {}, ...rest } = options;
+  const { auth = true, headers: customHeaders = {}, timeoutMs = 15000, signal, ...rest } = options;
   const headers = {
+    Accept: 'application/json',
     'Content-Type': 'application/json',
     ...customHeaders,
   };
@@ -72,8 +94,30 @@ export async function apiFetch(path, options = {}) {
     }
   }
 
-  return fetch(`${API_BASE}${path}`, {
-    ...rest,
-    headers,
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  if (signal) {
+    if (signal.aborted) {
+      controller.abort();
+    } else {
+      signal.addEventListener('abort', () => controller.abort(), { once: true });
+    }
+  }
+
+  try {
+    return await fetch(`${API_BASE}${path}`, {
+      ...rest,
+      signal: controller.signal,
+      headers,
+    });
+  } catch (error) {
+    const reason = error?.name === 'AbortError'
+      ? `Tempo esgotado ao conectar em ${API_BASE}`
+      : `Falha de rede ao conectar em ${API_BASE}`;
+    const wrapped = new Error(reason);
+    wrapped.cause = error;
+    throw wrapped;
+  } finally {
+    clearTimeout(timer);
+  }
 }

@@ -1,21 +1,21 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter, useFocusEffect } from 'expo-router'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Profile_Card } from './Profile_Card';
 import { apiFetch, getUserId } from '../services/api'
 
 export function Header() {
 
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userScore, setUserScore] = useState(0);
 
-    // Função executada ao clicar no botão de usuário
     function handleUserMenuClick() {
         setIsMenuOpen(!isMenuOpen);
     }
 
-    // Função para buscar a pontuação do cliente
     async function fetchScore() {
         try {
             const customerId = await getUserId();
@@ -46,26 +46,26 @@ export function Header() {
     }, []);
 
     return (
-        <View style={styles.header}>
-            {/* 1: Ícone de score */}
-            <View style={styles.scoreContainer}>
-                <Image style={styles.scoreImage} source={require('../assets/img/medal.png')} />
-                <Text style={styles.scoreText}>{userScore}</Text>
+        <View style={[styles.header, { paddingTop: Math.max(insets.top, 16) + 8 }]}>
+            <View style={styles.side}>
+                <View style={styles.scoreContainer}>
+                    <Image style={styles.scoreImage} source={require('../assets/img/medal.png')} resizeMode='contain' />
+                    <Text style={styles.scoreText}>{userScore}</Text>
+                </View>
             </View>
 
-            {/* 2: Logo */}
             <Pressable style={styles.logoContainer} onPress={() => router.replace('/homepage')}>
-                <Image style={styles.logo} source={require('../assets/img/logovitturino.png')} />
+                <Image style={styles.logo} source={require('../assets/img/logovitturino.png')} resizeMode='contain' />
             </Pressable>
 
-            {/* 3: Ícone de usuário */}
-            <Pressable style={styles.userButton} onPress={handleUserMenuClick}>
-                <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
-                    <Image style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} resizeMode='contain' />
-                </View>
-            </Pressable>
+            <View style={[styles.side, styles.sideRight]}>
+                <Pressable style={styles.userButton} onPress={handleUserMenuClick}>
+                    <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
+                        <Image style={styles.userIcon} source={require('../assets/img/circle-user-round.png')} resizeMode='contain' />
+                    </View>
+                </Pressable>
+            </View>
 
-            {/* 4: Card de profile */}
             <Profile_Card isVisible={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
         </View>
     )
@@ -77,9 +77,18 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         width: '100%',
-        height: 140,
-        padding: 30,
-        backgroundColor: '#1DA299D0'
+        minHeight: 112,
+        paddingHorizontal: 20,
+        paddingBottom: 16,
+        backgroundColor: 'rgba(29, 162, 153, 0.82)'
+    },
+    side: {
+        width: 72,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-end',
+    },
+    sideRight: {
+        alignItems: 'flex-end',
     },
     scoreContainer: {
         flexDirection: 'row',
@@ -97,18 +106,16 @@ const styles = StyleSheet.create({
         color: '#EEEDED'
     },
     logoContainer: {
-        position: 'absolute',
-        bottom: 12,
-        left: '50%',
-        marginLeft: -38
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
     logo: {
         width: 140,
         height: 80
-
     },
     userButton: {
-        marginRight: 8
+        marginRight: 0
     },
     glowContainer: {
         width: 50,

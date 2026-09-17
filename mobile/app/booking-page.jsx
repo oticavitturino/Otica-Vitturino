@@ -246,15 +246,15 @@ export default function BookingPage() {
                     {/* 5: Legenda de serviços */}
                     <View style={styles.legendContainer}>
                         <View style={styles.legend}>
-                            <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} />
+                            <Image style={styles.legendDot} source={require('../assets/img/green-dot.png')} resizeMode='contain' />
                             <Text style={styles.legendText}>Consulta</Text>
                         </View>
                         <View style={styles.legend}>
-                            <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} />
+                            <Image style={styles.legendDot} source={require('../assets/img/blue-dot.png')} resizeMode='contain' />
                             <Text style={styles.legendText}>Manutenção</Text>
                         </View>
                         <View style={styles.legend}>
-                            <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} />
+                            <Image style={styles.legendDot} source={require('../assets/img/purple-dot.png')} resizeMode='contain' />
                             <Text style={styles.legendText}>Limpeza</Text>
                         </View>
                     </View>

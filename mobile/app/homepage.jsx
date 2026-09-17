@@ -113,8 +113,6 @@ const styles = StyleSheet.create({
         height: 250,
         marginTop: 14,
         marginBottom: 14,
-        marginRight: 10
-
     },
     pageButtonContainer: {
         width: '100%',
@@ -123,7 +121,7 @@ const styles = StyleSheet.create({
     pageButton: {
         height: 70,
         borderRadius: 10,
-        backgroundColor: '#31A9A1C5'
+        backgroundColor: 'rgba(49, 169, 161, 0.77)'
     },
     pageButtonText: {
         fontSize: 16

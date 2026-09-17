@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
-import { apiFetch, setSession } from '../services/api'
+import { API_BASE, apiFetch, setSession } from '../services/api'
 
 export default function Login() {
 
@@ -61,7 +61,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Erro de requisição: ', error);
-      Alert.alert('Erro', 'Não foi possível conectar ao servidor. Verifique se o backend está no ar e se o IP está correto.');
+        Alert.alert('Erro', `Não foi possível conectar ao servidor.\n\n${error.message || API_BASE}`);
     } finally {
       setIsLoading(false);
     }
@@ -84,6 +84,7 @@ export default function Login() {
             <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} value={emailInput} onChangeText={setEmailInput} />
             <Input placeholder='Digite sua senha' secureTextEntry={true} value={passwordInput} onChangeText={setPasswordInput} />
             <Button title={isLoading ? 'Entrando...' : 'Entrar'} onPress={handleLogin} />
+            <Text style={styles.apiHint}>{API_BASE}</Text>
           </View>
 
         </View>
@@ -122,5 +123,11 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     gap: 14
+  },
+  apiHint: {
+    marginTop: 8,
+    textAlign: 'center',
+    color: '#8C8C8C',
+    fontSize: 12,
   }
 })
