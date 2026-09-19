@@ -35,8 +35,6 @@ services:
     build:
       context: ./WEB/FRONT
       dockerfile: dockerfile
-      args:
-        VITE_API_URL: ${VITE_API_URL}
     ports:
       - "8081:80"
     depends_on:
