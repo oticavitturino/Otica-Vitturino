@@ -84,7 +84,7 @@ export default function Login() {
             <Input placeholder='Digite seu e-mail' keyboardType='email-address' autoCapitalize='none' autoCorrect={false} value={emailInput} onChangeText={setEmailInput} />
             <Input placeholder='Digite sua senha' secureTextEntry={true} value={passwordInput} onChangeText={setPasswordInput} />
             <Button title={isLoading ? 'Entrando...' : 'Entrar'} onPress={handleLogin} />
-            <Text style={styles.apiHint}>{API_BASE}</Text>
+            <Text style={styles.credits}>Desenvolvido por: Daniel Silva e Caio Vasconcelos</Text>
           </View>
 
         </View>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     width: '100%',
     gap: 14
   },
-  apiHint: {
+  credits: {
     marginTop: 8,
     textAlign: 'center',
     color: '#8C8C8C',
