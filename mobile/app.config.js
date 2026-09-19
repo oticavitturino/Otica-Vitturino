@@ -1,4 +1,4 @@
-const LAN_API_URL = 'http://192.168.0.110';
+const LAN_API_URL = 'http://129.121.54.46';
 
 export default ({ config }) => ({
   ...config,
