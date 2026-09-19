@@ -1,10 +1,27 @@
-# Otica-Vitturino
-Projeto focado em CRM para fidelização. 
+# Ótica Vitturino
 
-- Para que seja criado uma aplicação java, de início, deve ser criado uma cópia do arquivo que contém todas as configurações, dependências, extensões e todos os arquivos necessários e que é responsável pela execução de toda a aplicação Java. Posteriormente, direcioná-lo a arquivo de imagem Docker que será responsável por conter todos os padrões de configuração do Java em prol da execução da aplicação em ambiente externo sem nenhum problema, esta imagem Docker nada mais é do que um *“espelho”* da aplicação Java que rodará em um ambiente reservado.
+Sistema de gestão e fidelização da ótica: painel web para a administradora, aplicativo para o cliente e API única.
 
-- Para que seja criado a cópia deste arquivo principal da aplicação, é preciso efetuar o seguinte comando na pasta raiz do projeto:
+A documentação completa — visão de negócio, requisitos, fases de implementação, arquitetura, MER/DER e contrato da API — está em **[DOCUMENTACAO.md](DOCUMENTACAO.md)**.
 
-    **`mvn clean package`**
-    
-    Este comando, irá criar o arquivo principal da aplicação dentro da pasta responsável pela gerência da aplicação e outras configurações de teste da aplicação.
+## O que tem neste repositório
+
+| Pasta | O quê |
+|---|---|
+| `WEB/BACK/main` | API Java 21 / Spring Boot |
+| `WEB/FRONT` | Painel administrativo (React + Vite) |
+| `mobile` | Aplicativo do cliente (Expo / React Native) |
+
+## Subir o ambiente
+
+1. Copie `example.env` para `.env` e preencha as variáveis.
+2. Na raiz:
+
+```bash
+docker compose up --build
+```
+
+- Painel: `http://localhost`
+- API: `http://localhost:8080`
+
+Detalhes de execução local, EAS, segurança e evolução do sistema: veja a [DOCUMENTACAO.md](DOCUMENTACAO.md).
