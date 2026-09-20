@@ -64,8 +64,7 @@
       "router": {},
       "eas": {
         "projectId": "ca9d8ae1-26a2-484e-aecd-4ca5ef74ab1e"
-      },
-      "apiUrl": "http://192.168.0.110"
+      }
     },
     "owner": "danielprogram08"
   }

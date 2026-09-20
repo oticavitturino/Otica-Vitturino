@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Input } from '../components/Input'
 import { Button } from '../components/Button'
-import { API_BASE, apiFetch, setSession } from '../services/api'
+import { apiFetch, getApiBase, setSession } from '../services/api'
 
 export default function Login() {
 
@@ -61,7 +61,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Erro de requisição: ', error);
-        Alert.alert('Erro', `Não foi possível conectar ao servidor.\n\n${error.message || API_BASE}`);
+        Alert.alert('Erro', `Não foi possível conectar ao servidor.\n\n${error.message || getApiBase()}`);
     } finally {
       setIsLoading(false);
     }
