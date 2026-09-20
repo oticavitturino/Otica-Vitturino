@@ -8,7 +8,7 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "http://129.121.54.46" 
+        "EXPO_PUBLIC_API_URL": "https://www.vitturino.com.br,http://129.121.54.46"
       }
     },
     "preview": {
@@ -19,15 +19,13 @@
       },
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://www.vitturino.com",
-        "EXPO_PUBLIC_API_URL_DEV": "http://129.121.54.46"
+        "EXPO_PUBLIC_API_URL": "https://www.vitturino.com.br,http://129.121.54.46"
       }
     },
     "production": {
       "autoIncrement": true,
       "env": {
-        "EXPO_PUBLIC_API_URL":"https://www.vitturino.com",
-        "EXPO_PUBLIC_API_URL_DEV": "http://129.121.54.46"
+        "EXPO_PUBLIC_API_URL": "https://www.vitturino.com.br,http://129.121.54.46"
       }
     }
   },

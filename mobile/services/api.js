@@ -22,26 +22,66 @@ function isIpHost(hostname) {
   return /^\d{1,3}(\.\d{1,3}){3}$/.test(hostname) || hostname === 'localhost' || hostname === '10.0.2.2';
 }
 
+function hostnameVariants(hostname) {
+  if (isIpHost(hostname)) {
+    return [hostname];
+  }
+
+  const hosts = [hostname];
+  if (hostname.startsWith('www.')) {
+    hosts.push(hostname.slice(4));
+  } else {
+    hosts.push(`www.${hostname}`);
+  }
+  return unique(hosts);
+}
+
+function originFor(protocol, hostname, port = '') {
+  const host = port ? `${hostname}:${port}` : hostname;
+  return `${protocol}//${host}`;
+}
+
+function isUsableApiResponse(response) {
+  const type = (response.headers.get('content-type') || '').toLowerCase();
+  return !type.includes('text/html');
+}
+
 function expandOrigin(origin) {
   try {
     const url = new URL(origin);
+    const protocol = url.protocol;
     const port = url.port;
-    const candidates = [origin];
+    const candidates = [];
 
-    if (url.protocol === 'http:') {
-      if (!port) {
-        candidates.push(`${url.protocol}//${url.hostname}:8081`);
-        candidates.push(`${url.protocol}//${url.hostname}:8080`);
-      } else if (port === '8080') {
-        candidates.push(`${url.protocol}//${url.hostname}:8081`);
-        candidates.push(`${url.protocol}//${url.hostname}`);
-      } else if (port === '8081') {
-        candidates.push(`${url.protocol}//${url.hostname}`);
-        candidates.push(`${url.protocol}//${url.hostname}:8080`);
+    for (const hostname of hostnameVariants(url.hostname)) {
+      if (protocol === 'https:') {
+        candidates.push(originFor(protocol, hostname, port));
+        continue;
       }
 
-      if (!isIpHost(url.hostname)) {
-        candidates.push(`https://${url.hostname}`);
+      // No IP da VPS a API não está na porta 80; nginx (8081) e backend (8080) respondem.
+      if (isIpHost(hostname) && !port) {
+        candidates.push(originFor(protocol, hostname, '8081'));
+        candidates.push(originFor(protocol, hostname, '8080'));
+        candidates.push(originFor(protocol, hostname));
+        continue;
+      }
+
+      candidates.push(originFor(protocol, hostname, port));
+
+      if (!port) {
+        candidates.push(originFor(protocol, hostname, '8081'));
+        candidates.push(originFor(protocol, hostname, '8080'));
+      } else if (port === '8080') {
+        candidates.push(originFor(protocol, hostname, '8081'));
+        candidates.push(originFor(protocol, hostname));
+      } else if (port === '8081') {
+        candidates.push(originFor(protocol, hostname));
+        candidates.push(originFor(protocol, hostname, '8080'));
+      }
+
+      if (!isIpHost(hostname)) {
+        candidates.push(originFor('https:', hostname));
       }
     }
 
@@ -195,7 +235,13 @@ export async function apiFetch(path, options = {}) {
   const init = { ...rest, headers };
   const perAttemptTimeout = orderedBases.length > 1 ? Math.min(timeoutMs, 8000) : timeoutMs;
 
-  const requestBase = (base) => fetchWithTimeout(`${base}${path}`, init, perAttemptTimeout, signal);
+  const requestBase = (base) => fetchWithTimeout(`${base}${path}`, init, perAttemptTimeout, signal)
+    .then((response) => {
+      if (!isUsableApiResponse(response)) {
+        throw new Error(`Resposta inválida de ${base}`);
+      }
+      return response;
+    });
 
   try {
     if (preferredBase) {
