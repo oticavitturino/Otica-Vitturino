@@ -26,7 +26,7 @@
 .main-container-production-status-panel h2 {
     font-family: Poppins, sans-serif;
     font-size: 2.04rem;
-    color: #3C7975;
+    color: #DEDEDE;
     margin-bottom: 45px;
 }
 
@@ -97,7 +97,7 @@
 /* 7: Botão de adicionar produto */
 
 .btn-add-product {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1rem;
     height: 60px;
@@ -110,7 +110,7 @@
 }
 
 .btn-add-product:hover {
-    background-color: #187E77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 /* 8: Pop-up de adicionar produto */
@@ -134,7 +134,7 @@
     font-family: 'Poppins';
     font-size: 1.7rem;
     font-weight: 500;
-    color: #3C7975;
+    color: #6F5C43;
     margin: 0;
 }
 
@@ -207,12 +207,12 @@
 .add-product-form .input-group select:focus,
 .update-status-form .input-group input:focus,
 .update-status-form .input-group select:focus {
-    border-color: #1DA299 !important;
+    border-color: rgba(121, 97, 62, 0.55) !important;
 }
 
 .btn-confirm-product,
 .btn-update-status {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1.1rem;
     height: 55px;
@@ -224,7 +224,7 @@
 
 .btn-confirm-product:hover,
 .btn-update-status:hover {
-    background-color: #187E77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 .delete-btn-group {
@@ -255,18 +255,18 @@
 }
 
 .btn-cancel-delete:hover {
-    background-color: #f5f5f5;
+    background-color: #F5F5F5;
 }
 
 .btn-confirm-delete {
-    background-color: #c0392b;
+    background-color: #C0392B;
     color: #FFFFFF;
     border: none;
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .btn-confirm-delete:hover {
-    background-color: #a53125;
+    background-color: #A53125;
 }
 
 /* 1600 * 900 */
@@ -548,7 +548,7 @@
     .main-container-production-status-panel .list-row-data span:first-child {
         font-weight: 500;
         font-size: 1rem;
-        color: #3C7975 !important;
+        color: #CBB89A !important;
     }
 
     .main-container-production-status-panel .list-item {

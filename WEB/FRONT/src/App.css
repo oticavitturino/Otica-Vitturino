@@ -1,5 +1,15 @@
 /* App.css */
 
+:root {
+    --color-text: #DEDEDE;
+    --color-champagne: #CBB89A;
+    --color-ink: #6F5C43;
+    --color-btn: rgba(121, 97, 62, 0.55);
+    --color-btn-hover: rgba(85, 69, 44, 0.72);
+    --color-glass: rgba(252, 252, 252, 0.1);
+    --color-list: rgba(203, 184, 154, 0.28);
+}
+
 @font-face {
     font-family: 'Poppins';
     src: url('/fonts/Poppins-Medium.ttf') format('truetype');
@@ -37,7 +47,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(190, 190, 190, 0.1)), url('/img/pexels-steve-29506613.jpg');
+    background-image: linear-gradient(rgba(10, 10, 11, 1), rgba(10, 10, 11, 1)), url('/img/pexels-steve-29506613.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -114,7 +124,7 @@ body::before {
 
 .empty-state-text {
     font-family: 'Poppins', sans-serif;
-    color: #3C7975;
+    color: #DEDEDE;
     font-size: 1.2rem;
     text-align: center;
     margin: auto;

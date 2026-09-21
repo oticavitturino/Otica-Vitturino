@@ -27,7 +27,7 @@
     height: 450px;
     max-width: 700px;
     margin-bottom: 3%;
-    background-color: rgba(217, 217, 217, 0.3) !important;
+    background-color: rgba(252, 252, 252, 0.1) !important;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -37,7 +37,7 @@
     font-size: 2.2rem;
     font-weight: 500;
     text-align: center;
-    color: #3C7975;
+    color: #CBB89A;
     margin-bottom: 6%;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .btn-enter {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1.3rem;
     height: 60px;
@@ -70,7 +70,7 @@
 }
 
 .btn-enter:hover {
-    background-color: #187e77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 /* 5: Card de erro de login */
@@ -87,7 +87,7 @@
     font-family: 'Poppins';
     font-size: 1.7rem;
     font-weight: 600;
-    color: #3C7975;
+    color: #6F5C43;
     margin: 0;
 }
 
@@ -107,9 +107,13 @@
     height: 40px;
     font-family: 'Poppins';
     font-size: 1rem;
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     font-size: 0.9rem;
+}
+
+.btn-ok:hover {
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 /* 1600 * 900 */

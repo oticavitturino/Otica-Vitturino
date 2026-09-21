@@ -5,3 +5,20 @@ button {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.btn-enter,
+.btn-ok,
+.btn-register,
+.btn-save-user,
+.btn-add-date,
+.btn-add-product,
+.btn-save-message,
+.btn-send-response,
+.btn-confirm-product,
+.btn-update-status,
+.yes-btn,
+.delete-user-card .yes-btn {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}

@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#eeeded",
+        "backgroundColor": "#EEEDED",
         "foregroundImage": "./assets/img/logovitturino.png"
       },
       "edgeToEdgeEnabled": false,
@@ -33,9 +33,9 @@
           "image": "./assets/img/logovitturino.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#eeeded",
+          "backgroundColor": "#EEEDED",
           "dark": {
-            "backgroundColor": "#eeeded"
+            "backgroundColor": "#EEEDED"
           }
         }
       ],

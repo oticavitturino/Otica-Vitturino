@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2
     },
     header: {
-        backgroundColor: '#74C0B9',
+        backgroundColor: 'rgba(121, 97, 62, 0.55)',
         paddingVertical: 22,
         alignItems: 'center',
         justifyContent: 'center',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
         marginBottom: 16
     },
     sendButton: {
-        backgroundColor: '#1DA299',
+        backgroundColor: 'rgba(121, 97, 62, 0.55)',
         paddingVertical: 12,
         paddingHorizontal: 40,
         borderRadius: 8

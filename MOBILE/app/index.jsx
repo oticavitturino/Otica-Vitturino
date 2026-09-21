@@ -75,7 +75,7 @@ export default function Login() {
 
           {/* 1: Header (Logo & Title) */}
           <View style={styles.headerContainer}>
-            <Image style={styles.logo} source={require('../assets/img/upscalemedia-transformed.png')} resizeMode='contain' />
+            <Image style={styles.logo} source={require('../assets/img/logovitturino-full.png')} resizeMode='contain' />
             <Text style={styles.title}>Fazer Login</Text>
           </View>
 
@@ -97,7 +97,7 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#EEEDED'
+    backgroundColor: 'rgba(10, 10, 11, 0.8)'
   },
   inner: {
     flex: 1,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'PoppinsSemiBold',
     fontSize: 34,
-    color: '#1DA299'
+    color: '#C79C58'
   },
   formContainer: {
     width: '100%',

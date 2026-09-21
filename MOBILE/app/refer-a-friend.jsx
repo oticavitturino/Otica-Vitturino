@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: '#1DA299'
+        color: '#C79C58'
     },
     textContainer: {
         flexDirection: 'row',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#1DA299'
+        color: '#C79C58'
     },
     illustration: {
         width: 400,

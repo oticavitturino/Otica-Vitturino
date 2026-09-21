@@ -47,23 +47,27 @@ export function Header() {
 
     return (
         <View style={styles.header}>
-            {/* 1: Ícone de score */}
-            <View style={styles.scoreContainer}>
-                <Image style={styles.scoreImage} source={require('../assets/img/medal.png')} />
-                <Text style={styles.scoreText}>{userScore}</Text>
-            </View>
-
-            {/* 2: Logo */}
-            <Pressable style={styles.logoContainer} onPress={() => router.replace('/homepage')}>
-                <Image style={styles.logo} source={require('../assets/img/logovitturino.png')} />
-            </Pressable>
-
-            {/* 3: Ícone de usuário */}
-            <Pressable style={styles.userButton} onPress={handleUserMenuClick}>
-                <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
-                    <Image style={[styles.userIcon]} source={require('../assets/img/circle-user-round.png')} resizeMode='contain' />
+            <View style={styles.row}>
+                {/* 1: Ícone de score */}
+                <View style={styles.sideLeft}>
+                    <Image style={styles.scoreImage} source={require('../assets/img/medal.png')} />
+                    <Text style={styles.scoreText}>{userScore}</Text>
                 </View>
-            </Pressable>
+
+                {/* 2: Logo */}
+                <Pressable style={styles.sideCenter} onPress={() => router.replace('/homepage')}>
+                    <Image style={styles.logo} source={require('../assets/img/logovitturino.png')} resizeMode="contain" />
+                </Pressable>
+
+                {/* 3: Ícone de usuário */}
+                <View style={styles.sideRight}>
+                    <Pressable onPress={handleUserMenuClick}>
+                        <View style={[styles.glowContainer, isMenuOpen && styles.activeGlow]}>
+                            <Image style={styles.userIcon} source={require('../assets/img/circle-user-round.png')} resizeMode="contain" />
+                        </View>
+                    </Pressable>
+                </View>
+            </View>
 
             {/* 4: Card de profile */}
             <Profile_Card isVisible={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
@@ -73,18 +77,32 @@ export function Header() {
 
 const styles = StyleSheet.create({
     header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
         width: '100%',
         height: 140,
-        padding: 30,
-        backgroundColor: '#1DA299D0'
+        paddingHorizontal: 30,
+        paddingBottom: 30,
+        justifyContent: 'flex-end',
+        backgroundColor: 'rgba(10, 10, 11, 0.8)'
     },
-    scoreContainer: {
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
+    },
+    sideLeft: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6
+    },
+    sideCenter: {
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    sideRight: {
+        flex: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center'
     },
     scoreImage: {
         width: 38,
@@ -94,21 +112,11 @@ const styles = StyleSheet.create({
         fontFamily: 'PoppinsRegular',
         fontSize: 18,
         marginTop: 4,
-        color: '#EEEDED'
-    },
-    logoContainer: {
-        position: 'absolute',
-        bottom: 12,
-        left: '50%',
-        marginLeft: -38
+        color: '#FFFFFF'
     },
     logo: {
-        width: 140,
-        height: 80
-
-    },
-    userButton: {
-        marginRight: 8
+        width: 60,
+        height: 60
     },
     glowContainer: {
         width: 50,
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
         shadowRadius: 10
     },
     userIcon: {
-        width: 42,
-        height: 42
+        width: 38,
+        height: 38
     }
 })

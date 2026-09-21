@@ -26,7 +26,7 @@
 .main-container-user-management h2 {
     font-family: Poppins, sans-serif;
     font-size: 2.04rem;
-    color: #3C7975;
+    color: #DEDEDE;
     margin-bottom: 45px;
 }
 
@@ -56,14 +56,14 @@
     width: 100%;
     max-width: 400px;
     padding: 20px;
-    background-color: rgba(217, 217, 217, 0.3);
+    background-color: rgba(7, 6, 6, 0.2);
 }
 
 /* 5: Título secundário 1 */
 .user-registration-container h3 {
     font-family: Poppins, sans-serif;
     font-size: 1.56rem;
-    color: #3C7975;
+    color: #DEDEDE;
     margin-bottom: 30px;
 }
 
@@ -94,7 +94,7 @@
 
 .btn-show-referral {
     background-color: #EBEBEB;
-    color: #3C7975;
+    color: #494949;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
     font-weight: 600;
@@ -114,7 +114,7 @@
 }
 
 .btn-register {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1.1rem;
     height: 55px;
@@ -124,7 +124,7 @@
 }
 
 .btn-register:hover {
-    background-color: #187e77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 /* 7: Container de usuários registrados */
@@ -138,14 +138,14 @@
     width: 100%;
     max-width: 750px;
     padding: 20px;
-    background-color: rgba(217, 217, 217, 0.3);
+    background-color: rgba(7, 6, 6, 0.2);
 }
 
 /* 8: Título secundário 2 */
 .registered-users-container h3 {
     font-family: Poppins, sans-serif;
     font-size: 1.56rem;
-    color: #3C7975;
+    color: #DEDEDE;
     margin-bottom: 30px;
 }
 
@@ -200,7 +200,7 @@
 
 .edit-user-title {
     font-family: 'Poppins', sans-serif;
-    color: #3C7975;
+    color: #6F5C43;
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0 0 15px 0;
@@ -237,7 +237,7 @@
 }
 
 .btn-save-user {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1.1rem;
     height: 55px;
@@ -248,7 +248,7 @@
 }
 
 .btn-save-user:hover {
-    background-color: #187E77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 /* 11: Pop-up de exclusão de usuário */
@@ -266,7 +266,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.7rem;
     font-weight: 500;
-    color: #3C7975;
+    color: #6F5C43;
     margin: 0;
 }
 
@@ -284,7 +284,7 @@
 }
 
 .delete-user-card .yes-btn {
-    background-color: #1DA299;
+    background-color: rgba(121, 97, 62, 0.55);
     color: #FFFFFF;
     font-size: 1rem;
     height: 50px;
@@ -297,7 +297,7 @@
 }
 
 .delete-user-card .yes-btn:hover {
-    background-color: #187E77;
+    background-color: rgba(85, 69, 44, 0.72);
 }
 
 .delete-user-card .no-btn {
@@ -314,7 +314,7 @@
 }
 
 .delete-user-card .no-btn:hover {
-    background-color: #c73d1a;
+    background-color: #C73D1A;
 }
 
 /* Aplica o transform apenas na página de Usuários e apenas em telas acima de 1600px */

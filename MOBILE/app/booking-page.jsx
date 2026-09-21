@@ -90,7 +90,7 @@ export default function BookingPage() {
                 ...marks[selectedDate],
                 selected: true,
                 disableTouchEvent: true,
-                selectedColor: '#1DA299',
+                selectedColor: 'rgba(121, 97, 62, 0.55)',
                 selectedTextColor: '#FFFFFF'
             };
         }
@@ -226,14 +226,14 @@ export default function BookingPage() {
                             theme={{
                                 backgroundColor: 'transparent',
                                 calendarBackground: 'transparent',
-                                textSectionTitleColor: '#1DA299',
-                                selectedDayBackgroundColor: '#1DA299',
+                                textSectionTitleColor: '#C79C58',
+                                selectedDayBackgroundColor: 'rgba(121, 97, 62, 0.55)',
                                 selectedDayTextColor: '#FFFFFF',
-                                todayTextColor: '#1DA299',
+                                todayTextColor: '#C79C58',
                                 dayTextColor: '#8C8C8C',
                                 textDisabledColor: '#D9E1E8',
                                 arrowColor: '#8C8C8C',
-                                monthTextColor: '#1DA299',
+                                monthTextColor: '#C79C58',
                                 textMonthFontFamily: 'PoppinsSemiBold',
                                 textDayHeaderFontFamily: 'PoppinsRegular',
                                 textDayFontFamily: 'PoppinsRegular',
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: '#1DA299'
+        color: '#C79C58'
     },
     textContainer: {
         flexDirection: 'row',
@@ -427,7 +427,7 @@ const styles = StyleSheet.create({
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#1DA299'
+        color: '#C79C58'
     },
     calendarContainer: {
         width: '100%',
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
         fontFamily: 'PoppinsRegular',
         fontSize: 16,
         marginTop: 4,
-        color: '#33ABA3'
+        color: '#C79C58'
     },
     bookingText: {
         fontFamily: 'PoppinsRegular',
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 14,
         marginBottom: 18,
-        color: '#1DA299'
+        color: '#C79C58'
     },
     emptyText: {
         fontFamily: 'PoppinsRegular',
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     cancelButton: {
         width: 45,
         height: 45,
-        backgroundColor: '#c92e2c',
+        backgroundColor: '#C92E2C',
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center'
@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontFamily: 'PoppinsSemiBold',
         fontSize: 18,
-        color: '#1DA299',
+        color: '#C79C58',
         marginBottom: 16,
     },
     typeLabel: {
@@ -537,7 +537,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEEDED',
     },
     typeChipSelected: {
-        backgroundColor: '#1DA299',
+        backgroundColor: 'rgba(121, 97, 62, 0.55)',
     },
     typeChipText: {
         fontFamily: 'PoppinsRegular',
@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     closeModalButtonText: {
-        color: '#1DA299',
+        color: '#C79C58',
         fontSize: 16,
         fontFamily: 'PoppinsSemiBold',
     }

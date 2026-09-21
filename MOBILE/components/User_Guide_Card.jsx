@@ -62,13 +62,13 @@ const styles = StyleSheet.create({
         color: '#919191'
     },
     userGuideTextSpan: {
-        color: '#1DA299'
+        color: '#C79C58'
     },
     gotItButton: {
         backgroundColor: 'transparent',
         marginTop: 12
     },
     gotItButtonText: {
-        color: '#1DA299'
+        color: '#C79C58'
     }
 })

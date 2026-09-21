@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 12,
         borderRadius: 14,
-        backgroundColor: '#1DA299'
+        backgroundColor: 'rgba(121, 97, 62, 0.55)'
     },
     buttonText: {
         fontFamily: 'PoppinsRegular',

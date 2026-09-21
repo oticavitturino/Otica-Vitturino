@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     },
     creditsButtonText: {
         fontSize: 15,
-        color: '#1DA299',
+        color: '#C79C58',
     },
     exitButton: {
         width: '100%',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     creditsTitle: {
         fontFamily: 'PoppinsSemiBold',
         fontSize: 18,
-        color: '#3C7975',
+        color: '#C79C58',
         marginBottom: 8,
         textAlign: 'center',
     },
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
     },
     creditLink: {
-        color: '#1DA299',
+        color: '#C79C58',
         textDecorationLine: 'underline',
     },
     closeCreditsButton: {
@@ -212,6 +212,6 @@ const styles = StyleSheet.create({
     },
     closeCreditsButtonText: {
         fontSize: 16,
-        color: '#1DA299',
+        color: '#C79C58',
     }
 })
