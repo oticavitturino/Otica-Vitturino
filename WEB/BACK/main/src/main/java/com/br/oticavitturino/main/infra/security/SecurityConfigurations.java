@@ -1,5 +1,6 @@
 package com.br.oticavitturino.main.infra.security;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import com.br.oticavitturino.main.model.repository.user.UserRepository;
@@ -115,13 +116,37 @@ public class SecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(urlFront));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
+        configuration.setAllowCredentials(false);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    // Método para analisar as origens de front
+    private List<String> parseFrontOrigins() {
+        List<String> defaultOrigins = List.of(
+                "http://localhost:5173",
+                "http://localhost",
+                "http://127.0.0.1:5173",
+                "http://127.0.0.1",
+                "http://192.168.0.110:5173",
+                "http://192.168.0.110"
+        );
+
+        if (urlFront == null || urlFront.isBlank()) {
+            return defaultOrigins;
+        }
+
+        List<String> origins = Arrays.stream(urlFront.split(","))
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .toList();
+
+        return origins.isEmpty() ? defaultOrigins : origins;
     }
 
     // Configuração TCP para acesso do banco

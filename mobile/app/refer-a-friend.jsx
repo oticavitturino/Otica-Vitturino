@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
         color: '#C79C58'
     },
     illustration: {
-        width: 400,
-        height: 400
+        width: 260,
+        height: 260
     },
     shareButton: {
         marginTop: 24

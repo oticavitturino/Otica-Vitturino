@@ -40,7 +40,7 @@ export function Occurrence_Card({ type = 'Ocorrência', isExpanded, onToggle, on
                     <TextInput
                         style={styles.input}
                         placeholder={`Digite aqui sua ${type.toLowerCase()}`}
-                        placeholderTextColor='#A9A9A9'
+                        placeholderTextColor='#8C8C8C'
                         multiline={true}
                         numberOfLines={5}
                         textAlignVertical='top'
@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#F8F8F8',
         borderRadius: 8,
         padding: 16,
-        fontFamily: 'PoppinsRegular',
         fontSize: 14,
         color: '#333333',
         marginBottom: 16

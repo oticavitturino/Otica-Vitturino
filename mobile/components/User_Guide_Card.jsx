@@ -39,15 +39,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.6)'
     },
     container: {
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         width: '95%',
-        height: '65%',
-        position: 'absolute',
-        top: 230,
-        zIndex: 999,
+        maxHeight: '75%',
         padding: 16,
         paddingTop: 30,
         borderRadius: 20,

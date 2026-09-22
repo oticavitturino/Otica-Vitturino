@@ -9,4 +9,9 @@ if [ ! -f "$LOCK_HASH_FILE" ] || [ "$(cat "$LOCK_HASH_FILE")" != "$LOCK_HASH" ];
   printf '%s\n' "$LOCK_HASH" > "$LOCK_HASH_FILE"
 fi
 
+LAN_HOST="${REACT_NATIVE_PACKAGER_HOSTNAME:-localhost}"
+echo "Metro (Expo Go): exp://${LAN_HOST}:8081"
+echo "Web: http://${LAN_HOST}:8081"
+echo "API: ${EXPO_PUBLIC_API_URL:-unset}"
+
 exec "$@"
