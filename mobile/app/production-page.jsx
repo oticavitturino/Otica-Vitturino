@@ -1,5 +1,5 @@
 import { View, ScrollView, Text, Image, StyleSheet } from 'react-native'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
@@ -61,10 +61,6 @@ export default function Production_Page() {
             fetchMyOrders();
         }, [])
     );
-
-    useEffect(() => {
-        fetchMyOrders();
-    }, []);
 
     function toggleCard(id) {
         if (openCardId === id) {

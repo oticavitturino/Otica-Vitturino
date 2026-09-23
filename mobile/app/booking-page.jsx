@@ -1,6 +1,6 @@
 import { View, ScrollView, Text, Image, StyleSheet, Alert, Modal, TouchableOpacity } from 'react-native'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
@@ -99,7 +99,7 @@ export default function BookingPage() {
     }
 
     // Função para buscar datas disponíveis
-    async function fetchAvailableDates() {
+    const fetchAvailableDates = useCallback(async () => {
         try {
             const response = await apiFetch('/scheduling/getAllDatesAvailable');
             if (response.ok) {
@@ -111,10 +111,10 @@ export default function BookingPage() {
         } catch (error) {
             console.error('Erro de requisição: ', error);
         }
-    }
+    }, []);
 
     // Função para buscar agendamentos do cliente logado
-    async function fetchMyAppointments() {
+    const fetchMyAppointments = useCallback(async () => {
         try {
             const response = await apiFetch('/scheduling/mySchedulings');
             if (response.ok) {
@@ -126,21 +126,17 @@ export default function BookingPage() {
         } catch (error) {
             console.error('Erro de requisição: ', error);
         }
-    }
+    }, []);
 
-    async function refreshBookingData() {
+    const refreshBookingData = useCallback(async () => {
         await Promise.all([fetchAvailableDates(), fetchMyAppointments()]);
-    }
+    }, [fetchAvailableDates, fetchMyAppointments]);
 
     useFocusEffect(
         useCallback(() => {
             refreshBookingData();
-        }, [])
+        }, [refreshBookingData])
     );
-
-    useEffect(() => {
-        refreshBookingData();
-    }, []);
 
     // Função para agendar consulta
     async function appointmentScheduling(selectedItem) {

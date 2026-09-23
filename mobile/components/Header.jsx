@@ -1,12 +1,14 @@
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useRouter, useFocusEffect } from 'expo-router'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Profile_Card } from './Profile_Card';
 import { apiFetch, getUserId } from '../services/api'
 
 export function Header() {
 
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userScore, setUserScore] = useState(0);
 
@@ -41,12 +43,8 @@ export function Header() {
         }, [])
     );
 
-    useEffect(() => {
-        fetchScore();
-    }, []);
-
     return (
-        <View style={styles.header}>
+        <View style={[styles.header, { height: 140 + insets.top, paddingTop: insets.top }]}>
             <View style={styles.row}>
                 {/* 1: Ícone de score */}
                 <View style={styles.sideLeft}>

@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, Modal, Pressable, ScrollView, Linking } from 'react-native'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'expo-router'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Button } from './Button'
 import { clearSession, getUserName } from '../services/api'
 
 export function Profile_Card({ isVisible, onClose }) {
 
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     const [userName, setUserName] = useState('Cliente');
     const [isCreditsOpen, setIsCreditsOpen] = useState(false);
 
@@ -45,7 +47,7 @@ export function Profile_Card({ isVisible, onClose }) {
                 <Pressable style={styles.overlay} onPress={onClose} />
 
                 {/* 1: Container principal */}
-                <View style={styles.container}>
+                <View style={[styles.container, { top: 80 + insets.top }]}>
 
                     {/* 2: Nome do usuário */}
                     <Text style={styles.nameText}>{userName}</Text>

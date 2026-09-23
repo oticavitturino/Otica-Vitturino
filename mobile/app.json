@@ -7,7 +7,6 @@
     "icon": "./assets/img/logovitturino.png",
     "scheme": "oticavitturino",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -21,10 +20,8 @@
         "backgroundColor": "#EEEDED",
         "foregroundImage": "./assets/img/logovitturino.png"
       },
-      "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "softwareKeyboardLayoutMode": "pan",
-      "usesCleartextTraffic": true,
       "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
       "package": "com.danielprogram08.OticaVitturino"
     },

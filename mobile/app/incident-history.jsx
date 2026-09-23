@@ -1,5 +1,5 @@
 import { View, ScrollView, Text, Image, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useFocusEffect } from 'expo-router'
 import { Header } from '../components/Header'
 import { Button } from '../components/Button'
@@ -34,10 +34,6 @@ export default function Incident_History() {
             fetchAllOccurrences();
         }, [])
     );
-
-    useEffect(() => {
-        fetchAllOccurrences();
-    }, []);
 
     // Função para registrar ocorrência
     async function registerOccurrence(categoryType, userDescription) {

@@ -5,23 +5,26 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function Layout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     PoppinsRegular: require('../assets/fonts/Poppins_400Regular.ttf'),
     PoppinsMedium: require('../assets/fonts/Poppins_500Medium.ttf'),
     PoppinsSemiBold: require('../assets/fonts/Poppins_600SemiBold.ttf'),
     PoppinsBold: require('../assets/fonts/Poppins_700Bold.ttf'),
   });
 
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  const isReady = fontsLoaded || !!fontError;
 
-  if (!fontsLoaded) {
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync().catch(() => {});
+    }
+  }, [isReady]);
+
+  // Sem as fontes o app segue com a fonte do sistema em vez de ficar preso na splash.
+  if (!isReady) {
     return null;
   }
 
