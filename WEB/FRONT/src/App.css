@@ -212,6 +212,10 @@ body::before {
         overflow-y: auto;
     }
 
+    body::before {
+        background-image: linear-gradient(rgba(10, 10, 10, 0.1), rgba(10, 10, 10, 0.1)), url('/img/pexels-steve-29506613-vertical.jpg');
+    }
+
     .icon-btn {
         width: 25px;
         height: 25px;
