@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingBottom: 30,
         justifyContent: 'flex-end',
-        backgroundColor: 'rgba(10, 10, 11, 0.8)'
+        backgroundColor: 'rgba(10, 10, 10, 0.8)'
     },
     row: {
         flexDirection: 'row',
