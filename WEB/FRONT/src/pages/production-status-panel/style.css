@@ -18,7 +18,7 @@
     align-items: center;
     width: min(1308px, 100%);
     box-sizing: border-box;
-    background-color: rgba(217, 217, 217, 0.3);
+    background-color: rgba(100, 100, 100, 0.3);
     animation: welcome-container-animation 0.5s ease-in;
 }
 

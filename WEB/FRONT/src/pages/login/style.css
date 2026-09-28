@@ -27,7 +27,7 @@
     height: 450px;
     max-width: 700px;
     margin-bottom: 3%;
-    background-color: rgba(252, 252, 252, 0.1) !important;
+    background-color: rgba(100, 100, 100, 0.3) !important;
     animation: welcome-container-animation 0.5s ease-in;
 }
 
