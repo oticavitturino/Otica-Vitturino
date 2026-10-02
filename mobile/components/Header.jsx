@@ -54,7 +54,7 @@ export function Header() {
 
                 {/* 2: Logo */}
                 <Pressable style={styles.sideCenter} onPress={() => router.replace('/homepage')}>
-                    <Image style={styles.logo} source={require('../assets/img/logovitturino.png')} resizeMode="contain" />
+                    <Image style={styles.logo} source={require('../assets/img/logovitturino.svg')} resizeMode="contain" />
                 </Pressable>
 
                 {/* 3: Ícone de usuário */}
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingBottom: 30,
         justifyContent: 'flex-end',
-        backgroundColor: 'rgba(10, 10, 10, 0.8)'
+        backgroundColor: '#A7967B'
     },
     row: {
         flexDirection: 'row',

@@ -3,8 +3,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: rgba(203, 184, 154, 0.28);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background-color: #7A5A3A30;
+    border: 1px solid rgba(225, 225, 225, 0.2);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: #F4F1EA;

@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2
     },
     header: {
-        backgroundColor: 'rgba(121, 97, 62, 0.55)',
+        backgroundColor: '#7A5A3A',
         paddingVertical: 22,
         alignItems: 'center',
         justifyContent: 'center',
@@ -105,19 +105,19 @@ const styles = StyleSheet.create({
     line: {
         flex: 1,
         height: 1,
-        backgroundColor: 'rgba(121, 97, 62, 0.55)'
+        backgroundColor: '#7A5A3A'
     },
     dot: {
         width: 4,
         height: 4,
         borderRadius: 2,
-        backgroundColor: 'rgba(121, 97, 62, 0.55)',
+        backgroundColor: '#7A5A3A',
         marginHorizontal: 4
     },
     dateText: {
         fontFamily: 'PoppinsRegular',
         fontSize: 14,
-        color: 'rgba(121, 97, 62, 0.55)',
+        color: '#7A5A3A',
         marginHorizontal: 8,
         includeFontPadding: false
     },

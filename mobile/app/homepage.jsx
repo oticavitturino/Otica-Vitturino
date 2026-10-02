@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     textContainer: {
         width: '100%',
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#C79C58',
+        color: '#7A5A3A',
         textAlign: 'center',
     },
     illustration: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     pageButton: {
         height: 70,
         borderRadius: 10,
-        backgroundColor: 'rgba(121, 97, 62, 0.55)'
+        backgroundColor: '#7A5A3A'
     },
     pageButtonText: {
         fontSize: 16

@@ -13,14 +13,14 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
-    color: #6F5C43;
+    color: #7A5A3A;
     margin: 0;
 }
 
 .credits-subtitle {
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
-    color: #666;
+    color: #707070;
     margin: 0 0 8px 0;
 }
 
@@ -38,19 +38,19 @@
 .credit-item strong {
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
-    color: #333;
+    color: #707070;
     display: block;
 }
 
 .credit-item p {
     font-family: 'Poppins', sans-serif;
     font-size: 0.85rem;
-    color: #555;
+    color: #707070;
     margin: 4px 0 0 0;
 }
 
 .credit-item a {
-    color: rgba(121, 97, 62, 0.85);
+    color: #7A5A3A;
     text-decoration: underline;
 }
 

@@ -4,7 +4,7 @@
     align-items: center;
     width: 100%;
     height: 10%;
-    background-color: rgba(252, 252, 252, 0.1);
+    background-color: rgba(100, 100, 100, 0.3);
     position: absolute;
     top: 0;
     left: 0;
@@ -27,7 +27,7 @@
 }
 
 .hamburger-btn.open img {
-    filter: brightness(0) saturate(100%) invert(78%) sepia(28%) saturate(620%) hue-rotate(6deg) brightness(95%) contrast(88%);
+    filter: brightness(0) saturate(100%) invert(78%) sepia(30%) saturate(620%) hue-rotate(6deg) brightness(95%) contrast(80%);
 }
 
 .header-logo {
@@ -76,7 +76,7 @@
 @media (max-width: 768px) {
     .header {
         position: fixed;
-        background-color: rgba(252, 252, 252, 0.1);
+        background-color: #A1988A;
         z-index: 1000;
     }
 

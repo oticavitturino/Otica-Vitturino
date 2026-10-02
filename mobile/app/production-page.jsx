@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     textContainer: {
         width: '100%',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     illustration: {
         width: 150,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         marginTop: 18,
         marginBottom: 18,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     cardsContainer: {
         width: '100%'

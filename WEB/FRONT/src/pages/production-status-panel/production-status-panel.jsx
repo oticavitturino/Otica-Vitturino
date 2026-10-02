@@ -344,7 +344,7 @@ function Production_Status_Panel() {
 
                                 <h3>Excluir Pedido</h3>
 
-                                <p style={{ fontFamily: 'Poppins', color: '#666', fontSize: '1.05rem', margin: '15px 0' }}>
+                                <p style={{ fontFamily: 'Poppins', color: '#707070', fontSize: '1.05rem', margin: '15px 0' }}>
                                     Tem certeza que deseja apagar o pedido <b>{itemToDelete.id}</b> do(a) cliente <b>{itemToDelete.customerName}</b>? <br />
                                     <span style={{ fontSize: '0.9rem', color: '#C0392B' }}>Esta ação não pode ser desfeita.</span>
                                 </p>

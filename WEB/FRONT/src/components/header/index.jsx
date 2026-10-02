@@ -1,5 +1,5 @@
 import './style.css'
-import LogoVitturino from '../../assets/logovitturino-full.png'
+import LogoVitturino from '../../assets/logovitturino-full.svg'
 import MenuIcon from '../../assets/menu.png'
 
 function Header({ toggleMenu, isOpen }) {

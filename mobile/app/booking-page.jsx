@@ -222,14 +222,14 @@ export default function BookingPage() {
                             theme={{
                                 backgroundColor: 'transparent',
                                 calendarBackground: 'transparent',
-                                textSectionTitleColor: '#C79C58',
+                                textSectionTitleColor: '#7A5A3A',
                                 selectedDayBackgroundColor: 'rgba(121, 97, 62, 0.55)',
                                 selectedDayTextColor: '#FFFFFF',
-                                todayTextColor: '#C79C58',
+                                todayTextColor: '#7A5A3A',
                                 dayTextColor: '#8C8C8C',
                                 textDisabledColor: '#D9E1E8',
                                 arrowColor: '#8C8C8C',
-                                monthTextColor: '#C79C58',
+                                monthTextColor: '#7A5A3A',
                                 textMonthFontFamily: 'PoppinsSemiBold',
                                 textDayHeaderFontFamily: 'PoppinsRegular',
                                 textDayFontFamily: 'PoppinsRegular',
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     },
     userGuideButtonText: {
         fontSize: 18,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     textContainer: {
         flexDirection: 'row',
@@ -423,7 +423,7 @@ const styles = StyleSheet.create({
     textSpan: {
         fontFamily: 'PoppinsRegular',
         fontSize: 22,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     calendarContainer: {
         width: '100%',
@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
         fontFamily: 'PoppinsRegular',
         fontSize: 16,
         marginTop: 4,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     bookingText: {
         fontFamily: 'PoppinsRegular',
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginTop: 14,
         marginBottom: 18,
-        color: '#C79C58'
+        color: '#7A5A3A'
     },
     emptyText: {
         fontFamily: 'PoppinsRegular',
@@ -508,7 +508,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontFamily: 'PoppinsSemiBold',
         fontSize: 18,
-        color: '#C79C58',
+        color: '#7A5A3A',
         marginBottom: 16,
     },
     typeLabel: {
@@ -575,7 +575,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     closeModalButtonText: {
-        color: '#C79C58',
+        color: '#7A5A3A',
         fontSize: 16,
         fontFamily: 'PoppinsSemiBold',
     }

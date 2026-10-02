@@ -4,7 +4,7 @@
     align-items: center;
     height: 90%;
     width: 21%;
-    background-color: rgba(252, 252, 252, 0.1);
+    background-color: rgba(100, 100, 100, 0.3);
     position: absolute;
     top: 10%;
     left: 0;
@@ -40,11 +40,11 @@
 }
 
 .btn-item:hover {
-    background-color: rgba(203, 184, 154, 0.22);
+    background-color: #7A5A3A;
 }
 
 .btn-exit {
-    background-color: #AAAAAA;
+    background-color: #7A5A3A;
     color: #FFFFFF;
     height: 60px;
     width: min(330px, 90%);
@@ -56,7 +56,7 @@
 }
 
 .btn-exit:hover {
-    background-color: #888888;
+    background-color: #644A30;
 }
 
 .btn-credits {
@@ -161,7 +161,7 @@
         animation: none;
         transform: translateX(-100%);
         transition: transform 0.4s ease-in-out;
-        background-color: rgba(22, 18, 14, 0.88);
+        background-color: #A1988A;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
     }

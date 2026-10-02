@@ -238,7 +238,7 @@
     }
 
     .main-content .container.user-registration-container h3,
-    .main-content .container.registered-users-container h3 {
+    .main-content .container.registered-users-container > h3 {
         margin-bottom: clamp(6px, 1.2vh, 12px);
     }
 

@@ -18,7 +18,7 @@
     align-items: center;
     width: min(1308px, 100%);
     box-sizing: border-box;
-    background-color: rgba(100, 100, 100, 0.3);
+    background-color: rgba(100, 100, 100, 0.1);
     animation: welcome-container-animation 0.5s ease-in;
 }
 
@@ -26,7 +26,7 @@
 .main-container-message-editor h2 {
     font-family: Poppins, sans-serif;
     font-size: 2.04rem;
-    color: #DEDEDE;
+    color: #7A5A3A;
     margin-bottom: 45px;
 }
 
@@ -103,13 +103,13 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.7rem;
     font-weight: 500;
-    color: #6F5C43;
+    color: #7A5A3A;
     margin: 0;
 }
 
 .edit-message-subtitle {
     font-family: 'Poppins', sans-serif;
-    color: #666;
+    color: #707070;
     margin-bottom: 10px;
 }
 
@@ -130,7 +130,7 @@
 .edit-message-form .input-group label {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1rem;
-    color: #666666;
+    color: #707070;
     margin: 0 0 8px 0;
     text-align: left;
 }
@@ -154,7 +154,7 @@
 }
 
 .btn-save-message {
-    background-color: rgba(121, 97, 62, 0.55);
+    background-color: #7A5A3A;
     color: #FFFFFF;
     font-size: 1.1rem;
     height: 55px;
@@ -165,7 +165,7 @@
 }
 
 .btn-save-message:hover {
-    background-color: rgba(85, 69, 44, 0.72);
+    background-color: #644A30;
 }
 
 /* 1600 * 900 */
