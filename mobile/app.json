@@ -8,6 +8,7 @@
     "scheme": "oticavitturino",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.danielprogram08.OticaVitturino",
       "supportsTablet": true,
       "infoPlist": {
         "NSAppTransportSecurity": {
